@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <gb/gb.h>
 #include <gb/cgb.h>
 #include <gb/drawing.h>
+#include <gb/gb.h>
 
 #include "utils.h"
 #include "sprites.c"
@@ -11,6 +11,7 @@
 
 UBYTE player_x;
 UBYTE player_y;
+UBYTE cooked_percent;
 
 void read_controls() {
     UBYTE button = joypad();
@@ -33,6 +34,21 @@ void draw_player() {
     move_sprite(PLAYER_SPR_TOP, player_x, player_y - 8);
 }
 
+void update_score_display() {
+    gotogxy(0, 0);
+    gprintf("%d%% Tasty  ", cooked_percent);
+}
+
+void set_score(int new) {
+    cooked_percent = new;
+    update_score_display();
+}
+
+void update_score(int diff) {
+    cooked_percent += diff;
+    update_score_display();
+}
+
 void game_loop() {
     read_controls();
     draw_player();
@@ -46,10 +62,17 @@ void init_player() {
     set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_DATA, PLAYER_SPR_BOT_PAL);
 }
 
+void init_text() {
+    // TODO set text palettes
+}
+
 void initialize() {
     cgb_compatibility();
 
+    init_text();
     init_player();
+    set_score(100);
+    set_score(10);
 
     SHOW_SPRITES;
 }

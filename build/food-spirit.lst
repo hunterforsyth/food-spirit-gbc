@@ -1,422 +1,585 @@
                               1 ;--------------------------------------------------------
                               2 ; File Created by SDCC : FreeWare ANSI-C Compiler
-                              3 ; Version 2.3.1 Sun Feb 12 12:28:49 2017
+                              3 ; Version 2.3.1 Sun Feb 12 12:48:24 2017
                               4 
                               5 ;--------------------------------------------------------
-                              6 	.module lcc35610
+                              6 	.module lcc37720
                               7 	
                               8 ;--------------------------------------------------------
                               9 ; Public variables in this module
                              10 ;--------------------------------------------------------
                              11 	.globl _main
                              12 	.globl _initialize
-                             13 	.globl _init_player
-                             14 	.globl _game_loop
-                             15 	.globl _draw_player
-                             16 	.globl _read_controls
-                             17 	.globl _player_y
-                             18 	.globl _player_x
-                             19 	.globl _PLAYER_SPR_BOT_PAL
-                             20 	.globl _PLAYER_SPR_TOP_PAL
-                             21 	.globl _PLAYER_SPR_BOT_DATA
-                             22 	.globl _PLAYER_SPR_TOP_DATA
-                             23 ;--------------------------------------------------------
-                             24 ; special function registers
-                             25 ;--------------------------------------------------------
-                             26 ;--------------------------------------------------------
-                             27 ; special function bits 
+                             13 	.globl _init_text
+                             14 	.globl _init_player
+                             15 	.globl _game_loop
+                             16 	.globl _update_score
+                             17 	.globl _set_score
+                             18 	.globl _update_score_display
+                             19 	.globl _draw_player
+                             20 	.globl _read_controls
+                             21 	.globl _cooked_percent
+                             22 	.globl _player_y
+                             23 	.globl _player_x
+                             24 	.globl _PLAYER_SPR_BOT_PAL
+                             25 	.globl _PLAYER_SPR_TOP_PAL
+                             26 	.globl _PLAYER_SPR_BOT_DATA
+                             27 	.globl _PLAYER_SPR_TOP_DATA
                              28 ;--------------------------------------------------------
-                             29 ;--------------------------------------------------------
-                             30 ; internal ram data
+                             29 ; special function registers
+                             30 ;--------------------------------------------------------
                              31 ;--------------------------------------------------------
-                             32 	.area _DATA
-   0000                      33 _player_x::
-   0000                      34 	.ds 1
-   0001                      35 _player_y::
-   0001                      36 	.ds 1
-                             37 ;--------------------------------------------------------
-                             38 ; overlayable items in internal ram 
-                             39 ;--------------------------------------------------------
-                             40 	.area _OVERLAY
-                             41 ;--------------------------------------------------------
-                             42 ; indirectly addressable internal ram data
-                             43 ;--------------------------------------------------------
-                             44 	.area _ISEG
-                             45 ;--------------------------------------------------------
-                             46 ; bit data
-                             47 ;--------------------------------------------------------
-                             48 	.area _BSEG
-                             49 ;--------------------------------------------------------
-                             50 ; external ram data
-                             51 ;--------------------------------------------------------
-                             52 	.area _XSEG
-                             53 ;--------------------------------------------------------
-                             54 ; global & static initialisations
-                             55 ;--------------------------------------------------------
-                             56 	.area _GSINIT
-                             57 	.area _GSFINAL
-                             58 	.area _GSINIT
-                             59 ;--------------------------------------------------------
-                             60 ; Home
-                             61 ;--------------------------------------------------------
-                             62 	.area _HOME
-                             63 	.area _CODE
-                             64 ;--------------------------------------------------------
-                             65 ; code
+                             32 ; special function bits 
+                             33 ;--------------------------------------------------------
+                             34 ;--------------------------------------------------------
+                             35 ; internal ram data
+                             36 ;--------------------------------------------------------
+                             37 	.area _DATA
+   0000                      38 _player_x::
+   0000                      39 	.ds 1
+   0001                      40 _player_y::
+   0001                      41 	.ds 1
+   0002                      42 _cooked_percent::
+   0002                      43 	.ds 1
+                             44 ;--------------------------------------------------------
+                             45 ; overlayable items in internal ram 
+                             46 ;--------------------------------------------------------
+                             47 	.area _OVERLAY
+                             48 ;--------------------------------------------------------
+                             49 ; indirectly addressable internal ram data
+                             50 ;--------------------------------------------------------
+                             51 	.area _ISEG
+                             52 ;--------------------------------------------------------
+                             53 ; bit data
+                             54 ;--------------------------------------------------------
+                             55 	.area _BSEG
+                             56 ;--------------------------------------------------------
+                             57 ; external ram data
+                             58 ;--------------------------------------------------------
+                             59 	.area _XSEG
+                             60 ;--------------------------------------------------------
+                             61 ; global & static initialisations
+                             62 ;--------------------------------------------------------
+                             63 	.area _GSINIT
+                             64 	.area _GSFINAL
+                             65 	.area _GSINIT
                              66 ;--------------------------------------------------------
-                             67 	.area _CODE
-                             68 ;	src/food-spirit.c 15
-                             69 ;	genLabel
-                             70 ;	genFunction
-                             71 ;	---------------------------------
-                             72 ; Function read_controls
-                             73 ; ---------------------------------
-   0000                      74 ___read_controls_start:
-   0000                      75 _read_controls:
-                             76 	
-                             77 ;	src/food-spirit.c 16
-                             78 ;	genCall
-                             79 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0000 CD 00 00             80 	call	_joypad
-   0003 4B                   81 	ld	c,e
-                             82 ;	genAssign
-                             83 ;	(registers are the same)
-                             84 ;	src/food-spirit.c 18
-                             85 ;	genAnd
-   0004 79                   86 	ld	a,c
-   0005 E6 04                87 	and	a,#0x04
-   0007 20 03                88 	jr	nz,00115$
-   0009 C3 10 00             89 	jp	00102$
-   000C                      90 00115$:
+                             67 ; Home
+                             68 ;--------------------------------------------------------
+                             69 	.area _HOME
+                             70 	.area _CODE
+                             71 ;--------------------------------------------------------
+                             72 ; code
+                             73 ;--------------------------------------------------------
+                             74 	.area _CODE
+                             75 ;	src/food-spirit.c 16
+                             76 ;	genLabel
+                             77 ;	genFunction
+                             78 ;	---------------------------------
+                             79 ; Function read_controls
+                             80 ; ---------------------------------
+   0000                      81 ___read_controls_start:
+   0000                      82 _read_controls:
+                             83 	
+                             84 ;	src/food-spirit.c 17
+                             85 ;	genCall
+                             86 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0000 CD 00 00             87 	call	_joypad
+   0003 4B                   88 	ld	c,e
+                             89 ;	genAssign
+                             90 ;	(registers are the same)
                              91 ;	src/food-spirit.c 19
-                             92 ;	genMinus
-                             93 ;	AOP_HL for _player_y
-   000C 21 01 00             94 	ld	hl,#_player_y
-   000F 35                   95 	dec	(hl)
-                             96 ;	genLabel
-   0010                      97 00102$:
-                             98 ;	src/food-spirit.c 21
-                             99 ;	genAnd
-   0010 79                  100 	ld	a,c
-   0011 E6 08               101 	and	a,#0x08
-   0013 20 03               102 	jr	nz,00116$
-   0015 C3 1C 00            103 	jp	00104$
-   0018                     104 00116$:
+                             92 ;	genAnd
+   0004 79                   93 	ld	a,c
+   0005 E6 04                94 	and	a,#0x04
+   0007 20 03                95 	jr	nz,00115$
+   0009 C3 10 00             96 	jp	00102$
+   000C                      97 00115$:
+                             98 ;	src/food-spirit.c 20
+                             99 ;	genMinus
+                            100 ;	AOP_HL for _player_y
+   000C 21 01 00            101 	ld	hl,#_player_y
+   000F 35                  102 	dec	(hl)
+                            103 ;	genLabel
+   0010                     104 00102$:
                             105 ;	src/food-spirit.c 22
-                            106 ;	genPlus
-                            107 ;	AOP_HL for _player_y
-                            108 ;	genPlusIncr
-   0018 21 01 00            109 	ld	hl,#_player_y
-   001B 34                  110 	inc	(hl)
-                            111 ;	genLabel
-   001C                     112 00104$:
-                            113 ;	src/food-spirit.c 24
-                            114 ;	genAnd
-   001C 79                  115 	ld	a,c
-   001D E6 01               116 	and	a,#0x01
-   001F 20 03               117 	jr	nz,00117$
-   0021 C3 28 00            118 	jp	00106$
-   0024                     119 00117$:
+                            106 ;	genAnd
+   0010 79                  107 	ld	a,c
+   0011 E6 08               108 	and	a,#0x08
+   0013 20 03               109 	jr	nz,00116$
+   0015 C3 1C 00            110 	jp	00104$
+   0018                     111 00116$:
+                            112 ;	src/food-spirit.c 23
+                            113 ;	genPlus
+                            114 ;	AOP_HL for _player_y
+                            115 ;	genPlusIncr
+   0018 21 01 00            116 	ld	hl,#_player_y
+   001B 34                  117 	inc	(hl)
+                            118 ;	genLabel
+   001C                     119 00104$:
                             120 ;	src/food-spirit.c 25
-                            121 ;	genPlus
-                            122 ;	AOP_HL for _player_x
-                            123 ;	genPlusIncr
-   0024 21 00 00            124 	ld	hl,#_player_x
-   0027 34                  125 	inc	(hl)
-                            126 ;	genLabel
-   0028                     127 00106$:
-                            128 ;	src/food-spirit.c 27
-                            129 ;	genAnd
-   0028 79                  130 	ld	a,c
-   0029 E6 02               131 	and	a,#0x02
-   002B 20 03               132 	jr	nz,00118$
-   002D C3 34 00            133 	jp	00109$
-   0030                     134 00118$:
+                            121 ;	genAnd
+   001C 79                  122 	ld	a,c
+   001D E6 01               123 	and	a,#0x01
+   001F 20 03               124 	jr	nz,00117$
+   0021 C3 28 00            125 	jp	00106$
+   0024                     126 00117$:
+                            127 ;	src/food-spirit.c 26
+                            128 ;	genPlus
+                            129 ;	AOP_HL for _player_x
+                            130 ;	genPlusIncr
+   0024 21 00 00            131 	ld	hl,#_player_x
+   0027 34                  132 	inc	(hl)
+                            133 ;	genLabel
+   0028                     134 00106$:
                             135 ;	src/food-spirit.c 28
-                            136 ;	genMinus
-                            137 ;	AOP_HL for _player_x
-   0030 21 00 00            138 	ld	hl,#_player_x
-   0033 35                  139 	dec	(hl)
-                            140 ;	genLabel
-   0034                     141 00109$:
-                            142 ;	genEndFunction
-                            143 	
-   0034 C9                  144 	ret
-   0035                     145 ___read_controls_end:
-   0035                     146 _PLAYER_SPR_TOP_DATA:
-   0035 00                  147 	.db #0x00
-   0036 18                  148 	.db #0x18
-   0037 18                  149 	.db #0x18
-   0038 66                  150 	.db #0x66
-   0039 7E                  151 	.db #0x7E
-   003A A5                  152 	.db #0xA5
-   003B 7E                  153 	.db #0x7E
-   003C A5                  154 	.db #0xA5
-   003D 3C                  155 	.db #0x3C
-   003E 42                  156 	.db #0x42
-   003F 00                  157 	.db #0x00
-   0040 3C                  158 	.db #0x3C
-   0041 00                  159 	.db #0x00
-   0042 3C                  160 	.db #0x3C
-   0043 00                  161 	.db #0x00
-   0044 5A                  162 	.db #0x5A
-   0045                     163 _PLAYER_SPR_BOT_DATA:
-   0045 00                  164 	.db #0x00
-   0046 5A                  165 	.db #0x5A
-   0047 00                  166 	.db #0x00
-   0048 5A                  167 	.db #0x5A
-   0049 18                  168 	.db #0x18
-   004A 42                  169 	.db #0x42
-   004B 18                  170 	.db #0x18
-   004C 00                  171 	.db #0x00
-   004D 24                  172 	.db #0x24
-   004E 00                  173 	.db #0x00
-   004F 24                  174 	.db #0x24
-   0050 00                  175 	.db #0x00
-   0051 42                  176 	.db #0x42
-   0052 00                  177 	.db #0x00
-   0053 00                  178 	.db #0x00
-   0054 42                  179 	.db #0x42
-   0055                     180 _PLAYER_SPR_TOP_PAL:
-   0055 00 00               181 	.dw #0x0000
-   0057 34 46               182 	.dw #0x4634
-   0059 00 00               183 	.dw #0x0000
-   005B A5 20               184 	.dw #0x20A5
-   005D                     185 _PLAYER_SPR_BOT_PAL:
-   005D 00 00               186 	.dw #0x0000
-   005F 00 7C               187 	.dw #0x7C00
-   0061 00 00               188 	.dw #0x0000
-   0063 00 00               189 	.dw #0x0000
-                            190 ;	src/food-spirit.c 31
-                            191 ;	genLabel
-                            192 ;	genFunction
-                            193 ;	---------------------------------
-                            194 ; Function draw_player
-                            195 ; ---------------------------------
-   0065                     196 ___draw_player_start:
-   0065                     197 _draw_player:
-                            198 	
-                            199 ;	src/food-spirit.c 32
-                            200 ;	genIpush
-                            201 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-                            202 ;	AOP_HL for _player_y
-   0065 21 01 00            203 	ld	hl,#_player_y
-   0068 7E                  204 	ld	a,(hl)
-   0069 F5                  205 	push	af
-   006A 33                  206 	inc	sp
+                            136 ;	genAnd
+   0028 79                  137 	ld	a,c
+   0029 E6 02               138 	and	a,#0x02
+   002B 20 03               139 	jr	nz,00118$
+   002D C3 34 00            140 	jp	00109$
+   0030                     141 00118$:
+                            142 ;	src/food-spirit.c 29
+                            143 ;	genMinus
+                            144 ;	AOP_HL for _player_x
+   0030 21 00 00            145 	ld	hl,#_player_x
+   0033 35                  146 	dec	(hl)
+                            147 ;	genLabel
+   0034                     148 00109$:
+                            149 ;	genEndFunction
+                            150 	
+   0034 C9                  151 	ret
+   0035                     152 ___read_controls_end:
+   0035                     153 _PLAYER_SPR_TOP_DATA:
+   0035 00                  154 	.db #0x00
+   0036 18                  155 	.db #0x18
+   0037 18                  156 	.db #0x18
+   0038 66                  157 	.db #0x66
+   0039 7E                  158 	.db #0x7E
+   003A A5                  159 	.db #0xA5
+   003B 7E                  160 	.db #0x7E
+   003C A5                  161 	.db #0xA5
+   003D 3C                  162 	.db #0x3C
+   003E 42                  163 	.db #0x42
+   003F 00                  164 	.db #0x00
+   0040 3C                  165 	.db #0x3C
+   0041 00                  166 	.db #0x00
+   0042 3C                  167 	.db #0x3C
+   0043 00                  168 	.db #0x00
+   0044 5A                  169 	.db #0x5A
+   0045                     170 _PLAYER_SPR_BOT_DATA:
+   0045 00                  171 	.db #0x00
+   0046 5A                  172 	.db #0x5A
+   0047 00                  173 	.db #0x00
+   0048 5A                  174 	.db #0x5A
+   0049 18                  175 	.db #0x18
+   004A 42                  176 	.db #0x42
+   004B 18                  177 	.db #0x18
+   004C 00                  178 	.db #0x00
+   004D 24                  179 	.db #0x24
+   004E 00                  180 	.db #0x00
+   004F 24                  181 	.db #0x24
+   0050 00                  182 	.db #0x00
+   0051 42                  183 	.db #0x42
+   0052 00                  184 	.db #0x00
+   0053 00                  185 	.db #0x00
+   0054 42                  186 	.db #0x42
+   0055                     187 _PLAYER_SPR_TOP_PAL:
+   0055 00 00               188 	.dw #0x0000
+   0057 34 46               189 	.dw #0x4634
+   0059 00 00               190 	.dw #0x0000
+   005B A5 20               191 	.dw #0x20A5
+   005D                     192 _PLAYER_SPR_BOT_PAL:
+   005D 00 00               193 	.dw #0x0000
+   005F 00 7C               194 	.dw #0x7C00
+   0061 00 00               195 	.dw #0x0000
+   0063 00 00               196 	.dw #0x0000
+                            197 ;	src/food-spirit.c 32
+                            198 ;	genLabel
+                            199 ;	genFunction
+                            200 ;	---------------------------------
+                            201 ; Function draw_player
+                            202 ; ---------------------------------
+   0065                     203 ___draw_player_start:
+   0065                     204 _draw_player:
+                            205 	
+                            206 ;	src/food-spirit.c 33
                             207 ;	genIpush
-                            208 ;	AOP_HL for _player_x
-   006B 21 00 00            209 	ld	hl,#_player_x
-   006E 7E                  210 	ld	a,(hl)
-   006F F5                  211 	push	af
-   0070 33                  212 	inc	sp
-                            213 ;	genIpush
-   0071 3E 01               214 	ld	a,#0x01
-   0073 F5                  215 	push	af
-   0074 33                  216 	inc	sp
-                            217 ;	genCall
-   0075 CD 00 00            218 	call	_move_sprite
-   0078 E8 03               219 	lda	sp,3(sp)
-                            220 ;	src/food-spirit.c 33
-                            221 ;	genMinus
-                            222 ;	AOP_HL for _player_y
-   007A 21 01 00            223 	ld	hl,#_player_y
-   007D 7E                  224 	ld	a,(hl)
-   007E C6 F8               225 	add	a,#0xF8
-                            226 ;	genIpush
-                            227 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0080 4F                  228 	ld	c,a
-   0081 F5                  229 	push	af
-   0082 33                  230 	inc	sp
-                            231 ;	genIpush
-                            232 ;	AOP_HL for _player_x
-   0083 21 00 00            233 	ld	hl,#_player_x
-   0086 7E                  234 	ld	a,(hl)
-   0087 F5                  235 	push	af
-   0088 33                  236 	inc	sp
-                            237 ;	genIpush
-   0089 3E 00               238 	ld	a,#0x00
-   008B F5                  239 	push	af
-   008C 33                  240 	inc	sp
-                            241 ;	genCall
-   008D CD 00 00            242 	call	_move_sprite
-   0090 E8 03               243 	lda	sp,3(sp)
-                            244 ;	genLabel
-   0092                     245 00101$:
-                            246 ;	genEndFunction
-                            247 	
-   0092 C9                  248 	ret
-   0093                     249 ___draw_player_end:
-                            250 ;	src/food-spirit.c 36
+                            208 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            209 ;	AOP_HL for _player_y
+   0065 21 01 00            210 	ld	hl,#_player_y
+   0068 7E                  211 	ld	a,(hl)
+   0069 F5                  212 	push	af
+   006A 33                  213 	inc	sp
+                            214 ;	genIpush
+                            215 ;	AOP_HL for _player_x
+   006B 21 00 00            216 	ld	hl,#_player_x
+   006E 7E                  217 	ld	a,(hl)
+   006F F5                  218 	push	af
+   0070 33                  219 	inc	sp
+                            220 ;	genIpush
+   0071 3E 01               221 	ld	a,#0x01
+   0073 F5                  222 	push	af
+   0074 33                  223 	inc	sp
+                            224 ;	genCall
+   0075 CD 00 00            225 	call	_move_sprite
+   0078 E8 03               226 	lda	sp,3(sp)
+                            227 ;	src/food-spirit.c 34
+                            228 ;	genMinus
+                            229 ;	AOP_HL for _player_y
+   007A 21 01 00            230 	ld	hl,#_player_y
+   007D 7E                  231 	ld	a,(hl)
+   007E C6 F8               232 	add	a,#0xF8
+                            233 ;	genIpush
+                            234 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0080 4F                  235 	ld	c,a
+   0081 F5                  236 	push	af
+   0082 33                  237 	inc	sp
+                            238 ;	genIpush
+                            239 ;	AOP_HL for _player_x
+   0083 21 00 00            240 	ld	hl,#_player_x
+   0086 7E                  241 	ld	a,(hl)
+   0087 F5                  242 	push	af
+   0088 33                  243 	inc	sp
+                            244 ;	genIpush
+   0089 3E 00               245 	ld	a,#0x00
+   008B F5                  246 	push	af
+   008C 33                  247 	inc	sp
+                            248 ;	genCall
+   008D CD 00 00            249 	call	_move_sprite
+   0090 E8 03               250 	lda	sp,3(sp)
                             251 ;	genLabel
-                            252 ;	genFunction
-                            253 ;	---------------------------------
-                            254 ; Function game_loop
-                            255 ; ---------------------------------
-   0093                     256 ___game_loop_start:
-   0093                     257 _game_loop:
-                            258 	
-                            259 ;	src/food-spirit.c 37
-                            260 ;	genCall
-                            261 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0093 CD 00 00            262 	call	_read_controls
-                            263 ;	src/food-spirit.c 38
-                            264 ;	genCall
-                            265 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0096 CD 65 00            266 	call	_draw_player
-                            267 ;	genLabel
-   0099                     268 00101$:
-                            269 ;	genEndFunction
-                            270 	
-   0099 C9                  271 	ret
-   009A                     272 ___game_loop_end:
-                            273 ;	src/food-spirit.c 41
-                            274 ;	genLabel
-                            275 ;	genFunction
-                            276 ;	---------------------------------
-                            277 ; Function init_player
-                            278 ; ---------------------------------
-   009A                     279 ___init_player_start:
-   009A                     280 _init_player:
-                            281 	
-                            282 ;	src/food-spirit.c 42
-                            283 ;	genAssign
-                            284 ;	AOP_HL for _player_x
-   009A 21 00 00            285 	ld	hl,#_player_x
-   009D 36 28               286 	ld	(hl),#0x28
-                            287 ;	src/food-spirit.c 43
-                            288 ;	genAssign
-                            289 ;	AOP_HL for _player_y
-   009F 21 01 00            290 	ld	hl,#_player_y
-   00A2 36 28               291 	ld	(hl),#0x28
-                            292 ;	src/food-spirit.c 45
-                            293 ;	genIpush
-                            294 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00A4 21 55 00            295 	ld	hl,#_PLAYER_SPR_TOP_PAL
-   00A7 E5                  296 	push	hl
-                            297 ;	genIpush
-   00A8 21 35 00            298 	ld	hl,#_PLAYER_SPR_TOP_DATA
-   00AB E5                  299 	push	hl
-                            300 ;	genIpush
-   00AC 21 00 00            301 	ld	hl,#0x0000
-   00AF E5                  302 	push	hl
-                            303 ;	genIpush
-   00B0 21 00 00            304 	ld	hl,#0x0000
-   00B3 E5                  305 	push	hl
-                            306 ;	genIpush
-   00B4 21 00 00            307 	ld	hl,#0x0000
-   00B7 E5                  308 	push	hl
-                            309 ;	genCall
-   00B8 CD 00 00            310 	call	_set_up_sprite
-   00BB E8 0A               311 	lda	sp,10(sp)
-                            312 ;	src/food-spirit.c 46
-                            313 ;	genIpush
-                            314 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00BD 21 5D 00            315 	ld	hl,#_PLAYER_SPR_BOT_PAL
-   00C0 E5                  316 	push	hl
-                            317 ;	genIpush
-   00C1 21 45 00            318 	ld	hl,#_PLAYER_SPR_BOT_DATA
-   00C4 E5                  319 	push	hl
-                            320 ;	genIpush
-   00C5 21 01 00            321 	ld	hl,#0x0001
-   00C8 E5                  322 	push	hl
-                            323 ;	genIpush
-   00C9 21 01 00            324 	ld	hl,#0x0001
-   00CC E5                  325 	push	hl
-                            326 ;	genIpush
-   00CD 21 01 00            327 	ld	hl,#0x0001
-   00D0 E5                  328 	push	hl
-                            329 ;	genCall
-   00D1 CD 00 00            330 	call	_set_up_sprite
-   00D4 E8 0A               331 	lda	sp,10(sp)
-                            332 ;	genLabel
-   00D6                     333 00101$:
-                            334 ;	genEndFunction
-                            335 	
-   00D6 C9                  336 	ret
-   00D7                     337 ___init_player_end:
-                            338 ;	src/food-spirit.c 49
-                            339 ;	genLabel
-                            340 ;	genFunction
-                            341 ;	---------------------------------
-                            342 ; Function initialize
-                            343 ; ---------------------------------
-   00D7                     344 ___initialize_start:
-   00D7                     345 _initialize:
-   00D7 E8 FD               346 	lda	sp,-3(sp)
-                            347 ;	src/food-spirit.c 50
-                            348 ;	genCall
-                            349 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00D9 CD 00 00            350 	call	_cgb_compatibility
-                            351 ;	src/food-spirit.c 52
-                            352 ;	genCall
-                            353 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00DC CD 9A 00            354 	call	_init_player
-                            355 ;	src/food-spirit.c 54
-                            356 ;	genAssign
-   00DF 01 40 FF            357 	ld	bc,#0xFF40
-                            358 ;	genAssign
-                            359 ;	AOP_STK for _initialize_sloc0_1_0
-   00E2 F8 01               360 	lda	hl,1(sp)
-   00E4 36 40               361 	ld	(hl),#0x40
-   00E6 23                  362 	inc	hl
-   00E7 36 FF               363 	ld	(hl),#0xFF
-                            364 ;	genPointerGet
-                            365 ;	AOP_STK for _initialize_sloc0_1_0
-                            366 ;	AOP_STK for _initialize_sloc1_1_0
-   00E9 2B                  367 	dec	hl
-   00EA 5E                  368 	ld	e,(hl)
-   00EB 23                  369 	inc	hl
-   00EC 56                  370 	ld	d,(hl)
-   00ED 1A                  371 	ld	a,(de)
-   00EE 2B                  372 	dec	hl
-   00EF 2B                  373 	dec	hl
-                            374 ;	genOr
-                            375 ;	AOP_STK for _initialize_sloc1_1_0
-   00F0 77                  376 	ld      (hl),a
-   00F1 7F                  377 	ld      a,a
-   00F2 F6 02               378 	or	a,#0x02
-                            379 ;	genAssign (pointer)
-   00F4 02                  380 	ld	(bc),a
-                            381 ;	genLabel
-   00F5                     382 00101$:
-                            383 ;	genEndFunction
-   00F5 E8 03               384 	lda	sp,3(sp)
-   00F7 C9                  385 	ret
-   00F8                     386 ___initialize_end:
-                            387 ;	src/food-spirit.c 57
-                            388 ;	genLabel
-                            389 ;	genFunction
-                            390 ;	---------------------------------
-                            391 ; Function main
-                            392 ; ---------------------------------
-   00F8                     393 ___main_start:
-   00F8                     394 _main:
-                            395 	
-                            396 ;	src/food-spirit.c 58
-                            397 ;	genCall
-                            398 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00F8 CD D7 00            399 	call	_initialize
-                            400 ;	src/food-spirit.c 60
-                            401 ;	genLabel
-   00FB                     402 00102$:
-                            403 ;	src/food-spirit.c 61
-                            404 ;	genCall
-                            405 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00FB CD 00 00            406 	call	_wait_vbl_done
-                            407 ;	src/food-spirit.c 62
-                            408 ;	genCall
-                            409 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   00FE CD 93 00            410 	call	_game_loop
-                            411 ;	genGoto
-   0101 C3 FB 00            412 	jp	00102$
-                            413 ;	genLabel
-   0104                     414 00104$:
-                            415 ;	genEndFunction
-                            416 	
-   0104 C9                  417 	ret
-   0105                     418 ___main_end:
-                            419 	.area _CODE
+   0092                     252 00101$:
+                            253 ;	genEndFunction
+                            254 	
+   0092 C9                  255 	ret
+   0093                     256 ___draw_player_end:
+                            257 ;	src/food-spirit.c 37
+                            258 ;	genLabel
+                            259 ;	genFunction
+                            260 ;	---------------------------------
+                            261 ; Function update_score_display
+                            262 ; ---------------------------------
+   0093                     263 ___update_score_display_start:
+   0093                     264 _update_score_display:
+                            265 	
+                            266 ;	src/food-spirit.c 38
+                            267 ;	genIpush
+                            268 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0093 21 00 00            269 	ld	hl,#0x0000
+   0096 E5                  270 	push	hl
+                            271 ;	genCall
+   0097 CD 00 00            272 	call	_gotogxy
+   009A E8 02               273 	lda	sp,2(sp)
+                            274 ;	src/food-spirit.c 39
+                            275 ;	genCast
+                            276 ;	AOP_HL for _cooked_percent
+   009C 21 02 00            277 	ld	hl,#_cooked_percent
+   009F 4E                  278 	ld	c,(hl)
+   00A0 7E                  279 	ld	a,(hl)
+   00A1 17                  280 	rla	
+   00A2 9F                  281 	sbc	a,a
+   00A3 47                  282 	ld	b,a
+                            283 ;	genIpush
+                            284 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00A4 C5                  285 	push	bc
+                            286 ;	genIpush
+   00A5 21 AF 00            287 	ld	hl,#__str_0
+   00A8 E5                  288 	push	hl
+                            289 ;	genCall
+   00A9 CD 00 00            290 	call	_gprintf
+   00AC E8 04               291 	lda	sp,4(sp)
+                            292 ;	genLabel
+   00AE                     293 00101$:
+                            294 ;	genEndFunction
+                            295 	
+   00AE C9                  296 	ret
+   00AF                     297 ___update_score_display_end:
+   00AF                     298 __str_0:
+   00AF 25 64 25 25 20 54   299 	.ascii "%d%% Tasty  "
+        61 73 74 79 20 20
+   00BB 00                  300 	.db 0x00
+                            301 ;	src/food-spirit.c 42
+                            302 ;	genLabel
+                            303 ;	genFunction
+                            304 ;	---------------------------------
+                            305 ; Function set_score
+                            306 ; ---------------------------------
+   00BC                     307 ___set_score_start:
+   00BC                     308 _set_score:
+                            309 	
+                            310 ;	src/food-spirit.c 43
+                            311 ;	genCast
+                            312 ;	AOP_STK for 
+                            313 ;	AOP_HL for _cooked_percent
+   00BC F8 02               314 	lda	hl,2(sp)
+   00BE 7E                  315 	ld	a,(hl)
+   00BF 21 02 00            316 	ld	hl,#_cooked_percent
+   00C2 77                  317 	ld	(hl),a
+                            318 ;	src/food-spirit.c 44
+                            319 ;	genCall
+                            320 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C3 CD 93 00            321 	call	_update_score_display
+                            322 ;	genLabel
+   00C6                     323 00101$:
+                            324 ;	genEndFunction
+                            325 	
+   00C6 C9                  326 	ret
+   00C7                     327 ___set_score_end:
+                            328 ;	src/food-spirit.c 47
+                            329 ;	genLabel
+                            330 ;	genFunction
+                            331 ;	---------------------------------
+                            332 ; Function update_score
+                            333 ; ---------------------------------
+   00C7                     334 ___update_score_start:
+   00C7                     335 _update_score:
+   00C7 E8 FE               336 	lda	sp,-2(sp)
+                            337 ;	src/food-spirit.c 48
+                            338 ;	genCast
+                            339 ;	AOP_HL for _cooked_percent
+                            340 ;	AOP_STK for _update_score_sloc0_1_0
+   00C9 21 02 00            341 	ld	hl,#_cooked_percent
+   00CC 7E                  342 	ld	a,(hl)
+   00CD F8 00               343 	lda	hl,0(sp)
+   00CF 22                  344 	ld	(hl+),a
+   00D0 36 00               345 	ld	(hl),#0x00
+                            346 ;	genAssign
+                            347 ;	AOP_STK for 
+   00D2 F8 04               348 	lda	hl,4(sp)
+   00D4 4E                  349 	ld	c,(hl)
+   00D5 23                  350 	inc	hl
+   00D6 46                  351 	ld	b,(hl)
+                            352 ;	genPlus
+                            353 ;	AOP_STK for _update_score_sloc0_1_0
+                            354 ;	Can't optimise plus by inc, falling back to the normal way
+   00D7 F8 00               355 	lda	hl,0(sp)
+   00D9 2A                  356 	ld	a,(hl+)
+   00DA 66                  357 	ld	h,(hl)
+   00DB 6F                  358 	ld	l,a
+   00DC 09                  359 	add	hl,bc
+   00DD 4D                  360 	ld	c,l
+   00DE 44                  361 	ld	b,h
+                            362 ;	genCast
+                            363 ;	AOP_HL for _cooked_percent
+   00DF 21 02 00            364 	ld	hl,#_cooked_percent
+   00E2 71                  365 	ld	(hl),c
+                            366 ;	src/food-spirit.c 49
+                            367 ;	genCall
+                            368 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00E3 CD 93 00            369 	call	_update_score_display
+                            370 ;	genLabel
+   00E6                     371 00101$:
+                            372 ;	genEndFunction
+   00E6 E8 02               373 	lda	sp,2(sp)
+   00E8 C9                  374 	ret
+   00E9                     375 ___update_score_end:
+                            376 ;	src/food-spirit.c 52
+                            377 ;	genLabel
+                            378 ;	genFunction
+                            379 ;	---------------------------------
+                            380 ; Function game_loop
+                            381 ; ---------------------------------
+   00E9                     382 ___game_loop_start:
+   00E9                     383 _game_loop:
+                            384 	
+                            385 ;	src/food-spirit.c 53
+                            386 ;	genCall
+                            387 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00E9 CD 00 00            388 	call	_read_controls
+                            389 ;	src/food-spirit.c 54
+                            390 ;	genCall
+                            391 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00EC CD 65 00            392 	call	_draw_player
+                            393 ;	genLabel
+   00EF                     394 00101$:
+                            395 ;	genEndFunction
+                            396 	
+   00EF C9                  397 	ret
+   00F0                     398 ___game_loop_end:
+                            399 ;	src/food-spirit.c 57
+                            400 ;	genLabel
+                            401 ;	genFunction
+                            402 ;	---------------------------------
+                            403 ; Function init_player
+                            404 ; ---------------------------------
+   00F0                     405 ___init_player_start:
+   00F0                     406 _init_player:
+                            407 	
+                            408 ;	src/food-spirit.c 58
+                            409 ;	genAssign
+                            410 ;	AOP_HL for _player_x
+   00F0 21 00 00            411 	ld	hl,#_player_x
+   00F3 36 28               412 	ld	(hl),#0x28
+                            413 ;	src/food-spirit.c 59
+                            414 ;	genAssign
+                            415 ;	AOP_HL for _player_y
+   00F5 21 01 00            416 	ld	hl,#_player_y
+   00F8 36 28               417 	ld	(hl),#0x28
+                            418 ;	src/food-spirit.c 61
+                            419 ;	genIpush
+                            420 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00FA 21 55 00            421 	ld	hl,#_PLAYER_SPR_TOP_PAL
+   00FD E5                  422 	push	hl
+                            423 ;	genIpush
+   00FE 21 35 00            424 	ld	hl,#_PLAYER_SPR_TOP_DATA
+   0101 E5                  425 	push	hl
+                            426 ;	genIpush
+   0102 21 00 00            427 	ld	hl,#0x0000
+   0105 E5                  428 	push	hl
+                            429 ;	genIpush
+   0106 21 00 00            430 	ld	hl,#0x0000
+   0109 E5                  431 	push	hl
+                            432 ;	genIpush
+   010A 21 00 00            433 	ld	hl,#0x0000
+   010D E5                  434 	push	hl
+                            435 ;	genCall
+   010E CD 00 00            436 	call	_set_up_sprite
+   0111 E8 0A               437 	lda	sp,10(sp)
+                            438 ;	src/food-spirit.c 62
+                            439 ;	genIpush
+                            440 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0113 21 5D 00            441 	ld	hl,#_PLAYER_SPR_BOT_PAL
+   0116 E5                  442 	push	hl
+                            443 ;	genIpush
+   0117 21 45 00            444 	ld	hl,#_PLAYER_SPR_BOT_DATA
+   011A E5                  445 	push	hl
+                            446 ;	genIpush
+   011B 21 01 00            447 	ld	hl,#0x0001
+   011E E5                  448 	push	hl
+                            449 ;	genIpush
+   011F 21 01 00            450 	ld	hl,#0x0001
+   0122 E5                  451 	push	hl
+                            452 ;	genIpush
+   0123 21 01 00            453 	ld	hl,#0x0001
+   0126 E5                  454 	push	hl
+                            455 ;	genCall
+   0127 CD 00 00            456 	call	_set_up_sprite
+   012A E8 0A               457 	lda	sp,10(sp)
+                            458 ;	genLabel
+   012C                     459 00101$:
+                            460 ;	genEndFunction
+                            461 	
+   012C C9                  462 	ret
+   012D                     463 ___init_player_end:
+                            464 ;	src/food-spirit.c 65
+                            465 ;	genLabel
+                            466 ;	genFunction
+                            467 ;	---------------------------------
+                            468 ; Function init_text
+                            469 ; ---------------------------------
+   012D                     470 ___init_text_start:
+   012D                     471 _init_text:
+                            472 	
+                            473 ;	src/food-spirit.c 67
+                            474 ;	genLabel
+   012D                     475 00101$:
+                            476 ;	genEndFunction
+                            477 	
+   012D C9                  478 	ret
+   012E                     479 ___init_text_end:
+                            480 ;	src/food-spirit.c 69
+                            481 ;	genLabel
+                            482 ;	genFunction
+                            483 ;	---------------------------------
+                            484 ; Function initialize
+                            485 ; ---------------------------------
+   012E                     486 ___initialize_start:
+   012E                     487 _initialize:
+   012E E8 FD               488 	lda	sp,-3(sp)
+                            489 ;	src/food-spirit.c 70
+                            490 ;	genCall
+                            491 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0130 CD 00 00            492 	call	_cgb_compatibility
+                            493 ;	src/food-spirit.c 72
+                            494 ;	genCall
+                            495 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0133 CD 2D 01            496 	call	_init_text
+                            497 ;	src/food-spirit.c 73
+                            498 ;	genCall
+                            499 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0136 CD F0 00            500 	call	_init_player
+                            501 ;	src/food-spirit.c 74
+                            502 ;	genIpush
+                            503 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0139 21 64 00            504 	ld	hl,#0x0064
+   013C E5                  505 	push	hl
+                            506 ;	genCall
+   013D CD BC 00            507 	call	_set_score
+   0140 E8 02               508 	lda	sp,2(sp)
+                            509 ;	src/food-spirit.c 75
+                            510 ;	genIpush
+                            511 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0142 21 0A 00            512 	ld	hl,#0x000A
+   0145 E5                  513 	push	hl
+                            514 ;	genCall
+   0146 CD BC 00            515 	call	_set_score
+   0149 E8 02               516 	lda	sp,2(sp)
+                            517 ;	src/food-spirit.c 77
+                            518 ;	genAssign
+   014B 01 40 FF            519 	ld	bc,#0xFF40
+                            520 ;	genAssign
+                            521 ;	AOP_STK for _initialize_sloc0_1_0
+   014E F8 01               522 	lda	hl,1(sp)
+   0150 36 40               523 	ld	(hl),#0x40
+   0152 23                  524 	inc	hl
+   0153 36 FF               525 	ld	(hl),#0xFF
+                            526 ;	genPointerGet
+                            527 ;	AOP_STK for _initialize_sloc0_1_0
+                            528 ;	AOP_STK for _initialize_sloc1_1_0
+   0155 2B                  529 	dec	hl
+   0156 5E                  530 	ld	e,(hl)
+   0157 23                  531 	inc	hl
+   0158 56                  532 	ld	d,(hl)
+   0159 1A                  533 	ld	a,(de)
+   015A 2B                  534 	dec	hl
+   015B 2B                  535 	dec	hl
+                            536 ;	genOr
+                            537 ;	AOP_STK for _initialize_sloc1_1_0
+   015C 77                  538 	ld      (hl),a
+   015D 7F                  539 	ld      a,a
+   015E F6 02               540 	or	a,#0x02
+                            541 ;	genAssign (pointer)
+   0160 02                  542 	ld	(bc),a
+                            543 ;	genLabel
+   0161                     544 00101$:
+                            545 ;	genEndFunction
+   0161 E8 03               546 	lda	sp,3(sp)
+   0163 C9                  547 	ret
+   0164                     548 ___initialize_end:
+                            549 ;	src/food-spirit.c 80
+                            550 ;	genLabel
+                            551 ;	genFunction
+                            552 ;	---------------------------------
+                            553 ; Function main
+                            554 ; ---------------------------------
+   0164                     555 ___main_start:
+   0164                     556 _main:
+                            557 	
+                            558 ;	src/food-spirit.c 81
+                            559 ;	genCall
+                            560 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0164 CD 2E 01            561 	call	_initialize
+                            562 ;	src/food-spirit.c 83
+                            563 ;	genLabel
+   0167                     564 00102$:
+                            565 ;	src/food-spirit.c 84
+                            566 ;	genCall
+                            567 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0167 CD 00 00            568 	call	_wait_vbl_done
+                            569 ;	src/food-spirit.c 85
+                            570 ;	genCall
+                            571 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   016A CD E9 00            572 	call	_game_loop
+                            573 ;	genGoto
+   016D C3 67 01            574 	jp	00102$
+                            575 ;	genLabel
+   0170                     576 00104$:
+                            577 ;	genEndFunction
+                            578 	
+   0170 C9                  579 	ret
+   0171                     580 ___main_end:
+                            581 	.area _CODE
 ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
 
 Symbol Table
@@ -427,36 +590,52 @@ Symbol Table
   0 _PLAYER_SPR_TOP_PAL                0055 GR
   0 ___draw_player_end                 0093 R
   0 ___draw_player_start               0065 R
-  0 ___game_loop_end                   009A R
-  0 ___game_loop_start                 0093 R
-  0 ___init_player_end                 00D7 R
-  0 ___init_player_start               009A R
-  0 ___initialize_end                  00F8 R
-  0 ___initialize_start                00D7 R
-  0 ___main_end                        0105 R
-  0 ___main_start                      00F8 R
+  0 ___game_loop_end                   00F0 R
+  0 ___game_loop_start                 00E9 R
+  0 ___init_player_end                 012D R
+  0 ___init_player_start               00F0 R
+  0 ___init_text_end                   012E R
+  0 ___init_text_start                 012D R
+  0 ___initialize_end                  0164 R
+  0 ___initialize_start                012E R
+  0 ___main_end                        0171 R
+  0 ___main_start                      0164 R
   0 ___read_controls_end               0035 R
   0 ___read_controls_start             0000 R
+  0 ___set_score_end                   00C7 R
+  0 ___set_score_start                 00BC R
+  0 ___update_score_display_end        00AF R
+  0 ___update_score_display_start      0093 R
+  0 ___update_score_end                00E9 R
+  0 ___update_score_start              00C7 R
+  0 __str_0                            00AF R
     _cgb_compatibility                 **** GX
+  1 _cooked_percent                    0002 GR
   0 _draw_player                       0065 GR
-  0 _game_loop                         0093 GR
-  0 _init_player                       009A GR
-  0 _initialize                        00D7 GR
+  0 _game_loop                         00E9 GR
+    _gotogxy                           **** GX
+    _gprintf                           **** GX
+  0 _init_player                       00F0 GR
+  0 _init_text                         012D GR
+  0 _initialize                        012E GR
     _joypad                            **** GX
-  0 _main                              00F8 GR
+  0 _main                              0164 GR
     _move_sprite                       **** GX
   1 _player_x                          0000 GR
   1 _player_y                          0001 GR
   0 _read_controls                     0000 GR
+  0 _set_score                         00BC GR
     _set_up_sprite                     **** GX
+  0 _update_score                      00C7 GR
+  0 _update_score_display              0093 GR
     _wait_vbl_done                     **** GX
 
 ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
 
 Area Table
 
-   0 _CODE                              size  105   flags 0
-   1 _DATA                              size    2   flags 0
+   0 _CODE                              size  171   flags 0
+   1 _DATA                              size    3   flags 0
    2 _OVERLAY                           size    0   flags 0
    3 _ISEG                              size    0   flags 0
    4 _BSEG                              size    0   flags 0
