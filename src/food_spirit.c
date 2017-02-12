@@ -19,16 +19,16 @@ void read_controls() {
     UBYTE button = joypad();
 
     if (button & J_UP)
-        player_y--;
+        player_y -= 3;
 
     if (button & J_DOWN)
         player_y++;
 
     if (button & J_RIGHT) {
-        player_x++;
+        player_x += 2;
         player_dir = RIGHT;
     } else if (button & J_LEFT) {
-        player_x--;
+        player_x -= 2;
         player_dir = LEFT;
     } else {
         player_dir = 0;
@@ -58,12 +58,20 @@ void init_player() {
     player_y = 40;
 
     set_up_sprite(PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP_DATA, PLAYER_SPR_TOP_PAL);
-    set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_MID_DATA, PLAYER_SPR_BOT_PAL);
 }
 
 void init_bg() {
-    set_bkg_palette(1, 1, BG_PAL_1);
-    set_bkg_data(1, 1, BG_TILE_1_DATA);
+    set_bkg_palette(1, 1, BG_PAL_SPOTS);
+    set_bkg_palette(2, 1, BG_PAL_POT);
+    set_bkg_palette(3, 1, BG_PAL_FIRE);
+
+    set_bkg_data(1, 1, BG_TILE_SPOTS_DATA);
+    set_bkg_data(2, 1, BG_TILE_POT_FLOOR_DATA);
+    set_bkg_data(3, 1, BG_TILE_POT_LEFT_CORNER_DATA);
+    set_bkg_data(4, 1, BG_TILE_POT_RIGHT_CORNER_DATA);
+    set_bkg_data(5, 1, BG_TILE_POT_LEFT_WALL_DATA);
+    set_bkg_data(6, 1, BG_TILE_POT_RIGHT_WALL_DATA);
+    set_bkg_data(7, 1, BG_TILE_FIRE_DATA);
 
     set_up_bg(0, 1, 20, 17, BG_1_MAP, BG_1_MAP_PAL);
 }
