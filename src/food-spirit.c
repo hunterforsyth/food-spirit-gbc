@@ -5,6 +5,8 @@
 #include <gb/cgb.h>
 #include <gb/drawing.h>
 
+// TEST
+
 const UBYTE PLAYER_SPRITE_TOP_NUM = 0;
 const UBYTE PLAYER_SPRITE_BOT_NUM = 1;
 
