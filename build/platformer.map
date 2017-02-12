@@ -19,17 +19,17 @@ AREA .  .ABS.
 		l__GSINITTAIL	0001
 		l__DATA	0002
 		l__BSS	0059
-		l__CODE	018E
 		l__BASE	0193
+		l__CODE	01AA
 		l__HOME	01AC
 		l__HEADER	01E1
 		s__CODE	0200
-		s__HOME	038E
-		s__BASE	053A
-		s__GSINITTAIL	06CD
-		s__LIT	06CD
-		s__GSINIT	06CD
-		s__GSFINAL	06CE
+		s__HOME	03AA
+		s__BASE	0556
+		s__GSINITTAIL	06E9
+		s__LIT	06E9
+		s__GSINIT	06E9
+		s__GSFINAL	06EA
 		.OAM	C000
 		s__DATA	C0A0
 		s__BSS	C0A2
@@ -43,22 +43,23 @@ AREA .  .ABS.
 AREA _CODE
 	RADIX HEX
 	BASE 0200
-	SIZE 018E
+	SIZE 01AA
 	ATTRIB REL CON
 	GLOBALS
 		_read_controls	0200
 		_PLAYER_SPRITE_NUM	0235
-		_PLAYER_SPRITE	0236
-		_draw_player	0246
-		_game_loop	025F
-		_init_player	0266
-		_initialize	02A5
-		_main	02C6
-		_set_bkg_palette_entry	02D3
-		_set_sprite_palette_entry	02FB
-		_cpu_slow	0323
-		_cpu_fast	033E
-		_cgb_compatibility	0345
+		_PLAYER_SPRITE_DATA	0236
+		_PLAYER_SPRITE_PALETTE	0246
+		_draw_player	024E
+		_game_loop	0267
+		_init_player	026E
+		_initialize	02C1
+		_main	02E2
+		_set_bkg_palette_entry	02EF
+		_set_sprite_palette_entry	0317
+		_cpu_slow	033F
+		_cpu_fast	035A
+		_cgb_compatibility	0361
 AREA _HEADER
 	RADIX HEX
 	BASE 0000
@@ -68,95 +69,95 @@ AREA _HEADER
 		_exit	01D2
 AREA _HOME
 	RADIX HEX
-	BASE 038E
+	BASE 03AA
 	SIZE 01AC
 	ATTRIB REL CON
 	GLOBALS
-		.set_mode	038E
-		.remove_VBL	039E
-		.remove_LCD	03A4
-		.remove_TIM	03AA
-		.remove_SIO	03B0
-		.remove_JOY	03B6
-		.add_VBL	03BC
-		.add_LCD	03C2
-		.add_TIM	03C8
-		.add_SIO	03CE
-		.add_JOY	03D4
-		.remove_int	03DA
-		.add_int	03FA
-		.wait_vbl_done	0416
-		_wait_vbl_done	0416
-		_display_off	042D
-		.display_off	042D
-		.serial_IO	044E
-		_mode	047D
-		_get_mode	0486
-		_enable_interrupts	048B
-		_disable_interrupts	048D
-		_reset	048F
-		.reset	048F
-		_set_interrupts	0495
-		_remove_VBL	04A0
-		_remove_LCD	04AB
-		_remove_TIM	04B6
-		_remove_SIO	04C1
-		_remove_JOY	04CC
-		_add_VBL	04D7
-		_add_LCD	04E2
-		_add_TIM	04ED
-		_add_SIO	04F8
-		_add_JOY	0503
-		_clock	050E
-		__printTStates	0517
-		banked_call	0518
-		banked_ret	0531
+		.set_mode	03AA
+		.remove_VBL	03BA
+		.remove_LCD	03C0
+		.remove_TIM	03C6
+		.remove_SIO	03CC
+		.remove_JOY	03D2
+		.add_VBL	03D8
+		.add_LCD	03DE
+		.add_TIM	03E4
+		.add_SIO	03EA
+		.add_JOY	03F0
+		.remove_int	03F6
+		.add_int	0416
+		.wait_vbl_done	0432
+		_wait_vbl_done	0432
+		_display_off	0449
+		.display_off	0449
+		.serial_IO	046A
+		_mode	0499
+		_get_mode	04A2
+		_enable_interrupts	04A7
+		_disable_interrupts	04A9
+		_reset	04AB
+		.reset	04AB
+		_set_interrupts	04B1
+		_remove_VBL	04BC
+		_remove_LCD	04C7
+		_remove_TIM	04D2
+		_remove_SIO	04DD
+		_remove_JOY	04E8
+		_add_VBL	04F3
+		_add_LCD	04FE
+		_add_TIM	0509
+		_add_SIO	0514
+		_add_JOY	051F
+		_clock	052A
+		__printTStates	0533
+		banked_call	0534
+		banked_ret	054D
 AREA _BASE
 	RADIX HEX
-	BASE 053A
+	BASE 0556
 	SIZE 0193
 	ATTRIB REL CON
 	GLOBALS
-		.set_sprite_prop	053A
-		_set_sprite_prop	0547
-		.mv_sprite	0552
-		_move_sprite	0561
-		_set_win_data	056E
-		_set_bkg_data	056E
-		_set_sprite_data	05BB
-		_set_bkg_palette	05EA
-		_set_sprite_palette	0615
-		.padup	0640
-		_waitpadup	0640
-		.jpad	0650
-		.wait_pad	067D
-		_joypad	0684
-		_waitpad	0689
-		.set_sprite_tile	0693
-		_set_sprite_tile	06A0
-		.copy_vram	06AB
-		_get_data	06BA
-		_set_data	06BA
+		.set_sprite_prop	0556
+		_set_sprite_prop	0563
+		.mv_sprite	056E
+		_move_sprite	057D
+		_set_win_data	058A
+		_set_bkg_data	058A
+		_set_sprite_data	05D7
+		_set_bkg_palette	0606
+		_set_sprite_palette	0631
+		.padup	065C
+		_waitpadup	065C
+		.jpad	066C
+		.wait_pad	0699
+		_joypad	06A0
+		_waitpad	06A5
+		.set_sprite_tile	06AF
+		_set_sprite_tile	06BC
+		.copy_vram	06C7
+		_get_data	06D6
+		_set_data	06D6
 AREA _LIT
 	RADIX HEX
-	BASE 06CD
+	BASE 06E9
 	SIZE 0000
 	ATTRIB REL CON
 AREA _GSINIT
 	RADIX HEX
-	BASE 06CD
+	BASE 06E9
 	SIZE 0000
 	ATTRIB REL CON
 	GLOBALS
-		gsinit	06CD
+		gsinit	06E9
 AREA _GSINITTAIL
 	RADIX HEX
-	BASE 06CD
+	BASE 06E9
 	SIZE 0001
 	ATTRIB REL CON
 AREA _GSFINAL
 	RADIX HEX
-	BASE 06CE
+	BASE 06EA
 	SIZE 0000
 	ATTRIB REL CON
 AREA _DATA
@@ -218,7 +219,7 @@ MODULES
 	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
 		NAME Runtime
 	FILE build/platformer.o
-		NAME lcc44300
+		NAME lcc45160
 LIBRARIES
 	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
 		MODULE set_prop.o

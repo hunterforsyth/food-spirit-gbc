@@ -7,8 +7,11 @@
 
 const UBYTE PLAYER_SPRITE_NUM = 0;
 
-const unsigned char PLAYER_SPRITE[] = 
+const unsigned char PLAYER_SPRITE_DATA[] = 
     { 0x3C,0x3C,0x42,0x42,0x3C,0x3C,0x00,0x7E, 0x00,0x18,0x00,0x18,0x24,0x00,0x42,0x00 };
+
+const UWORD PLAYER_SPRITE_PALETTE[] = 
+    { RGB(31, 0, 0), RGB(31, 31, 0), RGB(0, 31, 0), RGB(0, 0, 31)};
 
 UBYTE player_x;
 UBYTE player_y;
@@ -42,9 +45,10 @@ void init_player() {
     player_x = 40;
     player_y = 40;
 
-    set_sprite_data(PLAYER_SPRITE_NUM, 1, PLAYER_SPRITE);
+    set_sprite_data(PLAYER_SPRITE_NUM, 1, PLAYER_SPRITE_DATA);
     set_sprite_tile(PLAYER_SPRITE_NUM, 0); // 0 is the tile #
     set_sprite_prop(PLAYER_SPRITE_NUM, 0x10);
+    set_sprite_palette(PLAYER_SPRITE_NUM, 1, PLAYER_SPRITE_PALETTE);
 }
 
 void initialize() {
