@@ -1,0 +1,131 @@
+; no$gmb format .sym file
+; Generated automagically by ASxxxx linker V01.75 (SDK 3.0.0)
+; Area: .  .ABS.
+00:0000 s__HEADER
+00:0000 .init
+00:0200 s__CODE
+00:040C s__HOME
+00:05B8 s__BASE
+00:074B s__GSINITTAIL
+00:074B s__LIT
+00:074B s__GSINIT
+00:074C s__GSFINAL
+00:C000 .OAM
+00:C0A0 s__DATA
+00:C0A2 s__BSS
+00:C0FB s__HEAP
+00:C0FB s__BSEG
+00:C0FB s__ISEG
+00:C0FB s__XSEG
+00:C0FB s__OVERLAY
+00:E000 .STACK
+00:FF80 .refresh_OAM
+; Area: _CODE
+00:0200 _read_controls
+00:0235 _PLAYER_SPR_TOP_DATA
+00:0245 _PLAYER_SPR_BOT_DATA
+00:0255 _PLAYER_SPR_TOP_PAL
+00:025D _PLAYER_SPR_BOT_PAL
+00:0265 _draw_player
+00:0293 _game_loop
+00:029A _init_player
+00:02D7 _initialize
+00:02F8 _main
+00:0305 _set_up_sprite
+00:0351 _set_bkg_palette_entry
+00:0379 _set_sprite_palette_entry
+00:03A1 _cpu_slow
+00:03BC _cpu_fast
+00:03C3 _cgb_compatibility
+; Area: _HEADER
+00:01D2 _exit
+; Area: _HOME
+00:040C .set_mode
+00:041C .remove_VBL
+00:0422 .remove_LCD
+00:0428 .remove_TIM
+00:042E .remove_SIO
+00:0434 .remove_JOY
+00:043A .add_VBL
+00:0440 .add_LCD
+00:0446 .add_TIM
+00:044C .add_SIO
+00:0452 .add_JOY
+00:0458 .remove_int
+00:0478 .add_int
+00:0494 .wait_vbl_done
+00:0494 _wait_vbl_done
+00:04AB _display_off
+00:04AB .display_off
+00:04CC .serial_IO
+00:04FB _mode
+00:0504 _get_mode
+00:0509 _enable_interrupts
+00:050B _disable_interrupts
+00:050D _reset
+00:050D .reset
+00:0513 _set_interrupts
+00:051E _remove_VBL
+00:0529 _remove_LCD
+00:0534 _remove_TIM
+00:053F _remove_SIO
+00:054A _remove_JOY
+00:0555 _add_VBL
+00:0560 _add_LCD
+00:056B _add_TIM
+00:0576 _add_SIO
+00:0581 _add_JOY
+00:058C _clock
+00:0595 __printTStates
+00:0596 banked_call
+00:05AF banked_ret
+; Area: _BASE
+00:05B8 .set_sprite_prop
+00:05C5 _set_sprite_prop
+00:05D0 .mv_sprite
+00:05DF _move_sprite
+00:05EC _set_win_data
+00:05EC _set_bkg_data
+00:0639 _set_sprite_data
+00:0668 _set_bkg_palette
+00:0693 _set_sprite_palette
+00:06BE .padup
+00:06BE _waitpadup
+00:06CE .jpad
+00:06FB .wait_pad
+00:0702 _joypad
+00:0707 _waitpad
+00:0711 .set_sprite_tile
+00:071E _set_sprite_tile
+00:0729 .copy_vram
+00:0738 _get_data
+00:0738 _set_data
+; Area: _LIT
+; Area: _GSINIT
+00:074B gsinit
+; Area: _GSINITTAIL
+; Area: _GSFINAL
+; Area: _DATA
+00:C0A0 _player_x
+00:C0A1 _player_y
+; Area: _BSS
+00:C0A2 __cpu
+00:C0A3 .mode
+00:C0A4 __io_out
+00:C0A5 __io_in
+00:C0A6 __io_status
+00:C0A7 .vbl_done
+00:C0A8 __current_bank
+00:C0A9 _sys_time
+00:C0A9 .sys_time
+00:C0AB .int_0x40
+00:C0BB .int_0x48
+00:C0CB .int_0x50
+00:C0DB .int_0x58
+00:C0EB .int_0x60
+; Area: _HEAP
+00:C0FB _malloc_heap_start
+; Area: _OVERLAY
+; Area: _ISEG
+; Area: _BSEG
+; Area: _XSEG

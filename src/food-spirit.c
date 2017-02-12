@@ -5,20 +5,9 @@
 #include <gb/cgb.h>
 #include <gb/drawing.h>
 
-const UBYTE PLAYER_SPRITE_TOP_NUM = 0;
-const UBYTE PLAYER_SPRITE_BOT_NUM = 1;
-
-const unsigned char PLAYER_SPRITE_TOP_DATA[] = 
-     { 0x00,0x18,0x18,0x66,0x7E,0xA5,0x7E,0xA5, 0x3C,0x42,0x00,0x3C,0x00,0x3C,0x00,0x5A };
-
-const unsigned char PLAYER_SPRITE_BOT_DATA[] = 
-     { 0x00,0x5A,0x00,0x5A,0x18,0x42,0x18,0x00, 0x24,0x00,0x24,0x00,0x42,0x00,0x00,0x42 };
-
-const UWORD PLAYER_SPRITE_TOP_PALETTE[] = 
-    { RGB(0, 0, 0), RGB(20, 17, 17), RGB(0, 0, 0), RGB(5, 5, 8) };
-
-const UWORD PLAYER_SPRITE_BOT_PALETTE[] = 
-    { RGB(0, 0, 0), RGB(0, 0, 31), RGB(0, 0, 0), RGB(0, 0, 0) };
+#include "utils.h"
+#include "sprites.c"
+#include "palettes.c"
 
 UBYTE player_x;
 UBYTE player_y;
@@ -40,8 +29,8 @@ void read_controls() {
 }
 
 void draw_player() {
-    move_sprite(PLAYER_SPRITE_BOT_NUM, player_x, player_y);
-    move_sprite(PLAYER_SPRITE_TOP_NUM, player_x, player_y - 8);
+    move_sprite(PLAYER_SPR_BOT, player_x, player_y);
+    move_sprite(PLAYER_SPR_TOP, player_x, player_y - 8);
 }
 
 void game_loop() {
@@ -53,15 +42,8 @@ void init_player() {
     player_x = 40;
     player_y = 40;
 
-    set_sprite_data(PLAYER_SPRITE_TOP_NUM, 1, PLAYER_SPRITE_TOP_DATA);
-    set_sprite_tile(PLAYER_SPRITE_TOP_NUM, PLAYER_SPRITE_TOP_NUM);
-    set_sprite_palette(PLAYER_SPRITE_TOP_NUM, 1, PLAYER_SPRITE_TOP_PALETTE);
-    set_sprite_prop(PLAYER_SPRITE_TOP_NUM, PLAYER_SPRITE_TOP_NUM);
-
-    set_sprite_data(PLAYER_SPRITE_BOT_NUM, 1, PLAYER_SPRITE_BOT_DATA);
-    set_sprite_tile(PLAYER_SPRITE_BOT_NUM, PLAYER_SPRITE_BOT_NUM);
-    set_sprite_palette(PLAYER_SPRITE_BOT_NUM, 1, PLAYER_SPRITE_BOT_PALETTE);
-    set_sprite_prop(PLAYER_SPRITE_BOT_NUM, PLAYER_SPRITE_BOT_NUM);
+    set_up_sprite(PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP_DATA, PLAYER_SPR_TOP_PAL);
+    set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_DATA, PLAYER_SPR_BOT_PAL);
 }
 
 void initialize() {
