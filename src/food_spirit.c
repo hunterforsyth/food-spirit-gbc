@@ -13,6 +13,7 @@
 
 UBYTE player_x;
 UBYTE player_y;
+UBYTE player_dir;
 
 void read_controls() {
     UBYTE button = joypad();
@@ -23,16 +24,28 @@ void read_controls() {
     if (button & J_DOWN)
         player_y++;
 
-    if (button & J_RIGHT)
+    if (button & J_RIGHT) {
         player_x++;
-
-    if (button & J_LEFT)
+        player_dir = RIGHT;
+    } else if (button & J_LEFT) {
         player_x--;
+        player_dir = LEFT;
+    } else {
+        player_dir = 0;
+    }
 }
 
 void draw_player() {
     move_sprite(PLAYER_SPR_BOT, player_x, player_y);
     move_sprite(PLAYER_SPR_TOP, player_x, player_y - 8);
+
+    if (player_dir == LEFT) {
+        set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_LEFT_DATA, PLAYER_SPR_BOT_PAL);
+    } else if (player_dir == RIGHT) {
+        set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_RIGHT_DATA, PLAYER_SPR_BOT_PAL);
+    } else {
+        set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_MID_DATA, PLAYER_SPR_BOT_PAL);
+    }
 }
 
 void game_loop() {
@@ -45,7 +58,7 @@ void init_player() {
     player_y = 40;
 
     set_up_sprite(PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP_DATA, PLAYER_SPR_TOP_PAL);
-    set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_DATA, PLAYER_SPR_BOT_PAL);
+    set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_MID_DATA, PLAYER_SPR_BOT_PAL);
 }
 
 void init_bg() {
