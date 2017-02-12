@@ -13,6 +13,9 @@ UBYTE player_x;
 UBYTE player_y;
 UBYTE cooked_percent;
 
+void set_score(int new);
+void update_score(int diff);
+
 void read_controls() {
     UBYTE button = joypad();
 
@@ -62,14 +65,14 @@ void init_player() {
     set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_DATA, PLAYER_SPR_BOT_PAL);
 }
 
-void init_text() {
-    // TODO set text palettes
+void init_bg() {
+    set_bkg_palette(0, 1, BG_PAL_TEXT); // Text uses palette 0
 }
 
 void initialize() {
     cgb_compatibility();
 
-    init_text();
+    init_bg();
     init_player();
     set_score(100);
     set_score(10);
