@@ -1,9 +1,11 @@
-# Gameboy Platformer
+# Food Spirit
+
+## About:
+ - Food Spirit is a homebrew game for the original Game Boy and Game Boy Color. It will run on real hardware, but you can play it on a computer with an emulator.
 
 ## Set Up:
- - Building requires gbdk 2.96a to be installed.
- - I've included a tar of it in the root directory of this folder. 
- - Run `make.sh` to build the rom.
+ - Building requires gbdk 2.96a to be installed. I've included an archive of it in the root directory of this folder.
+ - Run `make.sh` to compile the rom into the `build` directory.
 
 ### Installing gbdk:
 Follow the instructions in gbdk's readme to install it for Linux. Essentially:
