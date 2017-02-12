@@ -1,7 +1,7 @@
 # Food Spirit
 
 ## About:
- - Food Spirit is a homebrew game for the original Game Boy and Game Boy Color. It will run on real hardware, but you can play it on a computer with an emulator.
+ - Food Spirit is a homebrew game for the original Game Boy and Game Boy Color. It will run on real hardware, but you can play it on a computer with an emulator. It works best on Game Boy Color.
 
 ## Set Up:
  - Building requires gbdk 2.96a to be installed. I've included an archive of it in the root directory of this folder.

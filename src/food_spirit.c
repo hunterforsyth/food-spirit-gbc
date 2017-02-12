@@ -7,14 +7,12 @@
 
 #include "utils.h"
 #include "sprites.c"
+#include "bg_tiles.c"
+#include "bg_maps.c"
 #include "palettes.c"
 
 UBYTE player_x;
 UBYTE player_y;
-UBYTE cooked_percent;
-
-void set_score(int new);
-void update_score(int diff);
 
 void read_controls() {
     UBYTE button = joypad();
@@ -37,21 +35,6 @@ void draw_player() {
     move_sprite(PLAYER_SPR_TOP, player_x, player_y - 8);
 }
 
-void update_score_display() {
-    gotogxy(0, 0);
-    gprintf("%d%% Tasty  ", cooked_percent);
-}
-
-void set_score(int new) {
-    cooked_percent = new;
-    update_score_display();
-}
-
-void update_score(int diff) {
-    cooked_percent += diff;
-    update_score_display();
-}
-
 void game_loop() {
     read_controls();
     draw_player();
@@ -66,7 +49,10 @@ void init_player() {
 }
 
 void init_bg() {
-    set_bkg_palette(0, 1, BG_PAL_TEXT); // Text uses palette 0
+    set_bkg_palette(1, 1, BG_PAL_1);
+    set_bkg_data(1, 1, BG_TILE_1_DATA);
+
+    set_up_bg(0, 1, 20, 17, BG_1_MAP, BG_1_MAP_PAL);
 }
 
 void initialize() {
@@ -74,13 +60,13 @@ void initialize() {
 
     init_bg();
     init_player();
-    set_score(100);
-    set_score(10);
 
+    SHOW_BKG;
     SHOW_SPRITES;
 }
 
 void main() {
+    wait_vbl_done();
     initialize();
 
     while (1) {

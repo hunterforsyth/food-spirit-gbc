@@ -1,0 +1,265 @@
+AREA .  .ABS.
+	RADIX HEX
+	BASE 0000
+	SIZE 0000
+	ATTRIB ABS OVR
+	GLOBALS
+		l__HEAP	0000
+		l__BSEG	0000
+		l_.  .ABS.	0000
+		l__GSFINAL	0000
+		l__ISEG	0000
+		s_.  .ABS.	0000
+		s__HEADER	0000
+		l__XSEG	0000
+		.init	0000
+		l__OVERLAY	0000
+		l__LIT	0000
+		l__GSINIT	0000
+		l__GSINITTAIL	0001
+		l__DATA	0002
+		l__BSS	0059
+		l__HOME	01AC
+		l__HEADER	01E1
+		s__CODE	0200
+		l__BASE	0211
+		l__CODE	0580
+		s__HOME	0780
+		s__BASE	092C
+		s__GSINITTAIL	0B3D
+		s__LIT	0B3D
+		s__GSINIT	0B3D
+		s__GSFINAL	0B3E
+		.OAM	C000
+		s__DATA	C0A0
+		s__BSS	C0A2
+		s__HEAP	C0FB
+		s__BSEG	C0FB
+		s__ISEG	C0FB
+		s__XSEG	C0FB
+		s__OVERLAY	C0FB
+		.STACK	E000
+		.refresh_OAM	FF80
+AREA _CODE
+	RADIX HEX
+	BASE 0200
+	SIZE 0580
+	ATTRIB REL CON
+	GLOBALS
+		_read_controls	0200
+		_PLAYER_SPR_TOP_DATA	0235
+		_PLAYER_SPR_BOT_DATA	0245
+		_BG_TILE_1_DATA	0255
+		_BG_1_MAP	0265
+		_BG_1_MAP_PAL	03B9
+		_PLAYER_SPR_TOP_PAL	050D
+		_PLAYER_SPR_BOT_PAL	0515
+		_BG_PAL_1	051D
+		_draw_player	0525
+		_game_loop	0553
+		_init_player	055A
+		_init_bg	0597
+		_initialize	05CF
+		_main	0608
+		_set_up_sprite	0618
+		_set_up_bg	0664
+		_set_bkg_palette_entry	06C5
+		_set_sprite_palette_entry	06ED
+		_cpu_slow	0715
+		_cpu_fast	0730
+		_cgb_compatibility	0737
+AREA _HEADER
+	RADIX HEX
+	BASE 0000
+	SIZE 01E1
+	ATTRIB ABS OVR
+	GLOBALS
+		_exit	01D2
+AREA _HOME
+	RADIX HEX
+	BASE 0780
+	SIZE 01AC
+	ATTRIB REL CON
+	GLOBALS
+		.set_mode	0780
+		.remove_VBL	0790
+		.remove_LCD	0796
+		.remove_TIM	079C
+		.remove_SIO	07A2
+		.remove_JOY	07A8
+		.add_VBL	07AE
+		.add_LCD	07B4
+		.add_TIM	07BA
+		.add_SIO	07C0
+		.add_JOY	07C6
+		.remove_int	07CC
+		.add_int	07EC
+		.wait_vbl_done	0808
+		_wait_vbl_done	0808
+		_display_off	081F
+		.display_off	081F
+		.serial_IO	0840
+		_mode	086F
+		_get_mode	0878
+		_enable_interrupts	087D
+		_disable_interrupts	087F
+		_reset	0881
+		.reset	0881
+		_set_interrupts	0887
+		_remove_VBL	0892
+		_remove_LCD	089D
+		_remove_TIM	08A8
+		_remove_SIO	08B3
+		_remove_JOY	08BE
+		_add_VBL	08C9
+		_add_LCD	08D4
+		_add_TIM	08DF
+		_add_SIO	08EA
+		_add_JOY	08F5
+		_clock	0900
+		__printTStates	0909
+		banked_call	090A
+		banked_ret	0923
+AREA _BASE
+	RADIX HEX
+	BASE 092C
+	SIZE 0211
+	ATTRIB REL CON
+	GLOBALS
+		.set_sprite_prop	092C
+		_set_sprite_prop	0939
+		.mv_sprite	0944
+		_move_sprite	0953
+		_set_bkg_palette	0960
+		_set_sprite_palette	098B
+		_set_win_data	09B6
+		_set_bkg_data	09B6
+		_set_sprite_data	0A03
+		.padup	0A32
+		_waitpadup	0A32
+		.jpad	0A42
+		.wait_pad	0A6F
+		_joypad	0A76
+		_waitpad	0A7B
+		.set_sprite_tile	0A85
+		_set_sprite_tile	0A92
+		.copy_vram	0A9D
+		_get_data	0AAC
+		_set_data	0AAC
+		_set_bkg_tiles	0ABF
+		.set_xy_wtt	0AD3
+		.set_xy_btt	0AE4
+		.set_xy_tt	0AF3
+		_set_tiles	0B24
+AREA _LIT
+	RADIX HEX
+	BASE 0B3D
+	SIZE 0000
+	ATTRIB REL CON
+AREA _GSINIT
+	RADIX HEX
+	BASE 0B3D
+	SIZE 0000
+	ATTRIB REL CON
+	GLOBALS
+		gsinit	0B3D
+AREA _GSINITTAIL
+	RADIX HEX
+	BASE 0B3D
+	SIZE 0001
+	ATTRIB REL CON
+AREA _GSFINAL
+	RADIX HEX
+	BASE 0B3E
+	SIZE 0000
+	ATTRIB REL CON
+AREA _DATA
+	RADIX HEX
+	BASE C0A0
+	SIZE 0002
+	ATTRIB REL CON
+	GLOBALS
+		_player_x	C0A0
+		_player_y	C0A1
+AREA _BSS
+	RADIX HEX
+	BASE C0A2
+	SIZE 0059
+	ATTRIB REL CON
+	GLOBALS
+		__cpu	C0A2
+		.mode	C0A3
+		__io_out	C0A4
+		__io_in	C0A5
+		__io_status	C0A6
+		.vbl_done	C0A7
+		__current_bank	C0A8
+		_sys_time	C0A9
+		.sys_time	C0A9
+		.int_0x40	C0AB
+		.int_0x48	C0BB
+		.int_0x50	C0CB
+		.int_0x58	C0DB
+		.int_0x60	C0EB
+AREA _HEAP
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+	GLOBALS
+		_malloc_heap_start	C0FB
+AREA _OVERLAY
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+AREA _ISEG
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+AREA _BSEG
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+AREA _XSEG
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+MODULES
+	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
+		NAME Runtime
+	FILE build/food_spirit.o
+		NAME lcc50220
+	FILE build/utils.o
+		NAME lcc50260
+LIBRARIES
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_prop.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE mv_spr.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE cgb.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_data.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE pad.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_spr.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE cpy_data.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_bk_t.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_xy_t.o
+USERBASEDEF
+	_CODE=0x0200
+	_DATA=0xC0A0
+	_CODE_1=0x4000
+USERGLOBALDEF
+	.OAM=0xC000
+	.STACK=0xE000
+	.refresh_OAM=0xFF80
+	.init=0x0000
