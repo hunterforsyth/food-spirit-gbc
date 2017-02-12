@@ -1,0 +1,433 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Sun Feb 12 00:14:48 2017
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc44300
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _initialize
+                             13 	.globl _init_player
+                             14 	.globl _game_loop
+                             15 	.globl _draw_player
+                             16 	.globl _read_controls
+                             17 	.globl _player_y
+                             18 	.globl _player_x
+                             19 	.globl _PLAYER_SPRITE
+                             20 	.globl _PLAYER_SPRITE_NUM
+                             21 ;--------------------------------------------------------
+                             22 ; special function registers
+                             23 ;--------------------------------------------------------
+                             24 ;--------------------------------------------------------
+                             25 ; special function bits 
+                             26 ;--------------------------------------------------------
+                             27 ;--------------------------------------------------------
+                             28 ; internal ram data
+                             29 ;--------------------------------------------------------
+                             30 	.area _DATA
+   0000                      31 _player_x::
+   0000                      32 	.ds 1
+   0001                      33 _player_y::
+   0001                      34 	.ds 1
+                             35 ;--------------------------------------------------------
+                             36 ; overlayable items in internal ram 
+                             37 ;--------------------------------------------------------
+                             38 	.area _OVERLAY
+                             39 ;--------------------------------------------------------
+                             40 ; indirectly addressable internal ram data
+                             41 ;--------------------------------------------------------
+                             42 	.area _ISEG
+                             43 ;--------------------------------------------------------
+                             44 ; bit data
+                             45 ;--------------------------------------------------------
+                             46 	.area _BSEG
+                             47 ;--------------------------------------------------------
+                             48 ; external ram data
+                             49 ;--------------------------------------------------------
+                             50 	.area _XSEG
+                             51 ;--------------------------------------------------------
+                             52 ; global & static initialisations
+                             53 ;--------------------------------------------------------
+                             54 	.area _GSINIT
+                             55 	.area _GSFINAL
+                             56 	.area _GSINIT
+                             57 ;--------------------------------------------------------
+                             58 ; Home
+                             59 ;--------------------------------------------------------
+                             60 	.area _HOME
+                             61 	.area _CODE
+                             62 ;--------------------------------------------------------
+                             63 ; code
+                             64 ;--------------------------------------------------------
+                             65 	.area _CODE
+                             66 ;	src/platformer.c 16
+                             67 ;	genLabel
+                             68 ;	genFunction
+                             69 ;	---------------------------------
+                             70 ; Function read_controls
+                             71 ; ---------------------------------
+   0000                      72 ___read_controls_start:
+   0000                      73 _read_controls:
+                             74 	
+                             75 ;	src/platformer.c 17
+                             76 ;	genCall
+                             77 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0000 CD 00 00             78 	call	_joypad
+   0003 4B                   79 	ld	c,e
+                             80 ;	genAssign
+                             81 ;	(registers are the same)
+                             82 ;	src/platformer.c 19
+                             83 ;	genAnd
+   0004 79                   84 	ld	a,c
+   0005 E6 04                85 	and	a,#0x04
+   0007 20 03                86 	jr	nz,00115$
+   0009 C3 10 00             87 	jp	00102$
+   000C                      88 00115$:
+                             89 ;	src/platformer.c 20
+                             90 ;	genMinus
+                             91 ;	AOP_HL for _player_y
+   000C 21 01 00             92 	ld	hl,#_player_y
+   000F 35                   93 	dec	(hl)
+                             94 ;	genLabel
+   0010                      95 00102$:
+                             96 ;	src/platformer.c 22
+                             97 ;	genAnd
+   0010 79                   98 	ld	a,c
+   0011 E6 08                99 	and	a,#0x08
+   0013 20 03               100 	jr	nz,00116$
+   0015 C3 1C 00            101 	jp	00104$
+   0018                     102 00116$:
+                            103 ;	src/platformer.c 23
+                            104 ;	genPlus
+                            105 ;	AOP_HL for _player_y
+                            106 ;	genPlusIncr
+   0018 21 01 00            107 	ld	hl,#_player_y
+   001B 34                  108 	inc	(hl)
+                            109 ;	genLabel
+   001C                     110 00104$:
+                            111 ;	src/platformer.c 25
+                            112 ;	genAnd
+   001C 79                  113 	ld	a,c
+   001D E6 01               114 	and	a,#0x01
+   001F 20 03               115 	jr	nz,00117$
+   0021 C3 28 00            116 	jp	00106$
+   0024                     117 00117$:
+                            118 ;	src/platformer.c 26
+                            119 ;	genPlus
+                            120 ;	AOP_HL for _player_x
+                            121 ;	genPlusIncr
+   0024 21 00 00            122 	ld	hl,#_player_x
+   0027 34                  123 	inc	(hl)
+                            124 ;	genLabel
+   0028                     125 00106$:
+                            126 ;	src/platformer.c 28
+                            127 ;	genAnd
+   0028 79                  128 	ld	a,c
+   0029 E6 02               129 	and	a,#0x02
+   002B 20 03               130 	jr	nz,00118$
+   002D C3 34 00            131 	jp	00109$
+   0030                     132 00118$:
+                            133 ;	src/platformer.c 29
+                            134 ;	genMinus
+                            135 ;	AOP_HL for _player_x
+   0030 21 00 00            136 	ld	hl,#_player_x
+   0033 35                  137 	dec	(hl)
+                            138 ;	genLabel
+   0034                     139 00109$:
+                            140 ;	genEndFunction
+                            141 	
+   0034 C9                  142 	ret
+   0035                     143 ___read_controls_end:
+   0035                     144 _PLAYER_SPRITE_NUM:
+   0035 00                  145 	.db #0x00
+   0036                     146 _PLAYER_SPRITE:
+   0036 3C                  147 	.db #0x3C
+   0037 3C                  148 	.db #0x3C
+   0038 42                  149 	.db #0x42
+   0039 42                  150 	.db #0x42
+   003A 3C                  151 	.db #0x3C
+   003B 3C                  152 	.db #0x3C
+   003C 00                  153 	.db #0x00
+   003D 7E                  154 	.db #0x7E
+   003E 00                  155 	.db #0x00
+   003F 18                  156 	.db #0x18
+   0040 00                  157 	.db #0x00
+   0041 18                  158 	.db #0x18
+   0042 24                  159 	.db #0x24
+   0043 00                  160 	.db #0x00
+   0044 42                  161 	.db #0x42
+   0045 00                  162 	.db #0x00
+                            163 ;	src/platformer.c 32
+                            164 ;	genLabel
+                            165 ;	genFunction
+                            166 ;	---------------------------------
+                            167 ; Function draw_player
+                            168 ; ---------------------------------
+   0046                     169 ___draw_player_start:
+   0046                     170 _draw_player:
+                            171 	
+                            172 ;	src/platformer.c 33
+                            173 ;	genAssign
+                            174 ;	AOP_HL for _PLAYER_SPRITE_NUM
+   0046 21 35 00            175 	ld	hl,#_PLAYER_SPRITE_NUM
+   0049 4E                  176 	ld	c,(hl)
+                            177 ;	genIpush
+                            178 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            179 ;	AOP_HL for _player_y
+   004A 21 01 00            180 	ld	hl,#_player_y
+   004D 7E                  181 	ld	a,(hl)
+   004E F5                  182 	push	af
+   004F 33                  183 	inc	sp
+                            184 ;	genIpush
+                            185 ;	AOP_HL for _player_x
+   0050 21 00 00            186 	ld	hl,#_player_x
+   0053 7E                  187 	ld	a,(hl)
+   0054 F5                  188 	push	af
+   0055 33                  189 	inc	sp
+                            190 ;	genIpush
+   0056 79                  191 	ld	a,c
+   0057 F5                  192 	push	af
+   0058 33                  193 	inc	sp
+                            194 ;	genCall
+   0059 CD 00 00            195 	call	_move_sprite
+   005C E8 03               196 	lda	sp,3(sp)
+                            197 ;	genLabel
+   005E                     198 00101$:
+                            199 ;	genEndFunction
+                            200 	
+   005E C9                  201 	ret
+   005F                     202 ___draw_player_end:
+                            203 ;	src/platformer.c 36
+                            204 ;	genLabel
+                            205 ;	genFunction
+                            206 ;	---------------------------------
+                            207 ; Function game_loop
+                            208 ; ---------------------------------
+   005F                     209 ___game_loop_start:
+   005F                     210 _game_loop:
+                            211 	
+                            212 ;	src/platformer.c 37
+                            213 ;	genCall
+                            214 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   005F CD 00 00            215 	call	_read_controls
+                            216 ;	src/platformer.c 38
+                            217 ;	genCall
+                            218 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0062 CD 46 00            219 	call	_draw_player
+                            220 ;	genLabel
+   0065                     221 00101$:
+                            222 ;	genEndFunction
+                            223 	
+   0065 C9                  224 	ret
+   0066                     225 ___game_loop_end:
+                            226 ;	src/platformer.c 41
+                            227 ;	genLabel
+                            228 ;	genFunction
+                            229 ;	---------------------------------
+                            230 ; Function init_player
+                            231 ; ---------------------------------
+   0066                     232 ___init_player_start:
+   0066                     233 _init_player:
+                            234 	
+                            235 ;	src/platformer.c 42
+                            236 ;	genAssign
+                            237 ;	AOP_HL for _player_x
+   0066 21 00 00            238 	ld	hl,#_player_x
+   0069 36 28               239 	ld	(hl),#0x28
+                            240 ;	src/platformer.c 43
+                            241 ;	genAssign
+                            242 ;	AOP_HL for _player_y
+   006B 21 01 00            243 	ld	hl,#_player_y
+   006E 36 28               244 	ld	(hl),#0x28
+                            245 ;	src/platformer.c 45
+                            246 ;	genAssign
+                            247 ;	AOP_HL for _PLAYER_SPRITE_NUM
+   0070 21 35 00            248 	ld	hl,#_PLAYER_SPRITE_NUM
+   0073 4E                  249 	ld	c,(hl)
+                            250 ;	genIpush
+                            251 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0074 21 36 00            252 	ld	hl,#_PLAYER_SPRITE
+   0077 E5                  253 	push	hl
+                            254 ;	genIpush
+   0078 3E 01               255 	ld	a,#0x01
+   007A F5                  256 	push	af
+   007B 33                  257 	inc	sp
+                            258 ;	genIpush
+   007C 79                  259 	ld	a,c
+   007D F5                  260 	push	af
+   007E 33                  261 	inc	sp
+                            262 ;	genCall
+   007F CD 00 00            263 	call	_set_sprite_data
+   0082 E8 04               264 	lda	sp,4(sp)
+                            265 ;	src/platformer.c 46
+                            266 ;	genAssign
+                            267 ;	AOP_HL for _PLAYER_SPRITE_NUM
+   0084 21 35 00            268 	ld	hl,#_PLAYER_SPRITE_NUM
+   0087 4E                  269 	ld	c,(hl)
+                            270 ;	genIpush
+                            271 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0088 3E 00               272 	ld	a,#0x00
+   008A F5                  273 	push	af
+   008B 33                  274 	inc	sp
+                            275 ;	genIpush
+   008C 79                  276 	ld	a,c
+   008D F5                  277 	push	af
+   008E 33                  278 	inc	sp
+                            279 ;	genCall
+   008F CD 00 00            280 	call	_set_sprite_tile
+   0092 E8 02               281 	lda	sp,2(sp)
+                            282 ;	src/platformer.c 47
+                            283 ;	genAssign
+                            284 ;	AOP_HL for _PLAYER_SPRITE_NUM
+   0094 21 35 00            285 	ld	hl,#_PLAYER_SPRITE_NUM
+   0097 4E                  286 	ld	c,(hl)
+                            287 ;	genIpush
+                            288 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0098 3E 10               289 	ld	a,#0x10
+   009A F5                  290 	push	af
+   009B 33                  291 	inc	sp
+                            292 ;	genIpush
+   009C 79                  293 	ld	a,c
+   009D F5                  294 	push	af
+   009E 33                  295 	inc	sp
+                            296 ;	genCall
+   009F CD 00 00            297 	call	_set_sprite_prop
+   00A2 E8 02               298 	lda	sp,2(sp)
+                            299 ;	genLabel
+   00A4                     300 00101$:
+                            301 ;	genEndFunction
+                            302 	
+   00A4 C9                  303 	ret
+   00A5                     304 ___init_player_end:
+                            305 ;	src/platformer.c 50
+                            306 ;	genLabel
+                            307 ;	genFunction
+                            308 ;	---------------------------------
+                            309 ; Function initialize
+                            310 ; ---------------------------------
+   00A5                     311 ___initialize_start:
+   00A5                     312 _initialize:
+   00A5 E8 FD               313 	lda	sp,-3(sp)
+                            314 ;	src/platformer.c 51
+                            315 ;	genCall
+                            316 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00A7 CD 00 00            317 	call	_cgb_compatibility
+                            318 ;	src/platformer.c 53
+                            319 ;	genCall
+                            320 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00AA CD 66 00            321 	call	_init_player
+                            322 ;	src/platformer.c 55
+                            323 ;	genAssign
+   00AD 01 40 FF            324 	ld	bc,#0xFF40
+                            325 ;	genAssign
+                            326 ;	AOP_STK for _initialize_sloc0_1_0
+   00B0 F8 01               327 	lda	hl,1(sp)
+   00B2 36 40               328 	ld	(hl),#0x40
+   00B4 23                  329 	inc	hl
+   00B5 36 FF               330 	ld	(hl),#0xFF
+                            331 ;	genPointerGet
+                            332 ;	AOP_STK for _initialize_sloc0_1_0
+                            333 ;	AOP_STK for _initialize_sloc1_1_0
+   00B7 2B                  334 	dec	hl
+   00B8 5E                  335 	ld	e,(hl)
+   00B9 23                  336 	inc	hl
+   00BA 56                  337 	ld	d,(hl)
+   00BB 1A                  338 	ld	a,(de)
+   00BC 2B                  339 	dec	hl
+   00BD 2B                  340 	dec	hl
+                            341 ;	genOr
+                            342 ;	AOP_STK for _initialize_sloc1_1_0
+   00BE 77                  343 	ld      (hl),a
+   00BF 7F                  344 	ld      a,a
+   00C0 F6 02               345 	or	a,#0x02
+                            346 ;	genAssign (pointer)
+   00C2 02                  347 	ld	(bc),a
+                            348 ;	genLabel
+   00C3                     349 00101$:
+                            350 ;	genEndFunction
+   00C3 E8 03               351 	lda	sp,3(sp)
+   00C5 C9                  352 	ret
+   00C6                     353 ___initialize_end:
+                            354 ;	src/platformer.c 58
+                            355 ;	genLabel
+                            356 ;	genFunction
+                            357 ;	---------------------------------
+                            358 ; Function main
+                            359 ; ---------------------------------
+   00C6                     360 ___main_start:
+   00C6                     361 _main:
+                            362 	
+                            363 ;	src/platformer.c 59
+                            364 ;	genCall
+                            365 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C6 CD A5 00            366 	call	_initialize
+                            367 ;	src/platformer.c 61
+                            368 ;	genLabel
+   00C9                     369 00102$:
+                            370 ;	src/platformer.c 62
+                            371 ;	genCall
+                            372 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C9 CD 00 00            373 	call	_wait_vbl_done
+                            374 ;	src/platformer.c 63
+                            375 ;	genCall
+                            376 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00CC CD 5F 00            377 	call	_game_loop
+                            378 ;	genGoto
+   00CF C3 C9 00            379 	jp	00102$
+                            380 ;	genLabel
+   00D2                     381 00104$:
+                            382 ;	genEndFunction
+                            383 	
+   00D2 C9                  384 	ret
+   00D3                     385 ___main_end:
+                            386 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 _PLAYER_SPRITE                     0036 GR
+  0 _PLAYER_SPRITE_NUM                 0035 GR
+  0 ___draw_player_end                 005F R
+  0 ___draw_player_start               0046 R
+  0 ___game_loop_end                   0066 R
+  0 ___game_loop_start                 005F R
+  0 ___init_player_end                 00A5 R
+  0 ___init_player_start               0066 R
+  0 ___initialize_end                  00C6 R
+  0 ___initialize_start                00A5 R
+  0 ___main_end                        00D3 R
+  0 ___main_start                      00C6 R
+  0 ___read_controls_end               0035 R
+  0 ___read_controls_start             0000 R
+    _cgb_compatibility                 **** GX
+  0 _draw_player                       0046 GR
+  0 _game_loop                         005F GR
+  0 _init_player                       0066 GR
+  0 _initialize                        00A5 GR
+    _joypad                            **** GX
+  0 _main                              00C6 GR
+    _move_sprite                       **** GX
+  1 _player_x                          0000 GR
+  1 _player_y                          0001 GR
+  0 _read_controls                     0000 GR
+    _set_sprite_data                   **** GX
+    _set_sprite_prop                   **** GX
+    _set_sprite_tile                   **** GX
+    _wait_vbl_done                     **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size   D3   flags 0
+   1 _DATA                              size    2   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

@@ -1,0 +1,245 @@
+AREA .  .ABS.
+	RADIX HEX
+	BASE 0000
+	SIZE 0000
+	ATTRIB ABS OVR
+	GLOBALS
+		l__HEAP	0000
+		l__BSEG	0000
+		l_.  .ABS.	0000
+		l__GSFINAL	0000
+		l__ISEG	0000
+		s_.  .ABS.	0000
+		s__HEADER	0000
+		l__XSEG	0000
+		.init	0000
+		l__OVERLAY	0000
+		l__LIT	0000
+		l__GSINIT	0000
+		l__GSINITTAIL	0001
+		l__DATA	0002
+		l__BSS	0059
+		l__CODE	018E
+		l__BASE	0193
+		l__HOME	01AC
+		l__HEADER	01E1
+		s__CODE	0200
+		s__HOME	038E
+		s__BASE	053A
+		s__GSINITTAIL	06CD
+		s__LIT	06CD
+		s__GSINIT	06CD
+		s__GSFINAL	06CE
+		.OAM	C000
+		s__DATA	C0A0
+		s__BSS	C0A2
+		s__HEAP	C0FB
+		s__BSEG	C0FB
+		s__ISEG	C0FB
+		s__XSEG	C0FB
+		s__OVERLAY	C0FB
+		.STACK	E000
+		.refresh_OAM	FF80
+AREA _CODE
+	RADIX HEX
+	BASE 0200
+	SIZE 018E
+	ATTRIB REL CON
+	GLOBALS
+		_read_controls	0200
+		_PLAYER_SPRITE_NUM	0235
+		_PLAYER_SPRITE	0236
+		_draw_player	0246
+		_game_loop	025F
+		_init_player	0266
+		_initialize	02A5
+		_main	02C6
+		_set_bkg_palette_entry	02D3
+		_set_sprite_palette_entry	02FB
+		_cpu_slow	0323
+		_cpu_fast	033E
+		_cgb_compatibility	0345
+AREA _HEADER
+	RADIX HEX
+	BASE 0000
+	SIZE 01E1
+	ATTRIB ABS OVR
+	GLOBALS
+		_exit	01D2
+AREA _HOME
+	RADIX HEX
+	BASE 038E
+	SIZE 01AC
+	ATTRIB REL CON
+	GLOBALS
+		.set_mode	038E
+		.remove_VBL	039E
+		.remove_LCD	03A4
+		.remove_TIM	03AA
+		.remove_SIO	03B0
+		.remove_JOY	03B6
+		.add_VBL	03BC
+		.add_LCD	03C2
+		.add_TIM	03C8
+		.add_SIO	03CE
+		.add_JOY	03D4
+		.remove_int	03DA
+		.add_int	03FA
+		.wait_vbl_done	0416
+		_wait_vbl_done	0416
+		_display_off	042D
+		.display_off	042D
+		.serial_IO	044E
+		_mode	047D
+		_get_mode	0486
+		_enable_interrupts	048B
+		_disable_interrupts	048D
+		_reset	048F
+		.reset	048F
+		_set_interrupts	0495
+		_remove_VBL	04A0
+		_remove_LCD	04AB
+		_remove_TIM	04B6
+		_remove_SIO	04C1
+		_remove_JOY	04CC
+		_add_VBL	04D7
+		_add_LCD	04E2
+		_add_TIM	04ED
+		_add_SIO	04F8
+		_add_JOY	0503
+		_clock	050E
+		__printTStates	0517
+		banked_call	0518
+		banked_ret	0531
+AREA _BASE
+	RADIX HEX
+	BASE 053A
+	SIZE 0193
+	ATTRIB REL CON
+	GLOBALS
+		.set_sprite_prop	053A
+		_set_sprite_prop	0547
+		.mv_sprite	0552
+		_move_sprite	0561
+		_set_win_data	056E
+		_set_bkg_data	056E
+		_set_sprite_data	05BB
+		_set_bkg_palette	05EA
+		_set_sprite_palette	0615
+		.padup	0640
+		_waitpadup	0640
+		.jpad	0650
+		.wait_pad	067D
+		_joypad	0684
+		_waitpad	0689
+		.set_sprite_tile	0693
+		_set_sprite_tile	06A0
+		.copy_vram	06AB
+		_get_data	06BA
+		_set_data	06BA
+AREA _LIT
+	RADIX HEX
+	BASE 06CD
+	SIZE 0000
+	ATTRIB REL CON
+AREA _GSINIT
+	RADIX HEX
+	BASE 06CD
+	SIZE 0000
+	ATTRIB REL CON
+	GLOBALS
+		gsinit	06CD
+AREA _GSINITTAIL
+	RADIX HEX
+	BASE 06CD
+	SIZE 0001
+	ATTRIB REL CON
+AREA _GSFINAL
+	RADIX HEX
+	BASE 06CE
+	SIZE 0000
+	ATTRIB REL CON
+AREA _DATA
+	RADIX HEX
+	BASE C0A0
+	SIZE 0002
+	ATTRIB REL CON
+	GLOBALS
+		_player_x	C0A0
+		_player_y	C0A1
+AREA _BSS
+	RADIX HEX
+	BASE C0A2
+	SIZE 0059
+	ATTRIB REL CON
+	GLOBALS
+		__cpu	C0A2
+		.mode	C0A3
+		__io_out	C0A4
+		__io_in	C0A5
+		__io_status	C0A6
+		.vbl_done	C0A7
+		__current_bank	C0A8
+		_sys_time	C0A9
+		.sys_time	C0A9
+		.int_0x40	C0AB
+		.int_0x48	C0BB
+		.int_0x50	C0CB
+		.int_0x58	C0DB
+		.int_0x60	C0EB
+AREA _HEAP
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+	GLOBALS
+		_malloc_heap_start	C0FB
+AREA _OVERLAY
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+AREA _ISEG
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+AREA _BSEG
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+AREA _XSEG
+	RADIX HEX
+	BASE C0FB
+	SIZE 0000
+	ATTRIB REL CON
+MODULES
+	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
+		NAME Runtime
+	FILE build/platformer.o
+		NAME lcc44300
+LIBRARIES
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_prop.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE mv_spr.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_data.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE cgb.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE pad.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_spr.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE cpy_data.o
+USERBASEDEF
+	_CODE=0x0200
+	_DATA=0xC0A0
+	_CODE_1=0x4000
+USERGLOBALDEF
+	.OAM=0xC000
+	.STACK=0xE000
+	.refresh_OAM=0xFF80
+	.init=0x0000
