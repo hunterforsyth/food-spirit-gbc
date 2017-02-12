@@ -20,16 +20,16 @@ AREA .  .ABS.
 		l__DATA	0002
 		l__BSS	0059
 		l__BASE	0193
-		l__CODE	01AA
 		l__HOME	01AC
 		l__HEADER	01E1
 		s__CODE	0200
-		s__HOME	03AA
-		s__BASE	0556
-		s__GSINITTAIL	06E9
-		s__LIT	06E9
-		s__GSINIT	06E9
-		s__GSFINAL	06EA
+		l__CODE	0223
+		s__HOME	0423
+		s__BASE	05CF
+		s__GSINITTAIL	0762
+		s__LIT	0762
+		s__GSINIT	0762
+		s__GSFINAL	0763
 		.OAM	C000
 		s__DATA	C0A0
 		s__BSS	C0A2
@@ -43,23 +43,26 @@ AREA .  .ABS.
 AREA _CODE
 	RADIX HEX
 	BASE 0200
-	SIZE 01AA
+	SIZE 0223
 	ATTRIB REL CON
 	GLOBALS
 		_read_controls	0200
-		_PLAYER_SPRITE_NUM	0235
-		_PLAYER_SPRITE_DATA	0236
-		_PLAYER_SPRITE_PALETTE	0246
-		_draw_player	024E
-		_game_loop	0267
-		_init_player	026E
-		_initialize	02C1
-		_main	02E2
-		_set_bkg_palette_entry	02EF
-		_set_sprite_palette_entry	0317
-		_cpu_slow	033F
-		_cpu_fast	035A
-		_cgb_compatibility	0361
+		_PLAYER_SPRITE_TOP_NUM	0235
+		_PLAYER_SPRITE_BOT_NUM	0236
+		_PLAYER_SPRITE_TOP_DATA	0237
+		_PLAYER_SPRITE_BOT_DATA	0247
+		_PLAYER_SPRITE_TOP_PALETTE	0257
+		_PLAYER_SPRITE_BOT_PALETTE	025F
+		_draw_player	0267
+		_game_loop	029C
+		_init_player	02A3
+		_initialize	033A
+		_main	035B
+		_set_bkg_palette_entry	0368
+		_set_sprite_palette_entry	0390
+		_cpu_slow	03B8
+		_cpu_fast	03D3
+		_cgb_compatibility	03DA
 AREA _HEADER
 	RADIX HEX
 	BASE 0000
@@ -69,95 +72,95 @@ AREA _HEADER
 		_exit	01D2
 AREA _HOME
 	RADIX HEX
-	BASE 03AA
+	BASE 0423
 	SIZE 01AC
 	ATTRIB REL CON
 	GLOBALS
-		.set_mode	03AA
-		.remove_VBL	03BA
-		.remove_LCD	03C0
-		.remove_TIM	03C6
-		.remove_SIO	03CC
-		.remove_JOY	03D2
-		.add_VBL	03D8
-		.add_LCD	03DE
-		.add_TIM	03E4
-		.add_SIO	03EA
-		.add_JOY	03F0
-		.remove_int	03F6
-		.add_int	0416
-		.wait_vbl_done	0432
-		_wait_vbl_done	0432
-		_display_off	0449
-		.display_off	0449
-		.serial_IO	046A
-		_mode	0499
-		_get_mode	04A2
-		_enable_interrupts	04A7
-		_disable_interrupts	04A9
-		_reset	04AB
-		.reset	04AB
-		_set_interrupts	04B1
-		_remove_VBL	04BC
-		_remove_LCD	04C7
-		_remove_TIM	04D2
-		_remove_SIO	04DD
-		_remove_JOY	04E8
-		_add_VBL	04F3
-		_add_LCD	04FE
-		_add_TIM	0509
-		_add_SIO	0514
-		_add_JOY	051F
-		_clock	052A
-		__printTStates	0533
-		banked_call	0534
-		banked_ret	054D
+		.set_mode	0423
+		.remove_VBL	0433
+		.remove_LCD	0439
+		.remove_TIM	043F
+		.remove_SIO	0445
+		.remove_JOY	044B
+		.add_VBL	0451
+		.add_LCD	0457
+		.add_TIM	045D
+		.add_SIO	0463
+		.add_JOY	0469
+		.remove_int	046F
+		.add_int	048F
+		.wait_vbl_done	04AB
+		_wait_vbl_done	04AB
+		_display_off	04C2
+		.display_off	04C2
+		.serial_IO	04E3
+		_mode	0512
+		_get_mode	051B
+		_enable_interrupts	0520
+		_disable_interrupts	0522
+		_reset	0524
+		.reset	0524
+		_set_interrupts	052A
+		_remove_VBL	0535
+		_remove_LCD	0540
+		_remove_TIM	054B
+		_remove_SIO	0556
+		_remove_JOY	0561
+		_add_VBL	056C
+		_add_LCD	0577
+		_add_TIM	0582
+		_add_SIO	058D
+		_add_JOY	0598
+		_clock	05A3
+		__printTStates	05AC
+		banked_call	05AD
+		banked_ret	05C6
 AREA _BASE
 	RADIX HEX
-	BASE 0556
+	BASE 05CF
 	SIZE 0193
 	ATTRIB REL CON
 	GLOBALS
-		.set_sprite_prop	0556
-		_set_sprite_prop	0563
-		.mv_sprite	056E
-		_move_sprite	057D
-		_set_win_data	058A
-		_set_bkg_data	058A
-		_set_sprite_data	05D7
-		_set_bkg_palette	0606
-		_set_sprite_palette	0631
-		.padup	065C
-		_waitpadup	065C
-		.jpad	066C
-		.wait_pad	0699
-		_joypad	06A0
-		_waitpad	06A5
-		.set_sprite_tile	06AF
-		_set_sprite_tile	06BC
-		.copy_vram	06C7
-		_get_data	06D6
-		_set_data	06D6
+		.set_sprite_prop	05CF
+		_set_sprite_prop	05DC
+		.mv_sprite	05E7
+		_move_sprite	05F6
+		_set_win_data	0603
+		_set_bkg_data	0603
+		_set_sprite_data	0650
+		_set_bkg_palette	067F
+		_set_sprite_palette	06AA
+		.padup	06D5
+		_waitpadup	06D5
+		.jpad	06E5
+		.wait_pad	0712
+		_joypad	0719
+		_waitpad	071E
+		.set_sprite_tile	0728
+		_set_sprite_tile	0735
+		.copy_vram	0740
+		_get_data	074F
+		_set_data	074F
 AREA _LIT
 	RADIX HEX
-	BASE 06E9
+	BASE 0762
 	SIZE 0000
 	ATTRIB REL CON
 AREA _GSINIT
 	RADIX HEX
-	BASE 06E9
+	BASE 0762
 	SIZE 0000
 	ATTRIB REL CON
 	GLOBALS
-		gsinit	06E9
+		gsinit	0762
 AREA _GSINITTAIL
 	RADIX HEX
-	BASE 06E9
+	BASE 0762
 	SIZE 0001
 	ATTRIB REL CON
 AREA _GSFINAL
 	RADIX HEX
-	BASE 06EA
+	BASE 0763
 	SIZE 0000
 	ATTRIB REL CON
 AREA _DATA
@@ -219,7 +222,7 @@ MODULES
 	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
 		NAME Runtime
 	FILE build/platformer.o
-		NAME lcc45160
+		NAME lcc50840
 LIBRARIES
 	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
 		MODULE set_prop.o
