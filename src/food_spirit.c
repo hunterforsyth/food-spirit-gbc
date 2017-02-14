@@ -16,10 +16,18 @@
 #include "bg_maps.c"
 #include "palettes.c"
 
+#define COLLISION_FLOOR 120
+#define COLLISION_CEIL 36
+#define COLLISION_RIGHT 140
+#define COLLISION_LEFT 20
+
 UBYTE player_x;
 UBYTE player_y;
+UBYTE player_y_draw_offset;
 UBYTE player_dir;
 UBYTE player_jump_frames;
+
+UWORD player_idle_anim_frames;
 
 void read_controls() {
     UBYTE button = joypad();
@@ -31,17 +39,17 @@ void read_controls() {
     }
 
     if (button & J_RIGHT) {
-        if (player_x < 148)
+        if (player_x < COLLISION_RIGHT)
             player_x += 2;
 
         player_dir = RIGHT;
     } else if (button & J_LEFT) {
-        if (player_x > 20)
+        if (player_x > COLLISION_LEFT)
             player_x -= 2;
 
         player_dir = LEFT;
     } else {
-        player_dir = 0;
+        player_dir = MID;
     }
 }
 
@@ -51,29 +59,50 @@ void player_jump_and_gravity() {
     }
 
     if (player_jump_frames > 6) {
-        if (player_y > 34)
+        if (player_y > COLLISION_CEIL) {
             player_y -= 3;
-    } else if (player_y < 136) {
+        }
+    } else if (player_y < COLLISION_FLOOR) {
         player_y += 3;
     }
 }
 
-void draw_player() {
-    move_sprite(SPR_PLAYER_0_0_MID, player_x, player_y);
-    move_sprite(SPR_PLAYER_0_1_MID, player_x + SPR_W, player_y);
-    move_sprite(SPR_PLAYER_1_0_MID, player_x, player_y + SPR_H);
-    move_sprite(SPR_PLAYER_1_1_MID, player_x + SPR_W, player_y + SPR_H);
-    move_sprite(SPR_PLAYER_2_0_MID, player_x, player_y + SPR_H + SPR_H);
-    move_sprite(SPR_PLAYER_2_1_MID, player_x + SPR_W, player_y + SPR_H + SPR_H);
-
-    /*
-    if (player_dir == LEFT) {
-        set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_LEFT_DATA, PLAYER_SPR_BOT_PAL);
-    } else if (player_dir == RIGHT) {
-        set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_RIGHT_DATA, PLAYER_SPR_BOT_PAL);
+void player_idle_anim() {
+    if (player_idle_anim_frames < 120) {
+        player_idle_anim_frames++;
     } else {
-        set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_MID_DATA, PLAYER_SPR_BOT_PAL);
-    }*/
+        player_idle_anim_frames = 0;
+    }
+
+    if (player_idle_anim_frames < 20) {
+        player_y_draw_offset = -1;
+    } else if (player_idle_anim_frames < 40) {
+        player_y_draw_offset = -2;
+    } else if (player_idle_anim_frames < 60) {
+        player_y_draw_offset = -3;
+    } else if (player_idle_anim_frames < 80) {
+        player_y_draw_offset = -2;
+    } else if (player_idle_anim_frames < 100) {
+        player_y_draw_offset = -1;
+    } else {
+        player_y_draw_offset = 0;
+    }
+}
+
+void draw_player() {
+    UBYTE draw_y_pos;
+
+    if (player_dir == MID)
+        player_idle_anim();
+    
+    draw_y_pos = player_y + player_y_draw_offset;
+
+    move_sprite(SPR_PLAYER_0_0_MID, player_x, draw_y_pos);
+    move_sprite(SPR_PLAYER_1_0_MID, player_x + SPR_W, draw_y_pos);
+    move_sprite(SPR_PLAYER_0_1_MID, player_x, draw_y_pos + SPR_H);
+    move_sprite(SPR_PLAYER_1_1_MID, player_x + SPR_W, draw_y_pos + SPR_H);
+    move_sprite(SPR_PLAYER_0_2_MID, player_x, draw_y_pos + SPR_H + SPR_H);
+    move_sprite(SPR_PLAYER_1_2_MID, player_x + SPR_W, draw_y_pos + SPR_H + SPR_H);
 }
 
 void game_loop() {
@@ -87,13 +116,15 @@ void init_player() {
     player_x = 40;
     player_y = 40;
     player_jump_frames = 0;
+    player_idle_anim_frames = 0;
+    player_y_draw_offset = 0;
 
     set_up_sprite_simple(SPR_PLAYER_0_0_MID, SPR_DAT_PLAYER_0_0_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_0_1_MID, SPR_DAT_PLAYER_0_1_MID, PAL_PLAYER);
     set_up_sprite_simple(SPR_PLAYER_1_0_MID, SPR_DAT_PLAYER_1_0_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_0_1_MID, SPR_DAT_PLAYER_0_1_MID, PAL_PLAYER);
     set_up_sprite_simple(SPR_PLAYER_1_1_MID, SPR_DAT_PLAYER_1_1_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_2_0_MID, SPR_DAT_PLAYER_2_0_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_2_1_MID, SPR_DAT_PLAYER_2_1_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_0_2_MID, SPR_DAT_PLAYER_0_2_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_1_2_MID, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
 }
 
 void init_bg() {

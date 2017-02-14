@@ -9,6 +9,7 @@
 #define SPR_W 8
 #define SPR_H 8
 
+#define MID 0
 #define LEFT 1
 #define RIGHT 2
 

@@ -1,9 +1,9 @@
                               1 ;--------------------------------------------------------
                               2 ; File Created by SDCC : FreeWare ANSI-C Compiler
-                              3 ; Version 2.3.1 Mon Feb 13 22:10:51 2017
+                              3 ; Version 2.3.1 Mon Feb 13 23:14:29 2017
                               4 
                               5 ;--------------------------------------------------------
-                              6 	.module lcc35180
+                              6 	.module lcc43710
                               7 	
                               8 ;--------------------------------------------------------
                               9 ; Public variables in this module
@@ -14,1829 +14,2086 @@
                              14 	.globl _init_player
                              15 	.globl _game_loop
                              16 	.globl _draw_player
-                             17 	.globl _player_jump_and_gravity
-                             18 	.globl _read_controls
-                             19 	.globl _player_jump_frames
-                             20 	.globl _player_dir
-                             21 	.globl _player_y
-                             22 	.globl _player_x
-                             23 	.globl _PAL_BG_FIRE
-                             24 	.globl _PAL_BG_POT_DARK_3
-                             25 	.globl _PAL_BG_POT_DARK_2
-                             26 	.globl _PAL_BG_POT_DARK
-                             27 	.globl _PAL_BG_POT
-                             28 	.globl _PAL_BG_SPOTS
-                             29 	.globl _PAL_PLAYER
-                             30 	.globl _MAP_PAL_BG_1
-                             31 	.globl _MAP_BG_1
-                             32 	.globl _TILE_FIRE
-                             33 	.globl _TILE_POT_RIGHT_WALL
-                             34 	.globl _TILE_POT_LEFT_WALL
-                             35 	.globl _TILE_POT_RIGHT_CORNER
-                             36 	.globl _TILE_POT_LEFT_CORNER
-                             37 	.globl _TILE_POT_FLOOR
-                             38 	.globl _TILE_SPOTS
-                             39 	.globl _TILE_BLANK
-                             40 	.globl _SPR_DAT_PLAYER_2_1_MID
-                             41 	.globl _SPR_DAT_PLAYER_2_0_MID
-                             42 	.globl _SPR_DAT_PLAYER_1_1_MID
-                             43 	.globl _SPR_DAT_PLAYER_1_0_MID
-                             44 	.globl _SPR_DAT_PLAYER_0_1_MID
-                             45 	.globl _SPR_DAT_PLAYER_0_0_MID
-                             46 ;--------------------------------------------------------
-                             47 ; special function registers
-                             48 ;--------------------------------------------------------
+                             17 	.globl _player_idle_anim
+                             18 	.globl _player_jump_and_gravity
+                             19 	.globl _read_controls
+                             20 	.globl _player_idle_anim_frames
+                             21 	.globl _player_jump_frames
+                             22 	.globl _player_dir
+                             23 	.globl _player_y_draw_offset
+                             24 	.globl _player_y
+                             25 	.globl _player_x
+                             26 	.globl _PAL_BG_FIRE
+                             27 	.globl _PAL_BG_POT_DARK_3
+                             28 	.globl _PAL_BG_POT_DARK_2
+                             29 	.globl _PAL_BG_POT_DARK
+                             30 	.globl _PAL_BG_POT
+                             31 	.globl _PAL_BG_SPOTS
+                             32 	.globl _PAL_PLAYER
+                             33 	.globl _MAP_PAL_BG_1
+                             34 	.globl _MAP_BG_1
+                             35 	.globl _TILE_FIRE
+                             36 	.globl _TILE_POT_RIGHT_WALL
+                             37 	.globl _TILE_POT_LEFT_WALL
+                             38 	.globl _TILE_POT_RIGHT_CORNER
+                             39 	.globl _TILE_POT_LEFT_CORNER
+                             40 	.globl _TILE_POT_FLOOR
+                             41 	.globl _TILE_SPOTS
+                             42 	.globl _TILE_BLANK
+                             43 	.globl _SPR_DAT_PLAYER_1_2_MID
+                             44 	.globl _SPR_DAT_PLAYER_0_2_MID
+                             45 	.globl _SPR_DAT_PLAYER_1_1_MID
+                             46 	.globl _SPR_DAT_PLAYER_0_1_MID
+                             47 	.globl _SPR_DAT_PLAYER_1_0_MID
+                             48 	.globl _SPR_DAT_PLAYER_0_0_MID
                              49 ;--------------------------------------------------------
-                             50 ; special function bits 
+                             50 ; special function registers
                              51 ;--------------------------------------------------------
                              52 ;--------------------------------------------------------
-                             53 ; internal ram data
+                             53 ; special function bits 
                              54 ;--------------------------------------------------------
-                             55 	.area _DATA
-   0000                      56 _player_x::
-   0000                      57 	.ds 1
-   0001                      58 _player_y::
-   0001                      59 	.ds 1
-   0002                      60 _player_dir::
-   0002                      61 	.ds 1
-   0003                      62 _player_jump_frames::
-   0003                      63 	.ds 1
-                             64 ;--------------------------------------------------------
-                             65 ; overlayable items in internal ram 
-                             66 ;--------------------------------------------------------
-                             67 	.area _OVERLAY
-                             68 ;--------------------------------------------------------
-                             69 ; indirectly addressable internal ram data
-                             70 ;--------------------------------------------------------
-                             71 	.area _ISEG
-                             72 ;--------------------------------------------------------
-                             73 ; bit data
-                             74 ;--------------------------------------------------------
-                             75 	.area _BSEG
-                             76 ;--------------------------------------------------------
-                             77 ; external ram data
-                             78 ;--------------------------------------------------------
-                             79 	.area _XSEG
-                             80 ;--------------------------------------------------------
-                             81 ; global & static initialisations
-                             82 ;--------------------------------------------------------
-                             83 	.area _GSINIT
-                             84 	.area _GSFINAL
-                             85 	.area _GSINIT
-                             86 ;--------------------------------------------------------
-                             87 ; Home
-                             88 ;--------------------------------------------------------
-                             89 	.area _HOME
-                             90 	.area _CODE
-                             91 ;--------------------------------------------------------
-                             92 ; code
+                             55 ;--------------------------------------------------------
+                             56 ; internal ram data
+                             57 ;--------------------------------------------------------
+                             58 	.area _DATA
+   0000                      59 _player_x::
+   0000                      60 	.ds 1
+   0001                      61 _player_y::
+   0001                      62 	.ds 1
+   0002                      63 _player_y_draw_offset::
+   0002                      64 	.ds 1
+   0003                      65 _player_dir::
+   0003                      66 	.ds 1
+   0004                      67 _player_jump_frames::
+   0004                      68 	.ds 1
+   0005                      69 _player_idle_anim_frames::
+   0005                      70 	.ds 2
+                             71 ;--------------------------------------------------------
+                             72 ; overlayable items in internal ram 
+                             73 ;--------------------------------------------------------
+                             74 	.area _OVERLAY
+                             75 ;--------------------------------------------------------
+                             76 ; indirectly addressable internal ram data
+                             77 ;--------------------------------------------------------
+                             78 	.area _ISEG
+                             79 ;--------------------------------------------------------
+                             80 ; bit data
+                             81 ;--------------------------------------------------------
+                             82 	.area _BSEG
+                             83 ;--------------------------------------------------------
+                             84 ; external ram data
+                             85 ;--------------------------------------------------------
+                             86 	.area _XSEG
+                             87 ;--------------------------------------------------------
+                             88 ; global & static initialisations
+                             89 ;--------------------------------------------------------
+                             90 	.area _GSINIT
+                             91 	.area _GSFINAL
+                             92 	.area _GSINIT
                              93 ;--------------------------------------------------------
-                             94 	.area _CODE
-                             95 ;	src/food_spirit.c 24
-                             96 ;	genLabel
-                             97 ;	genFunction
-                             98 ;	---------------------------------
-                             99 ; Function read_controls
-                            100 ; ---------------------------------
-   0000                     101 ___read_controls_start:
-   0000                     102 _read_controls:
-                            103 	
-                            104 ;	src/food_spirit.c 25
-                            105 ;	genCall
-                            106 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0000 CD 00 00            107 	call	_joypad
-   0003 4B                  108 	ld	c,e
-                            109 ;	genAssign
-                            110 ;	(registers are the same)
-                            111 ;	src/food_spirit.c 27
-                            112 ;	genAnd
-   0004 79                  113 	ld	a,c
-   0005 E6 10               114 	and	a,#0x10
-   0007 20 03               115 	jr	nz,00123$
-   0009 C3 1E 00            116 	jp	00104$
-   000C                     117 00123$:
-                            118 ;	src/food_spirit.c 28
-                            119 ;	genCmpEq
-                            120 ;	AOP_HL for _player_jump_frames
-                            121 ; genCmpEq: left 1, right 1, result 0
-   000C 21 03 00            122 	ld	hl,#_player_jump_frames
-   000F 7E                  123 	ld	a,(hl)
-   0010 B7                  124 	or	a,a
-   0011 C2 1E 00            125 	jp	nz,00104$
-   0014 18 03               126 	jr	00125$
-   0016                     127 00124$:
-   0016 C3 1E 00            128 	jp	00104$
-   0019                     129 00125$:
-                            130 ;	src/food_spirit.c 29
-                            131 ;	genAssign
-                            132 ;	AOP_HL for _player_jump_frames
-   0019 21 03 00            133 	ld	hl,#_player_jump_frames
-   001C 36 14               134 	ld	(hl),#0x14
-                            135 ;	genLabel
-   001E                     136 00104$:
-                            137 ;	src/food_spirit.c 33
-                            138 ;	genAnd
-   001E 79                  139 	ld	a,c
-   001F E6 01               140 	and	a,#0x01
-   0021 20 03               141 	jr	nz,00126$
-   0023 C3 39 00            142 	jp	00113$
-   0026                     143 00126$:
-                            144 ;	src/food_spirit.c 34
-                            145 ;	genCmpLt
-                            146 ;	AOP_HL for _player_x
-   0026 21 00 00            147 	ld	hl,#_player_x
-   0029 7E                  148 	ld	a,(hl)
-   002A FE 94               149 	cp	#0x94
-   002C D2 31 00            150 	jp	nc,00106$
-                            151 ;	src/food_spirit.c 35
-                            152 ;	genPlus
+                             94 ; Home
+                             95 ;--------------------------------------------------------
+                             96 	.area _HOME
+                             97 	.area _CODE
+                             98 ;--------------------------------------------------------
+                             99 ; code
+                            100 ;--------------------------------------------------------
+                            101 	.area _CODE
+                            102 ;	src/food_spirit.c 32
+                            103 ;	genLabel
+                            104 ;	genFunction
+                            105 ;	---------------------------------
+                            106 ; Function read_controls
+                            107 ; ---------------------------------
+   0000                     108 ___read_controls_start:
+   0000                     109 _read_controls:
+                            110 	
+                            111 ;	src/food_spirit.c 33
+                            112 ;	genCall
+                            113 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0000 CD 00 00            114 	call	_joypad
+   0003 4B                  115 	ld	c,e
+                            116 ;	genAssign
+                            117 ;	(registers are the same)
+                            118 ;	src/food_spirit.c 35
+                            119 ;	genAnd
+   0004 79                  120 	ld	a,c
+   0005 E6 10               121 	and	a,#0x10
+   0007 20 03               122 	jr	nz,00123$
+   0009 C3 1E 00            123 	jp	00104$
+   000C                     124 00123$:
+                            125 ;	src/food_spirit.c 36
+                            126 ;	genCmpEq
+                            127 ;	AOP_HL for _player_jump_frames
+                            128 ; genCmpEq: left 1, right 1, result 0
+   000C 21 04 00            129 	ld	hl,#_player_jump_frames
+   000F 7E                  130 	ld	a,(hl)
+   0010 B7                  131 	or	a,a
+   0011 C2 1E 00            132 	jp	nz,00104$
+   0014 18 03               133 	jr	00125$
+   0016                     134 00124$:
+   0016 C3 1E 00            135 	jp	00104$
+   0019                     136 00125$:
+                            137 ;	src/food_spirit.c 37
+                            138 ;	genAssign
+                            139 ;	AOP_HL for _player_jump_frames
+   0019 21 04 00            140 	ld	hl,#_player_jump_frames
+   001C 36 14               141 	ld	(hl),#0x14
+                            142 ;	genLabel
+   001E                     143 00104$:
+                            144 ;	src/food_spirit.c 41
+                            145 ;	genAnd
+   001E 79                  146 	ld	a,c
+   001F E6 01               147 	and	a,#0x01
+   0021 20 03               148 	jr	nz,00126$
+   0023 C3 39 00            149 	jp	00113$
+   0026                     150 00126$:
+                            151 ;	src/food_spirit.c 42
+                            152 ;	genCmpLt
                             153 ;	AOP_HL for _player_x
-                            154 ;	genPlusIncr
-   002F 34                  155 	inc	(hl)
-   0030 34                  156 	inc	(hl)
-                            157 ;	genLabel
-   0031                     158 00106$:
-                            159 ;	src/food_spirit.c 37
-                            160 ;	genAssign
-                            161 ;	AOP_HL for _player_dir
-   0031 21 02 00            162 	ld	hl,#_player_dir
-   0034 36 02               163 	ld	(hl),#0x02
-                            164 ;	genGoto
-   0036 C3 59 00            165 	jp	00115$
-                            166 ;	genLabel
-   0039                     167 00113$:
-                            168 ;	src/food_spirit.c 38
-                            169 ;	genAnd
-   0039 79                  170 	ld	a,c
-   003A E6 02               171 	and	a,#0x02
-   003C 20 03               172 	jr	nz,00127$
-   003E C3 54 00            173 	jp	00110$
-   0041                     174 00127$:
-                            175 ;	src/food_spirit.c 39
-                            176 ;	genCmpGt
-                            177 ;	AOP_HL for _player_x
-   0041 3E 14               178 	ld	a,#0x14
-   0043 21 00 00            179 	ld	hl,#_player_x
-   0046 96                  180 	sub	a,(hl)
-   0047 D2 4C 00            181 	jp	nc,00108$
-                            182 ;	src/food_spirit.c 40
-                            183 ;	genMinus
+   0026 21 00 00            154 	ld	hl,#_player_x
+   0029 7E                  155 	ld	a,(hl)
+   002A FE 8C               156 	cp	#0x8C
+   002C D2 31 00            157 	jp	nc,00106$
+                            158 ;	src/food_spirit.c 43
+                            159 ;	genPlus
+                            160 ;	AOP_HL for _player_x
+                            161 ;	genPlusIncr
+   002F 34                  162 	inc	(hl)
+   0030 34                  163 	inc	(hl)
+                            164 ;	genLabel
+   0031                     165 00106$:
+                            166 ;	src/food_spirit.c 45
+                            167 ;	genAssign
+                            168 ;	AOP_HL for _player_dir
+   0031 21 03 00            169 	ld	hl,#_player_dir
+   0034 36 02               170 	ld	(hl),#0x02
+                            171 ;	genGoto
+   0036 C3 59 00            172 	jp	00115$
+                            173 ;	genLabel
+   0039                     174 00113$:
+                            175 ;	src/food_spirit.c 46
+                            176 ;	genAnd
+   0039 79                  177 	ld	a,c
+   003A E6 02               178 	and	a,#0x02
+   003C 20 03               179 	jr	nz,00127$
+   003E C3 54 00            180 	jp	00110$
+   0041                     181 00127$:
+                            182 ;	src/food_spirit.c 47
+                            183 ;	genCmpGt
                             184 ;	AOP_HL for _player_x
-   004A 35                  185 	dec	(hl)
-   004B 35                  186 	dec	(hl)
-                            187 ;	genLabel
-   004C                     188 00108$:
-                            189 ;	src/food_spirit.c 42
-                            190 ;	genAssign
-                            191 ;	AOP_HL for _player_dir
-   004C 21 02 00            192 	ld	hl,#_player_dir
-   004F 36 01               193 	ld	(hl),#0x01
-                            194 ;	genGoto
-   0051 C3 59 00            195 	jp	00115$
-                            196 ;	genLabel
-   0054                     197 00110$:
-                            198 ;	src/food_spirit.c 44
-                            199 ;	genAssign
-                            200 ;	AOP_HL for _player_dir
-   0054 21 02 00            201 	ld	hl,#_player_dir
-   0057 36 00               202 	ld	(hl),#0x00
+   0041 3E 14               185 	ld	a,#0x14
+   0043 21 00 00            186 	ld	hl,#_player_x
+   0046 96                  187 	sub	a,(hl)
+   0047 D2 4C 00            188 	jp	nc,00108$
+                            189 ;	src/food_spirit.c 48
+                            190 ;	genMinus
+                            191 ;	AOP_HL for _player_x
+   004A 35                  192 	dec	(hl)
+   004B 35                  193 	dec	(hl)
+                            194 ;	genLabel
+   004C                     195 00108$:
+                            196 ;	src/food_spirit.c 50
+                            197 ;	genAssign
+                            198 ;	AOP_HL for _player_dir
+   004C 21 03 00            199 	ld	hl,#_player_dir
+   004F 36 01               200 	ld	(hl),#0x01
+                            201 ;	genGoto
+   0051 C3 59 00            202 	jp	00115$
                             203 ;	genLabel
-   0059                     204 00115$:
-                            205 ;	genEndFunction
-                            206 	
-   0059 C9                  207 	ret
-   005A                     208 ___read_controls_end:
-   005A                     209 _SPR_DAT_PLAYER_0_0_MID:
-   005A 78                  210 	.db #0x78
-   005B                     211 _SPR_DAT_PLAYER_0_1_MID:
-   005B 78                  212 	.db #0x78
-   005C                     213 _SPR_DAT_PLAYER_1_0_MID:
-   005C 78                  214 	.db #0x78
-   005D                     215 _SPR_DAT_PLAYER_1_1_MID:
-   005D 78                  216 	.db #0x78
-   005E                     217 _SPR_DAT_PLAYER_2_0_MID:
-   005E 78                  218 	.db #0x78
-   005F                     219 _SPR_DAT_PLAYER_2_1_MID:
-   005F 78                  220 	.db #0x78
-   0060                     221 _TILE_BLANK:
-   0060 FF                  222 	.db #0xFF
-   0061 00                  223 	.db #0x00
-   0062 FF                  224 	.db #0xFF
-   0063 00                  225 	.db #0x00
-   0064 FF                  226 	.db #0xFF
-   0065 00                  227 	.db #0x00
-   0066 FF                  228 	.db #0xFF
-   0067 00                  229 	.db #0x00
-   0068 FF                  230 	.db #0xFF
-   0069 00                  231 	.db #0x00
-   006A FF                  232 	.db #0xFF
-   006B 00                  233 	.db #0x00
-   006C FF                  234 	.db #0xFF
-   006D 00                  235 	.db #0x00
-   006E FF                  236 	.db #0xFF
-   006F 00                  237 	.db #0x00
-   0070                     238 _TILE_SPOTS:
-   0070 42                  239 	.db #0x42
-   0071 00                  240 	.db #0x00
-   0072 81                  241 	.db #0x81
-   0073 00                  242 	.db #0x00
-   0074 18                  243 	.db #0x18
-   0075 00                  244 	.db #0x00
-   0076 24                  245 	.db #0x24
-   0077 00                  246 	.db #0x00
-   0078 24                  247 	.db #0x24
-   0079 00                  248 	.db #0x00
-   007A 18                  249 	.db #0x18
-   007B 00                  250 	.db #0x00
-   007C 81                  251 	.db #0x81
-   007D 00                  252 	.db #0x00
-   007E 42                  253 	.db #0x42
-   007F 00                  254 	.db #0x00
-   0080                     255 _TILE_POT_FLOOR:
-   0080 FF                  256 	.db #0xFF
-   0081 00                  257 	.db #0x00
-   0082 FF                  258 	.db #0xFF
-   0083 00                  259 	.db #0x00
-   0084 FF                  260 	.db #0xFF
-   0085 00                  261 	.db #0x00
-   0086 FF                  262 	.db #0xFF
-   0087 FF                  263 	.db #0xFF
-   0088 FF                  264 	.db #0xFF
-   0089 FF                  265 	.db #0xFF
-   008A FF                  266 	.db #0xFF
-   008B FF                  267 	.db #0xFF
-   008C 00                  268 	.db #0x00
-   008D FF                  269 	.db #0xFF
-   008E 00                  270 	.db #0x00
-   008F 00                  271 	.db #0x00
-   0090                     272 _TILE_POT_LEFT_CORNER:
-   0090 FF                  273 	.db #0xFF
-   0091 F0                  274 	.db #0xF0
-   0092 FF                  275 	.db #0xFF
-   0093 F0                  276 	.db #0xF0
-   0094 FF                  277 	.db #0xFF
-   0095 F8                  278 	.db #0xF8
-   0096 FF                  279 	.db #0xFF
-   0097 FF                  280 	.db #0xFF
-   0098 7F                  281 	.db #0x7F
-   0099 7F                  282 	.db #0x7F
-   009A 3F                  283 	.db #0x3F
-   009B 3F                  284 	.db #0x3F
-   009C 10                  285 	.db #0x10
-   009D 1F                  286 	.db #0x1F
-   009E 00                  287 	.db #0x00
-   009F 00                  288 	.db #0x00
-   00A0                     289 _TILE_POT_RIGHT_CORNER:
-   00A0 FF                  290 	.db #0xFF
-   00A1 0F                  291 	.db #0x0F
-   00A2 FF                  292 	.db #0xFF
-   00A3 0F                  293 	.db #0x0F
-   00A4 FF                  294 	.db #0xFF
-   00A5 1F                  295 	.db #0x1F
-   00A6 FF                  296 	.db #0xFF
-   00A7 FF                  297 	.db #0xFF
-   00A8 FE                  298 	.db #0xFE
-   00A9 FE                  299 	.db #0xFE
-   00AA FC                  300 	.db #0xFC
-   00AB FC                  301 	.db #0xFC
-   00AC 08                  302 	.db #0x08
-   00AD F8                  303 	.db #0xF8
-   00AE 00                  304 	.db #0x00
-   00AF 00                  305 	.db #0x00
-   00B0                     306 _TILE_POT_LEFT_WALL:
-   00B0 FF                  307 	.db #0xFF
-   00B1 F0                  308 	.db #0xF0
-   00B2 FF                  309 	.db #0xFF
-   00B3 F0                  310 	.db #0xF0
-   00B4 FF                  311 	.db #0xFF
-   00B5 F0                  312 	.db #0xF0
-   00B6 FF                  313 	.db #0xFF
-   00B7 F0                  314 	.db #0xF0
-   00B8 FF                  315 	.db #0xFF
-   00B9 F0                  316 	.db #0xF0
-   00BA FF                  317 	.db #0xFF
-   00BB F0                  318 	.db #0xF0
-   00BC FF                  319 	.db #0xFF
-   00BD F0                  320 	.db #0xF0
-   00BE FF                  321 	.db #0xFF
-   00BF F0                  322 	.db #0xF0
-   00C0                     323 _TILE_POT_RIGHT_WALL:
-   00C0 FF                  324 	.db #0xFF
-   00C1 0F                  325 	.db #0x0F
-   00C2 FF                  326 	.db #0xFF
-   00C3 0F                  327 	.db #0x0F
-   00C4 FF                  328 	.db #0xFF
-   00C5 0F                  329 	.db #0x0F
-   00C6 FF                  330 	.db #0xFF
-   00C7 0F                  331 	.db #0x0F
-   00C8 FF                  332 	.db #0xFF
-   00C9 0F                  333 	.db #0x0F
-   00CA FF                  334 	.db #0xFF
-   00CB 0F                  335 	.db #0x0F
-   00CC FF                  336 	.db #0xFF
-   00CD 0F                  337 	.db #0x0F
-   00CE FF                  338 	.db #0xFF
-   00CF 0F                  339 	.db #0x0F
-   00D0                     340 _TILE_FIRE:
-   00D0 10                  341 	.db #0x10
-   00D1 10                  342 	.db #0x10
-   00D2 30                  343 	.db #0x30
-   00D3 30                  344 	.db #0x30
-   00D4 28                  345 	.db #0x28
-   00D5 38                  346 	.db #0x38
-   00D6 24                  347 	.db #0x24
-   00D7 3C                  348 	.db #0x3C
-   00D8 54                  349 	.db #0x54
-   00D9 6C                  350 	.db #0x6C
-   00DA 5A                  351 	.db #0x5A
-   00DB 66                  352 	.db #0x66
-   00DC 6E                  353 	.db #0x6E
-   00DD 52                  354 	.db #0x52
-   00DE 34                  355 	.db #0x34
-   00DF 2C                  356 	.db #0x2C
-   00E0                     357 _MAP_BG_1:
-   00E0 01                  358 	.db #0x01
-   00E1 01                  359 	.db #0x01
-   00E2 01                  360 	.db #0x01
-   00E3 01                  361 	.db #0x01
-   00E4 01                  362 	.db #0x01
-   00E5 01                  363 	.db #0x01
-   00E6 01                  364 	.db #0x01
-   00E7 01                  365 	.db #0x01
-   00E8 01                  366 	.db #0x01
-   00E9 01                  367 	.db #0x01
-   00EA 01                  368 	.db #0x01
-   00EB 01                  369 	.db #0x01
-   00EC 01                  370 	.db #0x01
-   00ED 01                  371 	.db #0x01
-   00EE 01                  372 	.db #0x01
-   00EF 01                  373 	.db #0x01
-   00F0 01                  374 	.db #0x01
-   00F1 01                  375 	.db #0x01
-   00F2 01                  376 	.db #0x01
-   00F3 01                  377 	.db #0x01
-   00F4 01                  378 	.db #0x01
-   00F5 01                  379 	.db #0x01
-   00F6 01                  380 	.db #0x01
-   00F7 01                  381 	.db #0x01
-   00F8 01                  382 	.db #0x01
-   00F9 01                  383 	.db #0x01
-   00FA 01                  384 	.db #0x01
-   00FB 01                  385 	.db #0x01
-   00FC 01                  386 	.db #0x01
-   00FD 01                  387 	.db #0x01
-   00FE 01                  388 	.db #0x01
-   00FF 01                  389 	.db #0x01
-   0100 01                  390 	.db #0x01
-   0101 01                  391 	.db #0x01
-   0102 01                  392 	.db #0x01
-   0103 01                  393 	.db #0x01
-   0104 01                  394 	.db #0x01
-   0105 01                  395 	.db #0x01
-   0106 01                  396 	.db #0x01
-   0107 01                  397 	.db #0x01
-   0108 01                  398 	.db #0x01
-   0109 05                  399 	.db #0x05
-   010A 08                  400 	.db #0x08
-   010B 08                  401 	.db #0x08
-   010C 08                  402 	.db #0x08
-   010D 08                  403 	.db #0x08
-   010E 08                  404 	.db #0x08
-   010F 08                  405 	.db #0x08
-   0110 08                  406 	.db #0x08
-   0111 08                  407 	.db #0x08
-   0112 08                  408 	.db #0x08
-   0113 08                  409 	.db #0x08
-   0114 08                  410 	.db #0x08
-   0115 08                  411 	.db #0x08
-   0116 08                  412 	.db #0x08
-   0117 08                  413 	.db #0x08
-   0118 08                  414 	.db #0x08
-   0119 08                  415 	.db #0x08
-   011A 06                  416 	.db #0x06
-   011B 01                  417 	.db #0x01
-   011C 01                  418 	.db #0x01
-   011D 05                  419 	.db #0x05
-   011E 08                  420 	.db #0x08
-   011F 08                  421 	.db #0x08
-   0120 08                  422 	.db #0x08
-   0121 08                  423 	.db #0x08
-   0122 08                  424 	.db #0x08
-   0123 08                  425 	.db #0x08
-   0124 08                  426 	.db #0x08
-   0125 08                  427 	.db #0x08
-   0126 08                  428 	.db #0x08
-   0127 08                  429 	.db #0x08
-   0128 08                  430 	.db #0x08
-   0129 08                  431 	.db #0x08
-   012A 08                  432 	.db #0x08
-   012B 08                  433 	.db #0x08
-   012C 08                  434 	.db #0x08
-   012D 08                  435 	.db #0x08
-   012E 06                  436 	.db #0x06
-   012F 01                  437 	.db #0x01
-   0130 01                  438 	.db #0x01
-   0131 05                  439 	.db #0x05
-   0132 08                  440 	.db #0x08
-   0133 08                  441 	.db #0x08
-   0134 08                  442 	.db #0x08
-   0135 08                  443 	.db #0x08
-   0136 08                  444 	.db #0x08
-   0137 08                  445 	.db #0x08
-   0138 08                  446 	.db #0x08
-   0139 08                  447 	.db #0x08
-   013A 08                  448 	.db #0x08
-   013B 08                  449 	.db #0x08
-   013C 08                  450 	.db #0x08
-   013D 08                  451 	.db #0x08
-   013E 08                  452 	.db #0x08
-   013F 08                  453 	.db #0x08
-   0140 08                  454 	.db #0x08
-   0141 08                  455 	.db #0x08
-   0142 06                  456 	.db #0x06
-   0143 01                  457 	.db #0x01
-   0144 01                  458 	.db #0x01
-   0145 05                  459 	.db #0x05
-   0146 08                  460 	.db #0x08
-   0147 08                  461 	.db #0x08
-   0148 08                  462 	.db #0x08
-   0149 08                  463 	.db #0x08
-   014A 08                  464 	.db #0x08
-   014B 08                  465 	.db #0x08
-   014C 08                  466 	.db #0x08
-   014D 08                  467 	.db #0x08
-   014E 08                  468 	.db #0x08
-   014F 08                  469 	.db #0x08
-   0150 08                  470 	.db #0x08
-   0151 08                  471 	.db #0x08
-   0152 08                  472 	.db #0x08
-   0153 08                  473 	.db #0x08
-   0154 08                  474 	.db #0x08
-   0155 08                  475 	.db #0x08
-   0156 06                  476 	.db #0x06
-   0157 01                  477 	.db #0x01
-   0158 01                  478 	.db #0x01
-   0159 05                  479 	.db #0x05
-   015A 08                  480 	.db #0x08
-   015B 08                  481 	.db #0x08
-   015C 08                  482 	.db #0x08
-   015D 08                  483 	.db #0x08
-   015E 08                  484 	.db #0x08
-   015F 08                  485 	.db #0x08
-   0160 08                  486 	.db #0x08
-   0161 08                  487 	.db #0x08
-   0162 08                  488 	.db #0x08
-   0163 08                  489 	.db #0x08
-   0164 08                  490 	.db #0x08
-   0165 08                  491 	.db #0x08
-   0166 08                  492 	.db #0x08
-   0167 08                  493 	.db #0x08
-   0168 08                  494 	.db #0x08
-   0169 08                  495 	.db #0x08
-   016A 06                  496 	.db #0x06
-   016B 01                  497 	.db #0x01
-   016C 01                  498 	.db #0x01
-   016D 05                  499 	.db #0x05
-   016E 08                  500 	.db #0x08
-   016F 08                  501 	.db #0x08
-   0170 08                  502 	.db #0x08
-   0171 08                  503 	.db #0x08
-   0172 08                  504 	.db #0x08
-   0173 08                  505 	.db #0x08
-   0174 08                  506 	.db #0x08
-   0175 08                  507 	.db #0x08
-   0176 08                  508 	.db #0x08
-   0177 08                  509 	.db #0x08
-   0178 08                  510 	.db #0x08
-   0179 08                  511 	.db #0x08
-   017A 08                  512 	.db #0x08
-   017B 08                  513 	.db #0x08
-   017C 08                  514 	.db #0x08
-   017D 08                  515 	.db #0x08
-   017E 06                  516 	.db #0x06
-   017F 01                  517 	.db #0x01
-   0180 01                  518 	.db #0x01
-   0181 05                  519 	.db #0x05
-   0182 08                  520 	.db #0x08
-   0183 08                  521 	.db #0x08
-   0184 08                  522 	.db #0x08
-   0185 08                  523 	.db #0x08
-   0186 08                  524 	.db #0x08
-   0187 08                  525 	.db #0x08
-   0188 08                  526 	.db #0x08
-   0189 08                  527 	.db #0x08
-   018A 08                  528 	.db #0x08
-   018B 08                  529 	.db #0x08
-   018C 08                  530 	.db #0x08
-   018D 08                  531 	.db #0x08
-   018E 08                  532 	.db #0x08
-   018F 08                  533 	.db #0x08
-   0190 08                  534 	.db #0x08
-   0191 08                  535 	.db #0x08
-   0192 06                  536 	.db #0x06
-   0193 01                  537 	.db #0x01
-   0194 01                  538 	.db #0x01
-   0195 05                  539 	.db #0x05
-   0196 08                  540 	.db #0x08
-   0197 08                  541 	.db #0x08
-   0198 08                  542 	.db #0x08
-   0199 08                  543 	.db #0x08
-   019A 08                  544 	.db #0x08
-   019B 08                  545 	.db #0x08
-   019C 08                  546 	.db #0x08
-   019D 08                  547 	.db #0x08
-   019E 08                  548 	.db #0x08
-   019F 08                  549 	.db #0x08
-   01A0 08                  550 	.db #0x08
-   01A1 08                  551 	.db #0x08
-   01A2 08                  552 	.db #0x08
-   01A3 08                  553 	.db #0x08
-   01A4 08                  554 	.db #0x08
-   01A5 08                  555 	.db #0x08
-   01A6 06                  556 	.db #0x06
-   01A7 01                  557 	.db #0x01
-   01A8 01                  558 	.db #0x01
-   01A9 05                  559 	.db #0x05
-   01AA 08                  560 	.db #0x08
-   01AB 08                  561 	.db #0x08
-   01AC 08                  562 	.db #0x08
-   01AD 08                  563 	.db #0x08
-   01AE 08                  564 	.db #0x08
-   01AF 08                  565 	.db #0x08
-   01B0 08                  566 	.db #0x08
-   01B1 08                  567 	.db #0x08
-   01B2 08                  568 	.db #0x08
-   01B3 08                  569 	.db #0x08
-   01B4 08                  570 	.db #0x08
-   01B5 08                  571 	.db #0x08
-   01B6 08                  572 	.db #0x08
-   01B7 08                  573 	.db #0x08
-   01B8 08                  574 	.db #0x08
-   01B9 08                  575 	.db #0x08
-   01BA 06                  576 	.db #0x06
-   01BB 01                  577 	.db #0x01
-   01BC 01                  578 	.db #0x01
-   01BD 05                  579 	.db #0x05
-   01BE 08                  580 	.db #0x08
-   01BF 08                  581 	.db #0x08
-   01C0 08                  582 	.db #0x08
-   01C1 08                  583 	.db #0x08
-   01C2 08                  584 	.db #0x08
-   01C3 08                  585 	.db #0x08
-   01C4 08                  586 	.db #0x08
-   01C5 08                  587 	.db #0x08
-   01C6 08                  588 	.db #0x08
-   01C7 08                  589 	.db #0x08
-   01C8 08                  590 	.db #0x08
-   01C9 08                  591 	.db #0x08
-   01CA 08                  592 	.db #0x08
-   01CB 08                  593 	.db #0x08
-   01CC 08                  594 	.db #0x08
-   01CD 08                  595 	.db #0x08
-   01CE 06                  596 	.db #0x06
-   01CF 01                  597 	.db #0x01
-   01D0 01                  598 	.db #0x01
-   01D1 05                  599 	.db #0x05
-   01D2 08                  600 	.db #0x08
-   01D3 08                  601 	.db #0x08
-   01D4 08                  602 	.db #0x08
-   01D5 08                  603 	.db #0x08
-   01D6 08                  604 	.db #0x08
-   01D7 08                  605 	.db #0x08
-   01D8 08                  606 	.db #0x08
-   01D9 08                  607 	.db #0x08
-   01DA 08                  608 	.db #0x08
-   01DB 08                  609 	.db #0x08
-   01DC 08                  610 	.db #0x08
-   01DD 08                  611 	.db #0x08
-   01DE 08                  612 	.db #0x08
-   01DF 08                  613 	.db #0x08
-   01E0 08                  614 	.db #0x08
-   01E1 08                  615 	.db #0x08
-   01E2 06                  616 	.db #0x06
-   01E3 01                  617 	.db #0x01
-   01E4 01                  618 	.db #0x01
-   01E5 05                  619 	.db #0x05
-   01E6 08                  620 	.db #0x08
-   01E7 08                  621 	.db #0x08
-   01E8 08                  622 	.db #0x08
-   01E9 08                  623 	.db #0x08
-   01EA 08                  624 	.db #0x08
-   01EB 08                  625 	.db #0x08
-   01EC 08                  626 	.db #0x08
-   01ED 08                  627 	.db #0x08
-   01EE 08                  628 	.db #0x08
-   01EF 08                  629 	.db #0x08
-   01F0 08                  630 	.db #0x08
-   01F1 08                  631 	.db #0x08
-   01F2 08                  632 	.db #0x08
-   01F3 08                  633 	.db #0x08
-   01F4 08                  634 	.db #0x08
-   01F5 08                  635 	.db #0x08
-   01F6 06                  636 	.db #0x06
-   01F7 01                  637 	.db #0x01
-   01F8 01                  638 	.db #0x01
-   01F9 05                  639 	.db #0x05
-   01FA 08                  640 	.db #0x08
-   01FB 08                  641 	.db #0x08
-   01FC 08                  642 	.db #0x08
-   01FD 08                  643 	.db #0x08
-   01FE 08                  644 	.db #0x08
-   01FF 08                  645 	.db #0x08
-   0200 08                  646 	.db #0x08
-   0201 08                  647 	.db #0x08
-   0202 08                  648 	.db #0x08
-   0203 08                  649 	.db #0x08
-   0204 08                  650 	.db #0x08
-   0205 08                  651 	.db #0x08
-   0206 08                  652 	.db #0x08
-   0207 08                  653 	.db #0x08
-   0208 08                  654 	.db #0x08
-   0209 08                  655 	.db #0x08
-   020A 06                  656 	.db #0x06
-   020B 01                  657 	.db #0x01
-   020C 01                  658 	.db #0x01
-   020D 03                  659 	.db #0x03
-   020E 02                  660 	.db #0x02
-   020F 02                  661 	.db #0x02
-   0210 02                  662 	.db #0x02
-   0211 02                  663 	.db #0x02
-   0212 02                  664 	.db #0x02
-   0213 02                  665 	.db #0x02
-   0214 02                  666 	.db #0x02
-   0215 02                  667 	.db #0x02
-   0216 02                  668 	.db #0x02
-   0217 02                  669 	.db #0x02
-   0218 02                  670 	.db #0x02
-   0219 02                  671 	.db #0x02
-   021A 02                  672 	.db #0x02
-   021B 02                  673 	.db #0x02
-   021C 02                  674 	.db #0x02
-   021D 02                  675 	.db #0x02
-   021E 04                  676 	.db #0x04
-   021F 01                  677 	.db #0x01
-   0220 01                  678 	.db #0x01
-   0221 01                  679 	.db #0x01
-   0222 07                  680 	.db #0x07
-   0223 07                  681 	.db #0x07
-   0224 07                  682 	.db #0x07
-   0225 07                  683 	.db #0x07
-   0226 07                  684 	.db #0x07
-   0227 07                  685 	.db #0x07
-   0228 07                  686 	.db #0x07
-   0229 07                  687 	.db #0x07
-   022A 07                  688 	.db #0x07
-   022B 07                  689 	.db #0x07
-   022C 07                  690 	.db #0x07
-   022D 07                  691 	.db #0x07
-   022E 07                  692 	.db #0x07
-   022F 07                  693 	.db #0x07
-   0230 07                  694 	.db #0x07
-   0231 07                  695 	.db #0x07
-   0232 01                  696 	.db #0x01
-   0233 01                  697 	.db #0x01
-   0234                     698 _MAP_PAL_BG_1:
-   0234 01                  699 	.db #0x01
-   0235 01                  700 	.db #0x01
-   0236 01                  701 	.db #0x01
-   0237 01                  702 	.db #0x01
-   0238 01                  703 	.db #0x01
-   0239 01                  704 	.db #0x01
-   023A 01                  705 	.db #0x01
-   023B 01                  706 	.db #0x01
-   023C 01                  707 	.db #0x01
-   023D 01                  708 	.db #0x01
-   023E 01                  709 	.db #0x01
-   023F 01                  710 	.db #0x01
-   0240 01                  711 	.db #0x01
-   0241 01                  712 	.db #0x01
-   0242 01                  713 	.db #0x01
-   0243 01                  714 	.db #0x01
-   0244 01                  715 	.db #0x01
-   0245 01                  716 	.db #0x01
-   0246 01                  717 	.db #0x01
-   0247 01                  718 	.db #0x01
-   0248 01                  719 	.db #0x01
-   0249 01                  720 	.db #0x01
-   024A 01                  721 	.db #0x01
-   024B 01                  722 	.db #0x01
-   024C 01                  723 	.db #0x01
-   024D 01                  724 	.db #0x01
-   024E 01                  725 	.db #0x01
-   024F 01                  726 	.db #0x01
-   0250 01                  727 	.db #0x01
-   0251 01                  728 	.db #0x01
-   0252 01                  729 	.db #0x01
-   0253 01                  730 	.db #0x01
-   0254 01                  731 	.db #0x01
-   0255 01                  732 	.db #0x01
-   0256 01                  733 	.db #0x01
-   0257 01                  734 	.db #0x01
-   0258 01                  735 	.db #0x01
-   0259 01                  736 	.db #0x01
-   025A 01                  737 	.db #0x01
-   025B 01                  738 	.db #0x01
-   025C 01                  739 	.db #0x01
-   025D 02                  740 	.db #0x02
-   025E 04                  741 	.db #0x04
-   025F 05                  742 	.db #0x05
-   0260 05                  743 	.db #0x05
-   0261 05                  744 	.db #0x05
-   0262 06                  745 	.db #0x06
-   0263 06                  746 	.db #0x06
-   0264 06                  747 	.db #0x06
-   0265 06                  748 	.db #0x06
-   0266 06                  749 	.db #0x06
-   0267 06                  750 	.db #0x06
-   0268 06                  751 	.db #0x06
-   0269 06                  752 	.db #0x06
-   026A 05                  753 	.db #0x05
-   026B 05                  754 	.db #0x05
-   026C 05                  755 	.db #0x05
-   026D 04                  756 	.db #0x04
-   026E 02                  757 	.db #0x02
-   026F 01                  758 	.db #0x01
-   0270 01                  759 	.db #0x01
-   0271 02                  760 	.db #0x02
-   0272 04                  761 	.db #0x04
-   0273 05                  762 	.db #0x05
-   0274 05                  763 	.db #0x05
-   0275 05                  764 	.db #0x05
-   0276 06                  765 	.db #0x06
-   0277 06                  766 	.db #0x06
-   0278 06                  767 	.db #0x06
-   0279 06                  768 	.db #0x06
-   027A 06                  769 	.db #0x06
-   027B 06                  770 	.db #0x06
-   027C 06                  771 	.db #0x06
-   027D 06                  772 	.db #0x06
-   027E 05                  773 	.db #0x05
-   027F 05                  774 	.db #0x05
-   0280 05                  775 	.db #0x05
-   0281 04                  776 	.db #0x04
-   0282 02                  777 	.db #0x02
-   0283 01                  778 	.db #0x01
-   0284 01                  779 	.db #0x01
-   0285 02                  780 	.db #0x02
-   0286 04                  781 	.db #0x04
-   0287 05                  782 	.db #0x05
-   0288 05                  783 	.db #0x05
-   0289 05                  784 	.db #0x05
-   028A 06                  785 	.db #0x06
-   028B 06                  786 	.db #0x06
-   028C 06                  787 	.db #0x06
-   028D 06                  788 	.db #0x06
-   028E 06                  789 	.db #0x06
-   028F 06                  790 	.db #0x06
-   0290 06                  791 	.db #0x06
-   0291 06                  792 	.db #0x06
-   0292 05                  793 	.db #0x05
-   0293 05                  794 	.db #0x05
-   0294 05                  795 	.db #0x05
-   0295 04                  796 	.db #0x04
-   0296 02                  797 	.db #0x02
-   0297 01                  798 	.db #0x01
-   0298 01                  799 	.db #0x01
-   0299 02                  800 	.db #0x02
-   029A 04                  801 	.db #0x04
-   029B 05                  802 	.db #0x05
-   029C 05                  803 	.db #0x05
-   029D 05                  804 	.db #0x05
-   029E 06                  805 	.db #0x06
-   029F 06                  806 	.db #0x06
-   02A0 06                  807 	.db #0x06
-   02A1 06                  808 	.db #0x06
-   02A2 06                  809 	.db #0x06
-   02A3 06                  810 	.db #0x06
-   02A4 06                  811 	.db #0x06
-   02A5 06                  812 	.db #0x06
-   02A6 05                  813 	.db #0x05
-   02A7 05                  814 	.db #0x05
-   02A8 05                  815 	.db #0x05
-   02A9 04                  816 	.db #0x04
-   02AA 02                  817 	.db #0x02
-   02AB 01                  818 	.db #0x01
-   02AC 01                  819 	.db #0x01
-   02AD 02                  820 	.db #0x02
-   02AE 04                  821 	.db #0x04
-   02AF 05                  822 	.db #0x05
-   02B0 05                  823 	.db #0x05
-   02B1 05                  824 	.db #0x05
-   02B2 06                  825 	.db #0x06
-   02B3 06                  826 	.db #0x06
-   02B4 06                  827 	.db #0x06
-   02B5 06                  828 	.db #0x06
-   02B6 06                  829 	.db #0x06
-   02B7 06                  830 	.db #0x06
-   02B8 06                  831 	.db #0x06
-   02B9 06                  832 	.db #0x06
-   02BA 05                  833 	.db #0x05
-   02BB 05                  834 	.db #0x05
-   02BC 05                  835 	.db #0x05
-   02BD 04                  836 	.db #0x04
-   02BE 02                  837 	.db #0x02
-   02BF 01                  838 	.db #0x01
-   02C0 01                  839 	.db #0x01
-   02C1 02                  840 	.db #0x02
-   02C2 04                  841 	.db #0x04
-   02C3 05                  842 	.db #0x05
-   02C4 05                  843 	.db #0x05
-   02C5 05                  844 	.db #0x05
-   02C6 06                  845 	.db #0x06
-   02C7 06                  846 	.db #0x06
-   02C8 06                  847 	.db #0x06
-   02C9 06                  848 	.db #0x06
-   02CA 06                  849 	.db #0x06
-   02CB 06                  850 	.db #0x06
-   02CC 06                  851 	.db #0x06
-   02CD 06                  852 	.db #0x06
-   02CE 05                  853 	.db #0x05
-   02CF 05                  854 	.db #0x05
-   02D0 05                  855 	.db #0x05
-   02D1 04                  856 	.db #0x04
-   02D2 02                  857 	.db #0x02
-   02D3 01                  858 	.db #0x01
-   02D4 01                  859 	.db #0x01
-   02D5 02                  860 	.db #0x02
-   02D6 04                  861 	.db #0x04
-   02D7 05                  862 	.db #0x05
-   02D8 05                  863 	.db #0x05
-   02D9 05                  864 	.db #0x05
-   02DA 06                  865 	.db #0x06
-   02DB 06                  866 	.db #0x06
-   02DC 06                  867 	.db #0x06
-   02DD 06                  868 	.db #0x06
-   02DE 06                  869 	.db #0x06
-   02DF 06                  870 	.db #0x06
-   02E0 06                  871 	.db #0x06
-   02E1 06                  872 	.db #0x06
-   02E2 05                  873 	.db #0x05
-   02E3 05                  874 	.db #0x05
-   02E4 05                  875 	.db #0x05
-   02E5 04                  876 	.db #0x04
-   02E6 02                  877 	.db #0x02
-   02E7 01                  878 	.db #0x01
-   02E8 01                  879 	.db #0x01
-   02E9 02                  880 	.db #0x02
-   02EA 04                  881 	.db #0x04
-   02EB 05                  882 	.db #0x05
-   02EC 05                  883 	.db #0x05
-   02ED 05                  884 	.db #0x05
-   02EE 06                  885 	.db #0x06
-   02EF 06                  886 	.db #0x06
-   02F0 06                  887 	.db #0x06
-   02F1 06                  888 	.db #0x06
-   02F2 06                  889 	.db #0x06
-   02F3 06                  890 	.db #0x06
-   02F4 06                  891 	.db #0x06
-   02F5 06                  892 	.db #0x06
-   02F6 05                  893 	.db #0x05
-   02F7 05                  894 	.db #0x05
-   02F8 05                  895 	.db #0x05
-   02F9 04                  896 	.db #0x04
-   02FA 02                  897 	.db #0x02
-   02FB 01                  898 	.db #0x01
-   02FC 01                  899 	.db #0x01
-   02FD 02                  900 	.db #0x02
-   02FE 04                  901 	.db #0x04
-   02FF 05                  902 	.db #0x05
-   0300 05                  903 	.db #0x05
-   0301 05                  904 	.db #0x05
-   0302 06                  905 	.db #0x06
-   0303 06                  906 	.db #0x06
-   0304 06                  907 	.db #0x06
-   0305 06                  908 	.db #0x06
-   0306 06                  909 	.db #0x06
-   0307 06                  910 	.db #0x06
-   0308 06                  911 	.db #0x06
-   0309 06                  912 	.db #0x06
-   030A 05                  913 	.db #0x05
-   030B 05                  914 	.db #0x05
-   030C 05                  915 	.db #0x05
-   030D 04                  916 	.db #0x04
-   030E 02                  917 	.db #0x02
-   030F 01                  918 	.db #0x01
-   0310 01                  919 	.db #0x01
-   0311 02                  920 	.db #0x02
-   0312 04                  921 	.db #0x04
-   0313 05                  922 	.db #0x05
-   0314 05                  923 	.db #0x05
-   0315 05                  924 	.db #0x05
-   0316 06                  925 	.db #0x06
-   0317 06                  926 	.db #0x06
-   0318 06                  927 	.db #0x06
-   0319 06                  928 	.db #0x06
-   031A 06                  929 	.db #0x06
-   031B 06                  930 	.db #0x06
-   031C 06                  931 	.db #0x06
-   031D 06                  932 	.db #0x06
-   031E 05                  933 	.db #0x05
-   031F 05                  934 	.db #0x05
-   0320 05                  935 	.db #0x05
-   0321 04                  936 	.db #0x04
-   0322 02                  937 	.db #0x02
-   0323 01                  938 	.db #0x01
-   0324 01                  939 	.db #0x01
-   0325 02                  940 	.db #0x02
-   0326 04                  941 	.db #0x04
-   0327 05                  942 	.db #0x05
-   0328 05                  943 	.db #0x05
-   0329 05                  944 	.db #0x05
-   032A 06                  945 	.db #0x06
-   032B 06                  946 	.db #0x06
-   032C 06                  947 	.db #0x06
-   032D 06                  948 	.db #0x06
-   032E 06                  949 	.db #0x06
-   032F 06                  950 	.db #0x06
-   0330 06                  951 	.db #0x06
-   0331 06                  952 	.db #0x06
-   0332 05                  953 	.db #0x05
-   0333 05                  954 	.db #0x05
-   0334 05                  955 	.db #0x05
-   0335 04                  956 	.db #0x04
-   0336 02                  957 	.db #0x02
-   0337 01                  958 	.db #0x01
-   0338 01                  959 	.db #0x01
-   0339 02                  960 	.db #0x02
-   033A 04                  961 	.db #0x04
-   033B 05                  962 	.db #0x05
-   033C 05                  963 	.db #0x05
-   033D 05                  964 	.db #0x05
-   033E 06                  965 	.db #0x06
-   033F 06                  966 	.db #0x06
-   0340 06                  967 	.db #0x06
-   0341 06                  968 	.db #0x06
-   0342 06                  969 	.db #0x06
-   0343 06                  970 	.db #0x06
-   0344 06                  971 	.db #0x06
-   0345 06                  972 	.db #0x06
-   0346 05                  973 	.db #0x05
-   0347 05                  974 	.db #0x05
-   0348 05                  975 	.db #0x05
-   0349 04                  976 	.db #0x04
-   034A 02                  977 	.db #0x02
-   034B 01                  978 	.db #0x01
-   034C 01                  979 	.db #0x01
-   034D 02                  980 	.db #0x02
-   034E 04                  981 	.db #0x04
-   034F 05                  982 	.db #0x05
-   0350 05                  983 	.db #0x05
-   0351 05                  984 	.db #0x05
-   0352 06                  985 	.db #0x06
-   0353 06                  986 	.db #0x06
-   0354 06                  987 	.db #0x06
-   0355 06                  988 	.db #0x06
-   0356 06                  989 	.db #0x06
-   0357 06                  990 	.db #0x06
-   0358 06                  991 	.db #0x06
-   0359 06                  992 	.db #0x06
-   035A 05                  993 	.db #0x05
-   035B 05                  994 	.db #0x05
-   035C 05                  995 	.db #0x05
-   035D 04                  996 	.db #0x04
-   035E 02                  997 	.db #0x02
-   035F 01                  998 	.db #0x01
-   0360 01                  999 	.db #0x01
-   0361 02                 1000 	.db #0x02
-   0362 02                 1001 	.db #0x02
-   0363 02                 1002 	.db #0x02
-   0364 02                 1003 	.db #0x02
-   0365 02                 1004 	.db #0x02
-   0366 02                 1005 	.db #0x02
-   0367 02                 1006 	.db #0x02
-   0368 02                 1007 	.db #0x02
-   0369 02                 1008 	.db #0x02
-   036A 02                 1009 	.db #0x02
-   036B 02                 1010 	.db #0x02
-   036C 02                 1011 	.db #0x02
-   036D 02                 1012 	.db #0x02
-   036E 02                 1013 	.db #0x02
-   036F 02                 1014 	.db #0x02
-   0370 02                 1015 	.db #0x02
-   0371 02                 1016 	.db #0x02
-   0372 02                 1017 	.db #0x02
-   0373 01                 1018 	.db #0x01
-   0374 01                 1019 	.db #0x01
-   0375 01                 1020 	.db #0x01
-   0376 03                 1021 	.db #0x03
-   0377 03                 1022 	.db #0x03
-   0378 03                 1023 	.db #0x03
-   0379 03                 1024 	.db #0x03
-   037A 03                 1025 	.db #0x03
-   037B 03                 1026 	.db #0x03
-   037C 03                 1027 	.db #0x03
-   037D 03                 1028 	.db #0x03
-   037E 03                 1029 	.db #0x03
-   037F 03                 1030 	.db #0x03
-   0380 03                 1031 	.db #0x03
-   0381 03                 1032 	.db #0x03
-   0382 03                 1033 	.db #0x03
-   0383 03                 1034 	.db #0x03
-   0384 03                 1035 	.db #0x03
-   0385 03                 1036 	.db #0x03
-   0386 01                 1037 	.db #0x01
-   0387 01                 1038 	.db #0x01
-   0388                    1039 _PAL_PLAYER:
-   0388 00 00              1040 	.dw #0x0000
-   038A 00 00              1041 	.dw #0x0000
-   038C E5 4B              1042 	.dw #0x4BE5
-   038E 61 24              1043 	.dw #0x2461
-   0390                    1044 _PAL_BG_SPOTS:
-   0390 FF 57              1045 	.dw #0x57FF
-   0392 BD 4B              1046 	.dw #0x4BBD
-   0394 00 00              1047 	.dw #0x0000
-   0396 00 00              1048 	.dw #0x0000
-   0398                    1049 _PAL_BG_POT:
-   0398 FF 57              1050 	.dw #0x57FF
-   039A 39 67              1051 	.dw #0x6739
-   039C BF 1E              1052 	.dw #0x1EBF
-   039E 29 25              1053 	.dw #0x2529
-   03A0                    1054 _PAL_BG_POT_DARK:
-   03A0 00 00              1055 	.dw #0x0000
-   03A2 18 63              1056 	.dw #0x6318
-   03A4 00 00              1057 	.dw #0x0000
-   03A6 00 00              1058 	.dw #0x0000
-   03A8                    1059 _PAL_BG_POT_DARK_2:
-   03A8 00 00              1060 	.dw #0x0000
-   03AA F7 5E              1061 	.dw #0x5EF7
-   03AC 00 00              1062 	.dw #0x0000
-   03AE 00 00              1063 	.dw #0x0000
-   03B0                    1064 _PAL_BG_POT_DARK_3:
-   03B0 00 00              1065 	.dw #0x0000
-   03B2 D6 5A              1066 	.dw #0x5AD6
-   03B4 00 00              1067 	.dw #0x0000
-   03B6 00 00              1068 	.dw #0x0000
-   03B8                    1069 _PAL_BG_FIRE:
-   03B8 FF 57              1070 	.dw #0x57FF
-   03BA FF 2B              1071 	.dw #0x2BFF
-   03BC 1F 00              1072 	.dw #0x001F
-   03BE 00 00              1073 	.dw #0x0000
-                           1074 ;	src/food_spirit.c 48
-                           1075 ;	genLabel
-                           1076 ;	genFunction
-                           1077 ;	---------------------------------
-                           1078 ; Function player_jump_and_gravity
-                           1079 ; ---------------------------------
-   03C0                    1080 ___player_jump_and_gravity_start:
-   03C0                    1081 _player_jump_and_gravity:
-                           1082 	
-                           1083 ;	src/food_spirit.c 49
-                           1084 ;	genCmpGt
-                           1085 ;	AOP_HL for _player_jump_frames
-   03C0 3E 00              1086 	ld	a,#0x00
-   03C2 21 03 00           1087 	ld	hl,#_player_jump_frames
-   03C5 96                 1088 	sub	a,(hl)
-   03C6 D2 CA 03           1089 	jp	nc,00102$
-                           1090 ;	src/food_spirit.c 50
-                           1091 ;	genMinus
-                           1092 ;	AOP_HL for _player_jump_frames
-   03C9 35                 1093 	dec	(hl)
-                           1094 ;	genLabel
-   03CA                    1095 00102$:
-                           1096 ;	src/food_spirit.c 53
-                           1097 ;	genCmpGt
-                           1098 ;	AOP_HL for _player_jump_frames
-   03CA 3E 06              1099 	ld	a,#0x06
-   03CC 21 03 00           1100 	ld	hl,#_player_jump_frames
-   03CF 96                 1101 	sub	a,(hl)
-   03D0 D2 E3 03           1102 	jp	nc,00108$
-                           1103 ;	src/food_spirit.c 54
-                           1104 ;	genCmpGt
-                           1105 ;	AOP_HL for _player_y
-   03D3 3E 22              1106 	ld	a,#0x22
-   03D5 21 01 00           1107 	ld	hl,#_player_y
-   03D8 96                 1108 	sub	a,(hl)
-   03D9 D2 EF 03           1109 	jp	nc,00110$
-                           1110 ;	src/food_spirit.c 55
-                           1111 ;	genMinus
-                           1112 ;	AOP_HL for _player_y
-   03DC 7E                 1113 	ld	a,(hl)
-   03DD C6 FD              1114 	add	a,#0xFD
-   03DF 77                 1115 	ld	(hl),a
-                           1116 ;	genGoto
-   03E0 C3 EF 03           1117 	jp	00110$
-                           1118 ;	genLabel
-   03E3                    1119 00108$:
-                           1120 ;	src/food_spirit.c 56
-                           1121 ;	genCmpLt
-                           1122 ;	AOP_HL for _player_y
-   03E3 21 01 00           1123 	ld	hl,#_player_y
-   03E6 7E                 1124 	ld	a,(hl)
-   03E7 FE 88              1125 	cp	#0x88
-   03E9 D2 EF 03           1126 	jp	nc,00110$
-                           1127 ;	src/food_spirit.c 57
-                           1128 ;	genPlus
-                           1129 ;	AOP_HL for _player_y
-                           1130 ;	genPlusIncr
-   03EC 34                 1131 	inc	(hl)
-   03ED 34                 1132 	inc	(hl)
-   03EE 34                 1133 	inc	(hl)
-                           1134 ;	genLabel
-   03EF                    1135 00110$:
-                           1136 ;	genEndFunction
-                           1137 	
-   03EF C9                 1138 	ret
-   03F0                    1139 ___player_jump_and_gravity_end:
-                           1140 ;	src/food_spirit.c 61
-                           1141 ;	genLabel
-                           1142 ;	genFunction
-                           1143 ;	---------------------------------
-                           1144 ; Function draw_player
-                           1145 ; ---------------------------------
-   03F0                    1146 ___draw_player_start:
-   03F0                    1147 _draw_player:
-                           1148 	
-                           1149 ;	src/food_spirit.c 62
-                           1150 ;	genIpush
-                           1151 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-                           1152 ;	AOP_HL for _player_y
-   03F0 21 01 00           1153 	ld	hl,#_player_y
-   03F3 7E                 1154 	ld	a,(hl)
-   03F4 F5                 1155 	push	af
-   03F5 33                 1156 	inc	sp
-                           1157 ;	genIpush
-                           1158 ;	AOP_HL for _player_x
-   03F6 21 00 00           1159 	ld	hl,#_player_x
-   03F9 7E                 1160 	ld	a,(hl)
-   03FA F5                 1161 	push	af
-   03FB 33                 1162 	inc	sp
-                           1163 ;	genIpush
-   03FC 3E 00              1164 	ld	a,#0x00
-   03FE F5                 1165 	push	af
-   03FF 33                 1166 	inc	sp
-                           1167 ;	genCall
-   0400 CD 00 00           1168 	call	_move_sprite
-   0403 E8 03              1169 	lda	sp,3(sp)
-                           1170 ;	src/food_spirit.c 63
-                           1171 ;	genPlus
-                           1172 ;	AOP_HL for _player_x
-                           1173 ;	genPlusIncr
-                           1174 ;	Can't optimise plus by inc, falling back to the normal way
-   0405 21 00 00           1175 	ld	hl,#_player_x
-   0408 7E                 1176 	ld	a,(hl)
-   0409 C6 08              1177 	add	a,#0x08
-   040B 4F                 1178 	ld	c,a
-                           1179 ;	genIpush
-                           1180 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   040C C5                 1181 	push	bc
-                           1182 ;	AOP_HL for _player_y
-   040D 21 01 00           1183 	ld	hl,#_player_y
-   0410 7E                 1184 	ld	a,(hl)
-   0411 F5                 1185 	push	af
-   0412 33                 1186 	inc	sp
-                           1187 ;	genIpush
-   0413 79                 1188 	ld	a,c
-   0414 F5                 1189 	push	af
-   0415 33                 1190 	inc	sp
-                           1191 ;	genIpush
-   0416 3E 01              1192 	ld	a,#0x01
-   0418 F5                 1193 	push	af
-   0419 33                 1194 	inc	sp
-                           1195 ;	genCall
-   041A CD 00 00           1196 	call	_move_sprite
-   041D E8 03              1197 	lda	sp,3(sp)
-   041F E1                 1198 	pop	hl
-   0420 4D                 1199 	ld	c,l
-                           1200 ;	src/food_spirit.c 64
-                           1201 ;	genPlus
+   0054                     204 00110$:
+                            205 ;	src/food_spirit.c 52
+                            206 ;	genAssign
+                            207 ;	AOP_HL for _player_dir
+   0054 21 03 00            208 	ld	hl,#_player_dir
+   0057 36 00               209 	ld	(hl),#0x00
+                            210 ;	genLabel
+   0059                     211 00115$:
+                            212 ;	genEndFunction
+                            213 	
+   0059 C9                  214 	ret
+   005A                     215 ___read_controls_end:
+   005A                     216 _SPR_DAT_PLAYER_0_0_MID:
+   005A 0E                  217 	.db #0x0E
+   005B 0E                  218 	.db #0x0E
+   005C 13                  219 	.db #0x13
+   005D 1D                  220 	.db #0x1D
+   005E 0F                  221 	.db #0x0F
+   005F 08                  222 	.db #0x08
+   0060 0F                  223 	.db #0x0F
+   0061 0A                  224 	.db #0x0A
+   0062 0F                  225 	.db #0x0F
+   0063 0A                  226 	.db #0x0A
+   0064 0F                  227 	.db #0x0F
+   0065 08                  228 	.db #0x08
+   0066 07                  229 	.db #0x07
+   0067 04                  230 	.db #0x04
+   0068 0F                  231 	.db #0x0F
+   0069 0C                  232 	.db #0x0C
+   006A                     233 _SPR_DAT_PLAYER_1_0_MID:
+   006A 00                  234 	.db #0x00
+   006B 00                  235 	.db #0x00
+   006C C0                  236 	.db #0xC0
+   006D C0                  237 	.db #0xC0
+   006E E0                  238 	.db #0xE0
+   006F 20                  239 	.db #0x20
+   0070 F0                  240 	.db #0xF0
+   0071 50                  241 	.db #0x50
+   0072 F0                  242 	.db #0xF0
+   0073 50                  243 	.db #0x50
+   0074 F0                  244 	.db #0xF0
+   0075 10                  245 	.db #0x10
+   0076 E0                  246 	.db #0xE0
+   0077 20                  247 	.db #0x20
+   0078 B0                  248 	.db #0xB0
+   0079 70                  249 	.db #0x70
+   007A                     250 _SPR_DAT_PLAYER_0_1_MID:
+   007A 37                  251 	.db #0x37
+   007B 38                  252 	.db #0x38
+   007C 5F                  253 	.db #0x5F
+   007D 60                  254 	.db #0x60
+   007E FF                  255 	.db #0xFF
+   007F 80                  256 	.db #0x80
+   0080 EA                  257 	.db #0xEA
+   0081 9D                  258 	.db #0x9D
+   0082 B5                  259 	.db #0xB5
+   0083 F6                  260 	.db #0xF6
+   0084 C5                  261 	.db #0xC5
+   0085 C6                  262 	.db #0xC6
+   0086 42                  263 	.db #0x42
+   0087 43                  264 	.db #0x43
+   0088 05                  265 	.db #0x05
+   0089 06                  266 	.db #0x06
+   008A                     267 _SPR_DAT_PLAYER_1_1_MID:
+   008A EC                  268 	.db #0xEC
+   008B 1C                  269 	.db #0x1C
+   008C FA                  270 	.db #0xFA
+   008D 06                  271 	.db #0x06
+   008E 7F                  272 	.db #0x7F
+   008F 81                  273 	.db #0x81
+   0090 DB                  274 	.db #0xDB
+   0091 3D                  275 	.db #0x3D
+   0092 E5                  276 	.db #0xE5
+   0093 27                  277 	.db #0x27
+   0094 53                  278 	.db #0x53
+   0095 B3                  279 	.db #0xB3
+   0096 D2                  280 	.db #0xD2
+   0097 32                  281 	.db #0x32
+   0098 E0                  282 	.db #0xE0
+   0099 20                  283 	.db #0x20
+   009A                     284 _SPR_DAT_PLAYER_0_2_MID:
+   009A 07                  285 	.db #0x07
+   009B 04                  286 	.db #0x04
+   009C 07                  287 	.db #0x07
+   009D 04                  288 	.db #0x04
+   009E 0A                  289 	.db #0x0A
+   009F 0D                  290 	.db #0x0D
+   00A0 05                  291 	.db #0x05
+   00A1 06                  292 	.db #0x06
+   00A2 03                  293 	.db #0x03
+   00A3 02                  294 	.db #0x02
+   00A4 01                  295 	.db #0x01
+   00A5 01                  296 	.db #0x01
+   00A6 02                  297 	.db #0x02
+   00A7 03                  298 	.db #0x03
+   00A8 01                  299 	.db #0x01
+   00A9 01                  300 	.db #0x01
+   00AA                     301 _SPR_DAT_PLAYER_1_2_MID:
+   00AA A0                  302 	.db #0xA0
+   00AB 60                  303 	.db #0x60
+   00AC 40                  304 	.db #0x40
+   00AD C0                  305 	.db #0xC0
+   00AE 80                  306 	.db #0x80
+   00AF 80                  307 	.db #0x80
+   00B0 40                  308 	.db #0x40
+   00B1 C0                  309 	.db #0xC0
+   00B2 A0                  310 	.db #0xA0
+   00B3 60                  311 	.db #0x60
+   00B4 40                  312 	.db #0x40
+   00B5 C0                  313 	.db #0xC0
+   00B6 80                  314 	.db #0x80
+   00B7 80                  315 	.db #0x80
+   00B8 00                  316 	.db #0x00
+   00B9 00                  317 	.db #0x00
+   00BA                     318 _TILE_BLANK:
+   00BA FF                  319 	.db #0xFF
+   00BB 00                  320 	.db #0x00
+   00BC FF                  321 	.db #0xFF
+   00BD 00                  322 	.db #0x00
+   00BE FF                  323 	.db #0xFF
+   00BF 00                  324 	.db #0x00
+   00C0 FF                  325 	.db #0xFF
+   00C1 00                  326 	.db #0x00
+   00C2 FF                  327 	.db #0xFF
+   00C3 00                  328 	.db #0x00
+   00C4 FF                  329 	.db #0xFF
+   00C5 00                  330 	.db #0x00
+   00C6 FF                  331 	.db #0xFF
+   00C7 00                  332 	.db #0x00
+   00C8 FF                  333 	.db #0xFF
+   00C9 00                  334 	.db #0x00
+   00CA                     335 _TILE_SPOTS:
+   00CA 42                  336 	.db #0x42
+   00CB 00                  337 	.db #0x00
+   00CC 81                  338 	.db #0x81
+   00CD 00                  339 	.db #0x00
+   00CE 18                  340 	.db #0x18
+   00CF 00                  341 	.db #0x00
+   00D0 24                  342 	.db #0x24
+   00D1 00                  343 	.db #0x00
+   00D2 24                  344 	.db #0x24
+   00D3 00                  345 	.db #0x00
+   00D4 18                  346 	.db #0x18
+   00D5 00                  347 	.db #0x00
+   00D6 81                  348 	.db #0x81
+   00D7 00                  349 	.db #0x00
+   00D8 42                  350 	.db #0x42
+   00D9 00                  351 	.db #0x00
+   00DA                     352 _TILE_POT_FLOOR:
+   00DA FF                  353 	.db #0xFF
+   00DB 00                  354 	.db #0x00
+   00DC FF                  355 	.db #0xFF
+   00DD 00                  356 	.db #0x00
+   00DE FF                  357 	.db #0xFF
+   00DF 00                  358 	.db #0x00
+   00E0 FF                  359 	.db #0xFF
+   00E1 FF                  360 	.db #0xFF
+   00E2 FF                  361 	.db #0xFF
+   00E3 FF                  362 	.db #0xFF
+   00E4 FF                  363 	.db #0xFF
+   00E5 FF                  364 	.db #0xFF
+   00E6 00                  365 	.db #0x00
+   00E7 FF                  366 	.db #0xFF
+   00E8 00                  367 	.db #0x00
+   00E9 00                  368 	.db #0x00
+   00EA                     369 _TILE_POT_LEFT_CORNER:
+   00EA FF                  370 	.db #0xFF
+   00EB F0                  371 	.db #0xF0
+   00EC FF                  372 	.db #0xFF
+   00ED F0                  373 	.db #0xF0
+   00EE FF                  374 	.db #0xFF
+   00EF F8                  375 	.db #0xF8
+   00F0 FF                  376 	.db #0xFF
+   00F1 FF                  377 	.db #0xFF
+   00F2 7F                  378 	.db #0x7F
+   00F3 7F                  379 	.db #0x7F
+   00F4 3F                  380 	.db #0x3F
+   00F5 3F                  381 	.db #0x3F
+   00F6 10                  382 	.db #0x10
+   00F7 1F                  383 	.db #0x1F
+   00F8 00                  384 	.db #0x00
+   00F9 00                  385 	.db #0x00
+   00FA                     386 _TILE_POT_RIGHT_CORNER:
+   00FA FF                  387 	.db #0xFF
+   00FB 0F                  388 	.db #0x0F
+   00FC FF                  389 	.db #0xFF
+   00FD 0F                  390 	.db #0x0F
+   00FE FF                  391 	.db #0xFF
+   00FF 1F                  392 	.db #0x1F
+   0100 FF                  393 	.db #0xFF
+   0101 FF                  394 	.db #0xFF
+   0102 FE                  395 	.db #0xFE
+   0103 FE                  396 	.db #0xFE
+   0104 FC                  397 	.db #0xFC
+   0105 FC                  398 	.db #0xFC
+   0106 08                  399 	.db #0x08
+   0107 F8                  400 	.db #0xF8
+   0108 00                  401 	.db #0x00
+   0109 00                  402 	.db #0x00
+   010A                     403 _TILE_POT_LEFT_WALL:
+   010A FF                  404 	.db #0xFF
+   010B F0                  405 	.db #0xF0
+   010C FF                  406 	.db #0xFF
+   010D F0                  407 	.db #0xF0
+   010E FF                  408 	.db #0xFF
+   010F F0                  409 	.db #0xF0
+   0110 FF                  410 	.db #0xFF
+   0111 F0                  411 	.db #0xF0
+   0112 FF                  412 	.db #0xFF
+   0113 F0                  413 	.db #0xF0
+   0114 FF                  414 	.db #0xFF
+   0115 F0                  415 	.db #0xF0
+   0116 FF                  416 	.db #0xFF
+   0117 F0                  417 	.db #0xF0
+   0118 FF                  418 	.db #0xFF
+   0119 F0                  419 	.db #0xF0
+   011A                     420 _TILE_POT_RIGHT_WALL:
+   011A FF                  421 	.db #0xFF
+   011B 0F                  422 	.db #0x0F
+   011C FF                  423 	.db #0xFF
+   011D 0F                  424 	.db #0x0F
+   011E FF                  425 	.db #0xFF
+   011F 0F                  426 	.db #0x0F
+   0120 FF                  427 	.db #0xFF
+   0121 0F                  428 	.db #0x0F
+   0122 FF                  429 	.db #0xFF
+   0123 0F                  430 	.db #0x0F
+   0124 FF                  431 	.db #0xFF
+   0125 0F                  432 	.db #0x0F
+   0126 FF                  433 	.db #0xFF
+   0127 0F                  434 	.db #0x0F
+   0128 FF                  435 	.db #0xFF
+   0129 0F                  436 	.db #0x0F
+   012A                     437 _TILE_FIRE:
+   012A 10                  438 	.db #0x10
+   012B 10                  439 	.db #0x10
+   012C 30                  440 	.db #0x30
+   012D 30                  441 	.db #0x30
+   012E 28                  442 	.db #0x28
+   012F 38                  443 	.db #0x38
+   0130 24                  444 	.db #0x24
+   0131 3C                  445 	.db #0x3C
+   0132 54                  446 	.db #0x54
+   0133 6C                  447 	.db #0x6C
+   0134 5A                  448 	.db #0x5A
+   0135 66                  449 	.db #0x66
+   0136 6E                  450 	.db #0x6E
+   0137 52                  451 	.db #0x52
+   0138 34                  452 	.db #0x34
+   0139 2C                  453 	.db #0x2C
+   013A                     454 _MAP_BG_1:
+   013A 01                  455 	.db #0x01
+   013B 01                  456 	.db #0x01
+   013C 01                  457 	.db #0x01
+   013D 01                  458 	.db #0x01
+   013E 01                  459 	.db #0x01
+   013F 01                  460 	.db #0x01
+   0140 01                  461 	.db #0x01
+   0141 01                  462 	.db #0x01
+   0142 01                  463 	.db #0x01
+   0143 01                  464 	.db #0x01
+   0144 01                  465 	.db #0x01
+   0145 01                  466 	.db #0x01
+   0146 01                  467 	.db #0x01
+   0147 01                  468 	.db #0x01
+   0148 01                  469 	.db #0x01
+   0149 01                  470 	.db #0x01
+   014A 01                  471 	.db #0x01
+   014B 01                  472 	.db #0x01
+   014C 01                  473 	.db #0x01
+   014D 01                  474 	.db #0x01
+   014E 01                  475 	.db #0x01
+   014F 01                  476 	.db #0x01
+   0150 01                  477 	.db #0x01
+   0151 01                  478 	.db #0x01
+   0152 01                  479 	.db #0x01
+   0153 01                  480 	.db #0x01
+   0154 01                  481 	.db #0x01
+   0155 01                  482 	.db #0x01
+   0156 01                  483 	.db #0x01
+   0157 01                  484 	.db #0x01
+   0158 01                  485 	.db #0x01
+   0159 01                  486 	.db #0x01
+   015A 01                  487 	.db #0x01
+   015B 01                  488 	.db #0x01
+   015C 01                  489 	.db #0x01
+   015D 01                  490 	.db #0x01
+   015E 01                  491 	.db #0x01
+   015F 01                  492 	.db #0x01
+   0160 01                  493 	.db #0x01
+   0161 01                  494 	.db #0x01
+   0162 01                  495 	.db #0x01
+   0163 05                  496 	.db #0x05
+   0164 08                  497 	.db #0x08
+   0165 08                  498 	.db #0x08
+   0166 08                  499 	.db #0x08
+   0167 08                  500 	.db #0x08
+   0168 08                  501 	.db #0x08
+   0169 08                  502 	.db #0x08
+   016A 08                  503 	.db #0x08
+   016B 08                  504 	.db #0x08
+   016C 08                  505 	.db #0x08
+   016D 08                  506 	.db #0x08
+   016E 08                  507 	.db #0x08
+   016F 08                  508 	.db #0x08
+   0170 08                  509 	.db #0x08
+   0171 08                  510 	.db #0x08
+   0172 08                  511 	.db #0x08
+   0173 08                  512 	.db #0x08
+   0174 06                  513 	.db #0x06
+   0175 01                  514 	.db #0x01
+   0176 01                  515 	.db #0x01
+   0177 05                  516 	.db #0x05
+   0178 08                  517 	.db #0x08
+   0179 08                  518 	.db #0x08
+   017A 08                  519 	.db #0x08
+   017B 08                  520 	.db #0x08
+   017C 08                  521 	.db #0x08
+   017D 08                  522 	.db #0x08
+   017E 08                  523 	.db #0x08
+   017F 08                  524 	.db #0x08
+   0180 08                  525 	.db #0x08
+   0181 08                  526 	.db #0x08
+   0182 08                  527 	.db #0x08
+   0183 08                  528 	.db #0x08
+   0184 08                  529 	.db #0x08
+   0185 08                  530 	.db #0x08
+   0186 08                  531 	.db #0x08
+   0187 08                  532 	.db #0x08
+   0188 06                  533 	.db #0x06
+   0189 01                  534 	.db #0x01
+   018A 01                  535 	.db #0x01
+   018B 05                  536 	.db #0x05
+   018C 08                  537 	.db #0x08
+   018D 08                  538 	.db #0x08
+   018E 08                  539 	.db #0x08
+   018F 08                  540 	.db #0x08
+   0190 08                  541 	.db #0x08
+   0191 08                  542 	.db #0x08
+   0192 08                  543 	.db #0x08
+   0193 08                  544 	.db #0x08
+   0194 08                  545 	.db #0x08
+   0195 08                  546 	.db #0x08
+   0196 08                  547 	.db #0x08
+   0197 08                  548 	.db #0x08
+   0198 08                  549 	.db #0x08
+   0199 08                  550 	.db #0x08
+   019A 08                  551 	.db #0x08
+   019B 08                  552 	.db #0x08
+   019C 06                  553 	.db #0x06
+   019D 01                  554 	.db #0x01
+   019E 01                  555 	.db #0x01
+   019F 05                  556 	.db #0x05
+   01A0 08                  557 	.db #0x08
+   01A1 08                  558 	.db #0x08
+   01A2 08                  559 	.db #0x08
+   01A3 08                  560 	.db #0x08
+   01A4 08                  561 	.db #0x08
+   01A5 08                  562 	.db #0x08
+   01A6 08                  563 	.db #0x08
+   01A7 08                  564 	.db #0x08
+   01A8 08                  565 	.db #0x08
+   01A9 08                  566 	.db #0x08
+   01AA 08                  567 	.db #0x08
+   01AB 08                  568 	.db #0x08
+   01AC 08                  569 	.db #0x08
+   01AD 08                  570 	.db #0x08
+   01AE 08                  571 	.db #0x08
+   01AF 08                  572 	.db #0x08
+   01B0 06                  573 	.db #0x06
+   01B1 01                  574 	.db #0x01
+   01B2 01                  575 	.db #0x01
+   01B3 05                  576 	.db #0x05
+   01B4 08                  577 	.db #0x08
+   01B5 08                  578 	.db #0x08
+   01B6 08                  579 	.db #0x08
+   01B7 08                  580 	.db #0x08
+   01B8 08                  581 	.db #0x08
+   01B9 08                  582 	.db #0x08
+   01BA 08                  583 	.db #0x08
+   01BB 08                  584 	.db #0x08
+   01BC 08                  585 	.db #0x08
+   01BD 08                  586 	.db #0x08
+   01BE 08                  587 	.db #0x08
+   01BF 08                  588 	.db #0x08
+   01C0 08                  589 	.db #0x08
+   01C1 08                  590 	.db #0x08
+   01C2 08                  591 	.db #0x08
+   01C3 08                  592 	.db #0x08
+   01C4 06                  593 	.db #0x06
+   01C5 01                  594 	.db #0x01
+   01C6 01                  595 	.db #0x01
+   01C7 05                  596 	.db #0x05
+   01C8 08                  597 	.db #0x08
+   01C9 08                  598 	.db #0x08
+   01CA 08                  599 	.db #0x08
+   01CB 08                  600 	.db #0x08
+   01CC 08                  601 	.db #0x08
+   01CD 08                  602 	.db #0x08
+   01CE 08                  603 	.db #0x08
+   01CF 08                  604 	.db #0x08
+   01D0 08                  605 	.db #0x08
+   01D1 08                  606 	.db #0x08
+   01D2 08                  607 	.db #0x08
+   01D3 08                  608 	.db #0x08
+   01D4 08                  609 	.db #0x08
+   01D5 08                  610 	.db #0x08
+   01D6 08                  611 	.db #0x08
+   01D7 08                  612 	.db #0x08
+   01D8 06                  613 	.db #0x06
+   01D9 01                  614 	.db #0x01
+   01DA 01                  615 	.db #0x01
+   01DB 05                  616 	.db #0x05
+   01DC 08                  617 	.db #0x08
+   01DD 08                  618 	.db #0x08
+   01DE 08                  619 	.db #0x08
+   01DF 08                  620 	.db #0x08
+   01E0 08                  621 	.db #0x08
+   01E1 08                  622 	.db #0x08
+   01E2 08                  623 	.db #0x08
+   01E3 08                  624 	.db #0x08
+   01E4 08                  625 	.db #0x08
+   01E5 08                  626 	.db #0x08
+   01E6 08                  627 	.db #0x08
+   01E7 08                  628 	.db #0x08
+   01E8 08                  629 	.db #0x08
+   01E9 08                  630 	.db #0x08
+   01EA 08                  631 	.db #0x08
+   01EB 08                  632 	.db #0x08
+   01EC 06                  633 	.db #0x06
+   01ED 01                  634 	.db #0x01
+   01EE 01                  635 	.db #0x01
+   01EF 05                  636 	.db #0x05
+   01F0 08                  637 	.db #0x08
+   01F1 08                  638 	.db #0x08
+   01F2 08                  639 	.db #0x08
+   01F3 08                  640 	.db #0x08
+   01F4 08                  641 	.db #0x08
+   01F5 08                  642 	.db #0x08
+   01F6 08                  643 	.db #0x08
+   01F7 08                  644 	.db #0x08
+   01F8 08                  645 	.db #0x08
+   01F9 08                  646 	.db #0x08
+   01FA 08                  647 	.db #0x08
+   01FB 08                  648 	.db #0x08
+   01FC 08                  649 	.db #0x08
+   01FD 08                  650 	.db #0x08
+   01FE 08                  651 	.db #0x08
+   01FF 08                  652 	.db #0x08
+   0200 06                  653 	.db #0x06
+   0201 01                  654 	.db #0x01
+   0202 01                  655 	.db #0x01
+   0203 05                  656 	.db #0x05
+   0204 08                  657 	.db #0x08
+   0205 08                  658 	.db #0x08
+   0206 08                  659 	.db #0x08
+   0207 08                  660 	.db #0x08
+   0208 08                  661 	.db #0x08
+   0209 08                  662 	.db #0x08
+   020A 08                  663 	.db #0x08
+   020B 08                  664 	.db #0x08
+   020C 08                  665 	.db #0x08
+   020D 08                  666 	.db #0x08
+   020E 08                  667 	.db #0x08
+   020F 08                  668 	.db #0x08
+   0210 08                  669 	.db #0x08
+   0211 08                  670 	.db #0x08
+   0212 08                  671 	.db #0x08
+   0213 08                  672 	.db #0x08
+   0214 06                  673 	.db #0x06
+   0215 01                  674 	.db #0x01
+   0216 01                  675 	.db #0x01
+   0217 05                  676 	.db #0x05
+   0218 08                  677 	.db #0x08
+   0219 08                  678 	.db #0x08
+   021A 08                  679 	.db #0x08
+   021B 08                  680 	.db #0x08
+   021C 08                  681 	.db #0x08
+   021D 08                  682 	.db #0x08
+   021E 08                  683 	.db #0x08
+   021F 08                  684 	.db #0x08
+   0220 08                  685 	.db #0x08
+   0221 08                  686 	.db #0x08
+   0222 08                  687 	.db #0x08
+   0223 08                  688 	.db #0x08
+   0224 08                  689 	.db #0x08
+   0225 08                  690 	.db #0x08
+   0226 08                  691 	.db #0x08
+   0227 08                  692 	.db #0x08
+   0228 06                  693 	.db #0x06
+   0229 01                  694 	.db #0x01
+   022A 01                  695 	.db #0x01
+   022B 05                  696 	.db #0x05
+   022C 08                  697 	.db #0x08
+   022D 08                  698 	.db #0x08
+   022E 08                  699 	.db #0x08
+   022F 08                  700 	.db #0x08
+   0230 08                  701 	.db #0x08
+   0231 08                  702 	.db #0x08
+   0232 08                  703 	.db #0x08
+   0233 08                  704 	.db #0x08
+   0234 08                  705 	.db #0x08
+   0235 08                  706 	.db #0x08
+   0236 08                  707 	.db #0x08
+   0237 08                  708 	.db #0x08
+   0238 08                  709 	.db #0x08
+   0239 08                  710 	.db #0x08
+   023A 08                  711 	.db #0x08
+   023B 08                  712 	.db #0x08
+   023C 06                  713 	.db #0x06
+   023D 01                  714 	.db #0x01
+   023E 01                  715 	.db #0x01
+   023F 05                  716 	.db #0x05
+   0240 08                  717 	.db #0x08
+   0241 08                  718 	.db #0x08
+   0242 08                  719 	.db #0x08
+   0243 08                  720 	.db #0x08
+   0244 08                  721 	.db #0x08
+   0245 08                  722 	.db #0x08
+   0246 08                  723 	.db #0x08
+   0247 08                  724 	.db #0x08
+   0248 08                  725 	.db #0x08
+   0249 08                  726 	.db #0x08
+   024A 08                  727 	.db #0x08
+   024B 08                  728 	.db #0x08
+   024C 08                  729 	.db #0x08
+   024D 08                  730 	.db #0x08
+   024E 08                  731 	.db #0x08
+   024F 08                  732 	.db #0x08
+   0250 06                  733 	.db #0x06
+   0251 01                  734 	.db #0x01
+   0252 01                  735 	.db #0x01
+   0253 05                  736 	.db #0x05
+   0254 08                  737 	.db #0x08
+   0255 08                  738 	.db #0x08
+   0256 08                  739 	.db #0x08
+   0257 08                  740 	.db #0x08
+   0258 08                  741 	.db #0x08
+   0259 08                  742 	.db #0x08
+   025A 08                  743 	.db #0x08
+   025B 08                  744 	.db #0x08
+   025C 08                  745 	.db #0x08
+   025D 08                  746 	.db #0x08
+   025E 08                  747 	.db #0x08
+   025F 08                  748 	.db #0x08
+   0260 08                  749 	.db #0x08
+   0261 08                  750 	.db #0x08
+   0262 08                  751 	.db #0x08
+   0263 08                  752 	.db #0x08
+   0264 06                  753 	.db #0x06
+   0265 01                  754 	.db #0x01
+   0266 01                  755 	.db #0x01
+   0267 03                  756 	.db #0x03
+   0268 02                  757 	.db #0x02
+   0269 02                  758 	.db #0x02
+   026A 02                  759 	.db #0x02
+   026B 02                  760 	.db #0x02
+   026C 02                  761 	.db #0x02
+   026D 02                  762 	.db #0x02
+   026E 02                  763 	.db #0x02
+   026F 02                  764 	.db #0x02
+   0270 02                  765 	.db #0x02
+   0271 02                  766 	.db #0x02
+   0272 02                  767 	.db #0x02
+   0273 02                  768 	.db #0x02
+   0274 02                  769 	.db #0x02
+   0275 02                  770 	.db #0x02
+   0276 02                  771 	.db #0x02
+   0277 02                  772 	.db #0x02
+   0278 04                  773 	.db #0x04
+   0279 01                  774 	.db #0x01
+   027A 01                  775 	.db #0x01
+   027B 01                  776 	.db #0x01
+   027C 07                  777 	.db #0x07
+   027D 07                  778 	.db #0x07
+   027E 07                  779 	.db #0x07
+   027F 07                  780 	.db #0x07
+   0280 07                  781 	.db #0x07
+   0281 07                  782 	.db #0x07
+   0282 07                  783 	.db #0x07
+   0283 07                  784 	.db #0x07
+   0284 07                  785 	.db #0x07
+   0285 07                  786 	.db #0x07
+   0286 07                  787 	.db #0x07
+   0287 07                  788 	.db #0x07
+   0288 07                  789 	.db #0x07
+   0289 07                  790 	.db #0x07
+   028A 07                  791 	.db #0x07
+   028B 07                  792 	.db #0x07
+   028C 01                  793 	.db #0x01
+   028D 01                  794 	.db #0x01
+   028E                     795 _MAP_PAL_BG_1:
+   028E 01                  796 	.db #0x01
+   028F 01                  797 	.db #0x01
+   0290 01                  798 	.db #0x01
+   0291 01                  799 	.db #0x01
+   0292 01                  800 	.db #0x01
+   0293 01                  801 	.db #0x01
+   0294 01                  802 	.db #0x01
+   0295 01                  803 	.db #0x01
+   0296 01                  804 	.db #0x01
+   0297 01                  805 	.db #0x01
+   0298 01                  806 	.db #0x01
+   0299 01                  807 	.db #0x01
+   029A 01                  808 	.db #0x01
+   029B 01                  809 	.db #0x01
+   029C 01                  810 	.db #0x01
+   029D 01                  811 	.db #0x01
+   029E 01                  812 	.db #0x01
+   029F 01                  813 	.db #0x01
+   02A0 01                  814 	.db #0x01
+   02A1 01                  815 	.db #0x01
+   02A2 01                  816 	.db #0x01
+   02A3 01                  817 	.db #0x01
+   02A4 01                  818 	.db #0x01
+   02A5 01                  819 	.db #0x01
+   02A6 01                  820 	.db #0x01
+   02A7 01                  821 	.db #0x01
+   02A8 01                  822 	.db #0x01
+   02A9 01                  823 	.db #0x01
+   02AA 01                  824 	.db #0x01
+   02AB 01                  825 	.db #0x01
+   02AC 01                  826 	.db #0x01
+   02AD 01                  827 	.db #0x01
+   02AE 01                  828 	.db #0x01
+   02AF 01                  829 	.db #0x01
+   02B0 01                  830 	.db #0x01
+   02B1 01                  831 	.db #0x01
+   02B2 01                  832 	.db #0x01
+   02B3 01                  833 	.db #0x01
+   02B4 01                  834 	.db #0x01
+   02B5 01                  835 	.db #0x01
+   02B6 01                  836 	.db #0x01
+   02B7 02                  837 	.db #0x02
+   02B8 04                  838 	.db #0x04
+   02B9 05                  839 	.db #0x05
+   02BA 05                  840 	.db #0x05
+   02BB 05                  841 	.db #0x05
+   02BC 06                  842 	.db #0x06
+   02BD 06                  843 	.db #0x06
+   02BE 06                  844 	.db #0x06
+   02BF 06                  845 	.db #0x06
+   02C0 06                  846 	.db #0x06
+   02C1 06                  847 	.db #0x06
+   02C2 06                  848 	.db #0x06
+   02C3 06                  849 	.db #0x06
+   02C4 05                  850 	.db #0x05
+   02C5 05                  851 	.db #0x05
+   02C6 05                  852 	.db #0x05
+   02C7 04                  853 	.db #0x04
+   02C8 02                  854 	.db #0x02
+   02C9 01                  855 	.db #0x01
+   02CA 01                  856 	.db #0x01
+   02CB 02                  857 	.db #0x02
+   02CC 04                  858 	.db #0x04
+   02CD 05                  859 	.db #0x05
+   02CE 05                  860 	.db #0x05
+   02CF 05                  861 	.db #0x05
+   02D0 06                  862 	.db #0x06
+   02D1 06                  863 	.db #0x06
+   02D2 06                  864 	.db #0x06
+   02D3 06                  865 	.db #0x06
+   02D4 06                  866 	.db #0x06
+   02D5 06                  867 	.db #0x06
+   02D6 06                  868 	.db #0x06
+   02D7 06                  869 	.db #0x06
+   02D8 05                  870 	.db #0x05
+   02D9 05                  871 	.db #0x05
+   02DA 05                  872 	.db #0x05
+   02DB 04                  873 	.db #0x04
+   02DC 02                  874 	.db #0x02
+   02DD 01                  875 	.db #0x01
+   02DE 01                  876 	.db #0x01
+   02DF 02                  877 	.db #0x02
+   02E0 04                  878 	.db #0x04
+   02E1 05                  879 	.db #0x05
+   02E2 05                  880 	.db #0x05
+   02E3 05                  881 	.db #0x05
+   02E4 06                  882 	.db #0x06
+   02E5 06                  883 	.db #0x06
+   02E6 06                  884 	.db #0x06
+   02E7 06                  885 	.db #0x06
+   02E8 06                  886 	.db #0x06
+   02E9 06                  887 	.db #0x06
+   02EA 06                  888 	.db #0x06
+   02EB 06                  889 	.db #0x06
+   02EC 05                  890 	.db #0x05
+   02ED 05                  891 	.db #0x05
+   02EE 05                  892 	.db #0x05
+   02EF 04                  893 	.db #0x04
+   02F0 02                  894 	.db #0x02
+   02F1 01                  895 	.db #0x01
+   02F2 01                  896 	.db #0x01
+   02F3 02                  897 	.db #0x02
+   02F4 04                  898 	.db #0x04
+   02F5 05                  899 	.db #0x05
+   02F6 05                  900 	.db #0x05
+   02F7 05                  901 	.db #0x05
+   02F8 06                  902 	.db #0x06
+   02F9 06                  903 	.db #0x06
+   02FA 06                  904 	.db #0x06
+   02FB 06                  905 	.db #0x06
+   02FC 06                  906 	.db #0x06
+   02FD 06                  907 	.db #0x06
+   02FE 06                  908 	.db #0x06
+   02FF 06                  909 	.db #0x06
+   0300 05                  910 	.db #0x05
+   0301 05                  911 	.db #0x05
+   0302 05                  912 	.db #0x05
+   0303 04                  913 	.db #0x04
+   0304 02                  914 	.db #0x02
+   0305 01                  915 	.db #0x01
+   0306 01                  916 	.db #0x01
+   0307 02                  917 	.db #0x02
+   0308 04                  918 	.db #0x04
+   0309 05                  919 	.db #0x05
+   030A 05                  920 	.db #0x05
+   030B 05                  921 	.db #0x05
+   030C 06                  922 	.db #0x06
+   030D 06                  923 	.db #0x06
+   030E 06                  924 	.db #0x06
+   030F 06                  925 	.db #0x06
+   0310 06                  926 	.db #0x06
+   0311 06                  927 	.db #0x06
+   0312 06                  928 	.db #0x06
+   0313 06                  929 	.db #0x06
+   0314 05                  930 	.db #0x05
+   0315 05                  931 	.db #0x05
+   0316 05                  932 	.db #0x05
+   0317 04                  933 	.db #0x04
+   0318 02                  934 	.db #0x02
+   0319 01                  935 	.db #0x01
+   031A 01                  936 	.db #0x01
+   031B 02                  937 	.db #0x02
+   031C 04                  938 	.db #0x04
+   031D 05                  939 	.db #0x05
+   031E 05                  940 	.db #0x05
+   031F 05                  941 	.db #0x05
+   0320 06                  942 	.db #0x06
+   0321 06                  943 	.db #0x06
+   0322 06                  944 	.db #0x06
+   0323 06                  945 	.db #0x06
+   0324 06                  946 	.db #0x06
+   0325 06                  947 	.db #0x06
+   0326 06                  948 	.db #0x06
+   0327 06                  949 	.db #0x06
+   0328 05                  950 	.db #0x05
+   0329 05                  951 	.db #0x05
+   032A 05                  952 	.db #0x05
+   032B 04                  953 	.db #0x04
+   032C 02                  954 	.db #0x02
+   032D 01                  955 	.db #0x01
+   032E 01                  956 	.db #0x01
+   032F 02                  957 	.db #0x02
+   0330 04                  958 	.db #0x04
+   0331 05                  959 	.db #0x05
+   0332 05                  960 	.db #0x05
+   0333 05                  961 	.db #0x05
+   0334 06                  962 	.db #0x06
+   0335 06                  963 	.db #0x06
+   0336 06                  964 	.db #0x06
+   0337 06                  965 	.db #0x06
+   0338 06                  966 	.db #0x06
+   0339 06                  967 	.db #0x06
+   033A 06                  968 	.db #0x06
+   033B 06                  969 	.db #0x06
+   033C 05                  970 	.db #0x05
+   033D 05                  971 	.db #0x05
+   033E 05                  972 	.db #0x05
+   033F 04                  973 	.db #0x04
+   0340 02                  974 	.db #0x02
+   0341 01                  975 	.db #0x01
+   0342 01                  976 	.db #0x01
+   0343 02                  977 	.db #0x02
+   0344 04                  978 	.db #0x04
+   0345 05                  979 	.db #0x05
+   0346 05                  980 	.db #0x05
+   0347 05                  981 	.db #0x05
+   0348 06                  982 	.db #0x06
+   0349 06                  983 	.db #0x06
+   034A 06                  984 	.db #0x06
+   034B 06                  985 	.db #0x06
+   034C 06                  986 	.db #0x06
+   034D 06                  987 	.db #0x06
+   034E 06                  988 	.db #0x06
+   034F 06                  989 	.db #0x06
+   0350 05                  990 	.db #0x05
+   0351 05                  991 	.db #0x05
+   0352 05                  992 	.db #0x05
+   0353 04                  993 	.db #0x04
+   0354 02                  994 	.db #0x02
+   0355 01                  995 	.db #0x01
+   0356 01                  996 	.db #0x01
+   0357 02                  997 	.db #0x02
+   0358 04                  998 	.db #0x04
+   0359 05                  999 	.db #0x05
+   035A 05                 1000 	.db #0x05
+   035B 05                 1001 	.db #0x05
+   035C 06                 1002 	.db #0x06
+   035D 06                 1003 	.db #0x06
+   035E 06                 1004 	.db #0x06
+   035F 06                 1005 	.db #0x06
+   0360 06                 1006 	.db #0x06
+   0361 06                 1007 	.db #0x06
+   0362 06                 1008 	.db #0x06
+   0363 06                 1009 	.db #0x06
+   0364 05                 1010 	.db #0x05
+   0365 05                 1011 	.db #0x05
+   0366 05                 1012 	.db #0x05
+   0367 04                 1013 	.db #0x04
+   0368 02                 1014 	.db #0x02
+   0369 01                 1015 	.db #0x01
+   036A 01                 1016 	.db #0x01
+   036B 02                 1017 	.db #0x02
+   036C 04                 1018 	.db #0x04
+   036D 05                 1019 	.db #0x05
+   036E 05                 1020 	.db #0x05
+   036F 05                 1021 	.db #0x05
+   0370 06                 1022 	.db #0x06
+   0371 06                 1023 	.db #0x06
+   0372 06                 1024 	.db #0x06
+   0373 06                 1025 	.db #0x06
+   0374 06                 1026 	.db #0x06
+   0375 06                 1027 	.db #0x06
+   0376 06                 1028 	.db #0x06
+   0377 06                 1029 	.db #0x06
+   0378 05                 1030 	.db #0x05
+   0379 05                 1031 	.db #0x05
+   037A 05                 1032 	.db #0x05
+   037B 04                 1033 	.db #0x04
+   037C 02                 1034 	.db #0x02
+   037D 01                 1035 	.db #0x01
+   037E 01                 1036 	.db #0x01
+   037F 02                 1037 	.db #0x02
+   0380 04                 1038 	.db #0x04
+   0381 05                 1039 	.db #0x05
+   0382 05                 1040 	.db #0x05
+   0383 05                 1041 	.db #0x05
+   0384 06                 1042 	.db #0x06
+   0385 06                 1043 	.db #0x06
+   0386 06                 1044 	.db #0x06
+   0387 06                 1045 	.db #0x06
+   0388 06                 1046 	.db #0x06
+   0389 06                 1047 	.db #0x06
+   038A 06                 1048 	.db #0x06
+   038B 06                 1049 	.db #0x06
+   038C 05                 1050 	.db #0x05
+   038D 05                 1051 	.db #0x05
+   038E 05                 1052 	.db #0x05
+   038F 04                 1053 	.db #0x04
+   0390 02                 1054 	.db #0x02
+   0391 01                 1055 	.db #0x01
+   0392 01                 1056 	.db #0x01
+   0393 02                 1057 	.db #0x02
+   0394 04                 1058 	.db #0x04
+   0395 05                 1059 	.db #0x05
+   0396 05                 1060 	.db #0x05
+   0397 05                 1061 	.db #0x05
+   0398 06                 1062 	.db #0x06
+   0399 06                 1063 	.db #0x06
+   039A 06                 1064 	.db #0x06
+   039B 06                 1065 	.db #0x06
+   039C 06                 1066 	.db #0x06
+   039D 06                 1067 	.db #0x06
+   039E 06                 1068 	.db #0x06
+   039F 06                 1069 	.db #0x06
+   03A0 05                 1070 	.db #0x05
+   03A1 05                 1071 	.db #0x05
+   03A2 05                 1072 	.db #0x05
+   03A3 04                 1073 	.db #0x04
+   03A4 02                 1074 	.db #0x02
+   03A5 01                 1075 	.db #0x01
+   03A6 01                 1076 	.db #0x01
+   03A7 02                 1077 	.db #0x02
+   03A8 04                 1078 	.db #0x04
+   03A9 05                 1079 	.db #0x05
+   03AA 05                 1080 	.db #0x05
+   03AB 05                 1081 	.db #0x05
+   03AC 06                 1082 	.db #0x06
+   03AD 06                 1083 	.db #0x06
+   03AE 06                 1084 	.db #0x06
+   03AF 06                 1085 	.db #0x06
+   03B0 06                 1086 	.db #0x06
+   03B1 06                 1087 	.db #0x06
+   03B2 06                 1088 	.db #0x06
+   03B3 06                 1089 	.db #0x06
+   03B4 05                 1090 	.db #0x05
+   03B5 05                 1091 	.db #0x05
+   03B6 05                 1092 	.db #0x05
+   03B7 04                 1093 	.db #0x04
+   03B8 02                 1094 	.db #0x02
+   03B9 01                 1095 	.db #0x01
+   03BA 01                 1096 	.db #0x01
+   03BB 02                 1097 	.db #0x02
+   03BC 02                 1098 	.db #0x02
+   03BD 02                 1099 	.db #0x02
+   03BE 02                 1100 	.db #0x02
+   03BF 02                 1101 	.db #0x02
+   03C0 02                 1102 	.db #0x02
+   03C1 02                 1103 	.db #0x02
+   03C2 02                 1104 	.db #0x02
+   03C3 02                 1105 	.db #0x02
+   03C4 02                 1106 	.db #0x02
+   03C5 02                 1107 	.db #0x02
+   03C6 02                 1108 	.db #0x02
+   03C7 02                 1109 	.db #0x02
+   03C8 02                 1110 	.db #0x02
+   03C9 02                 1111 	.db #0x02
+   03CA 02                 1112 	.db #0x02
+   03CB 02                 1113 	.db #0x02
+   03CC 02                 1114 	.db #0x02
+   03CD 01                 1115 	.db #0x01
+   03CE 01                 1116 	.db #0x01
+   03CF 01                 1117 	.db #0x01
+   03D0 03                 1118 	.db #0x03
+   03D1 03                 1119 	.db #0x03
+   03D2 03                 1120 	.db #0x03
+   03D3 03                 1121 	.db #0x03
+   03D4 03                 1122 	.db #0x03
+   03D5 03                 1123 	.db #0x03
+   03D6 03                 1124 	.db #0x03
+   03D7 03                 1125 	.db #0x03
+   03D8 03                 1126 	.db #0x03
+   03D9 03                 1127 	.db #0x03
+   03DA 03                 1128 	.db #0x03
+   03DB 03                 1129 	.db #0x03
+   03DC 03                 1130 	.db #0x03
+   03DD 03                 1131 	.db #0x03
+   03DE 03                 1132 	.db #0x03
+   03DF 03                 1133 	.db #0x03
+   03E0 01                 1134 	.db #0x01
+   03E1 01                 1135 	.db #0x01
+   03E2                    1136 _PAL_PLAYER:
+   03E2 00 00              1137 	.dw #0x0000
+   03E4 E0 6F              1138 	.dw #0x6FE0
+   03E6 80 46              1139 	.dw #0x4680
+   03E8 00 00              1140 	.dw #0x0000
+   03EA                    1141 _PAL_BG_SPOTS:
+   03EA FF 57              1142 	.dw #0x57FF
+   03EC BD 4B              1143 	.dw #0x4BBD
+   03EE 00 00              1144 	.dw #0x0000
+   03F0 00 00              1145 	.dw #0x0000
+   03F2                    1146 _PAL_BG_POT:
+   03F2 FF 57              1147 	.dw #0x57FF
+   03F4 39 67              1148 	.dw #0x6739
+   03F6 BF 1E              1149 	.dw #0x1EBF
+   03F8 29 25              1150 	.dw #0x2529
+   03FA                    1151 _PAL_BG_POT_DARK:
+   03FA 00 00              1152 	.dw #0x0000
+   03FC 18 63              1153 	.dw #0x6318
+   03FE 00 00              1154 	.dw #0x0000
+   0400 00 00              1155 	.dw #0x0000
+   0402                    1156 _PAL_BG_POT_DARK_2:
+   0402 00 00              1157 	.dw #0x0000
+   0404 F7 5E              1158 	.dw #0x5EF7
+   0406 00 00              1159 	.dw #0x0000
+   0408 00 00              1160 	.dw #0x0000
+   040A                    1161 _PAL_BG_POT_DARK_3:
+   040A 00 00              1162 	.dw #0x0000
+   040C D6 5A              1163 	.dw #0x5AD6
+   040E 00 00              1164 	.dw #0x0000
+   0410 00 00              1165 	.dw #0x0000
+   0412                    1166 _PAL_BG_FIRE:
+   0412 FF 57              1167 	.dw #0x57FF
+   0414 FF 2B              1168 	.dw #0x2BFF
+   0416 1F 00              1169 	.dw #0x001F
+   0418 00 00              1170 	.dw #0x0000
+                           1171 ;	src/food_spirit.c 56
+                           1172 ;	genLabel
+                           1173 ;	genFunction
+                           1174 ;	---------------------------------
+                           1175 ; Function player_jump_and_gravity
+                           1176 ; ---------------------------------
+   041A                    1177 ___player_jump_and_gravity_start:
+   041A                    1178 _player_jump_and_gravity:
+                           1179 	
+                           1180 ;	src/food_spirit.c 57
+                           1181 ;	genCmpGt
+                           1182 ;	AOP_HL for _player_jump_frames
+   041A 3E 00              1183 	ld	a,#0x00
+   041C 21 04 00           1184 	ld	hl,#_player_jump_frames
+   041F 96                 1185 	sub	a,(hl)
+   0420 D2 24 04           1186 	jp	nc,00102$
+                           1187 ;	src/food_spirit.c 58
+                           1188 ;	genMinus
+                           1189 ;	AOP_HL for _player_jump_frames
+   0423 35                 1190 	dec	(hl)
+                           1191 ;	genLabel
+   0424                    1192 00102$:
+                           1193 ;	src/food_spirit.c 61
+                           1194 ;	genCmpGt
+                           1195 ;	AOP_HL for _player_jump_frames
+   0424 3E 06              1196 	ld	a,#0x06
+   0426 21 04 00           1197 	ld	hl,#_player_jump_frames
+   0429 96                 1198 	sub	a,(hl)
+   042A D2 3D 04           1199 	jp	nc,00108$
+                           1200 ;	src/food_spirit.c 62
+                           1201 ;	genCmpGt
                            1202 ;	AOP_HL for _player_y
-                           1203 ;	genPlusIncr
-                           1204 ;	Can't optimise plus by inc, falling back to the normal way
-   0421 21 01 00           1205 	ld	hl,#_player_y
-   0424 7E                 1206 	ld	a,(hl)
-   0425 C6 08              1207 	add	a,#0x08
-   0427 47                 1208 	ld	b,a
-                           1209 ;	genIpush
-                           1210 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   0428 C5                 1211 	push	bc
-   0429 78                 1212 	ld	a,b
-   042A F5                 1213 	push	af
-   042B 33                 1214 	inc	sp
-                           1215 ;	genIpush
-                           1216 ;	AOP_HL for _player_x
-   042C 21 00 00           1217 	ld	hl,#_player_x
-   042F 7E                 1218 	ld	a,(hl)
-   0430 F5                 1219 	push	af
-   0431 33                 1220 	inc	sp
-                           1221 ;	genIpush
-   0432 3E 02              1222 	ld	a,#0x02
-   0434 F5                 1223 	push	af
-   0435 33                 1224 	inc	sp
-                           1225 ;	genCall
-   0436 CD 00 00           1226 	call	_move_sprite
-   0439 E8 03              1227 	lda	sp,3(sp)
-   043B C1                 1228 	pop	bc
-                           1229 ;	src/food_spirit.c 65
-                           1230 ;	genIpush
-                           1231 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   043C C5                 1232 	push	bc
-   043D 78                 1233 	ld	a,b
-   043E F5                 1234 	push	af
-   043F 33                 1235 	inc	sp
-                           1236 ;	genIpush
-   0440 79                 1237 	ld	a,c
-   0441 F5                 1238 	push	af
-   0442 33                 1239 	inc	sp
-                           1240 ;	genIpush
-   0443 3E 03              1241 	ld	a,#0x03
-   0445 F5                 1242 	push	af
-   0446 33                 1243 	inc	sp
-                           1244 ;	genCall
-   0447 CD 00 00           1245 	call	_move_sprite
-   044A E8 03              1246 	lda	sp,3(sp)
-   044C C1                 1247 	pop	bc
-                           1248 ;	src/food_spirit.c 66
-                           1249 ;	genPlus
-                           1250 ;	genPlusIncr
-                           1251 ;	Can't optimise plus by inc, falling back to the normal way
-   044D 78                 1252 	ld	a,b
-   044E C6 08              1253 	add	a,#0x08
-   0450 47                 1254 	ld	b,a
-                           1255 ;	genIpush
-                           1256 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   0451 C5                 1257 	push	bc
-   0452 78                 1258 	ld	a,b
-   0453 F5                 1259 	push	af
-   0454 33                 1260 	inc	sp
-                           1261 ;	genIpush
-                           1262 ;	AOP_HL for _player_x
-   0455 21 00 00           1263 	ld	hl,#_player_x
-   0458 7E                 1264 	ld	a,(hl)
-   0459 F5                 1265 	push	af
-   045A 33                 1266 	inc	sp
-                           1267 ;	genIpush
-   045B 3E 04              1268 	ld	a,#0x04
-   045D F5                 1269 	push	af
-   045E 33                 1270 	inc	sp
-                           1271 ;	genCall
-   045F CD 00 00           1272 	call	_move_sprite
-   0462 E8 03              1273 	lda	sp,3(sp)
-   0464 C1                 1274 	pop	bc
-                           1275 ;	src/food_spirit.c 67
-                           1276 ;	genIpush
-                           1277 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0465 78                 1278 	ld	a,b
-   0466 F5                 1279 	push	af
-   0467 33                 1280 	inc	sp
-                           1281 ;	genIpush
-   0468 79                 1282 	ld	a,c
-   0469 F5                 1283 	push	af
-   046A 33                 1284 	inc	sp
-                           1285 ;	genIpush
-   046B 3E 05              1286 	ld	a,#0x05
-   046D F5                 1287 	push	af
-   046E 33                 1288 	inc	sp
-                           1289 ;	genCall
-   046F CD 00 00           1290 	call	_move_sprite
-   0472 E8 03              1291 	lda	sp,3(sp)
-                           1292 ;	genLabel
-   0474                    1293 00101$:
-                           1294 ;	genEndFunction
-                           1295 	
-   0474 C9                 1296 	ret
-   0475                    1297 ___draw_player_end:
+   042D 3E 24              1203 	ld	a,#0x24
+   042F 21 01 00           1204 	ld	hl,#_player_y
+   0432 96                 1205 	sub	a,(hl)
+   0433 D2 49 04           1206 	jp	nc,00110$
+                           1207 ;	src/food_spirit.c 63
+                           1208 ;	genMinus
+                           1209 ;	AOP_HL for _player_y
+   0436 7E                 1210 	ld	a,(hl)
+   0437 C6 FD              1211 	add	a,#0xFD
+   0439 77                 1212 	ld	(hl),a
+                           1213 ;	genGoto
+   043A C3 49 04           1214 	jp	00110$
+                           1215 ;	genLabel
+   043D                    1216 00108$:
+                           1217 ;	src/food_spirit.c 65
+                           1218 ;	genCmpLt
+                           1219 ;	AOP_HL for _player_y
+   043D 21 01 00           1220 	ld	hl,#_player_y
+   0440 7E                 1221 	ld	a,(hl)
+   0441 FE 78              1222 	cp	#0x78
+   0443 D2 49 04           1223 	jp	nc,00110$
+                           1224 ;	src/food_spirit.c 66
+                           1225 ;	genPlus
+                           1226 ;	AOP_HL for _player_y
+                           1227 ;	genPlusIncr
+   0446 34                 1228 	inc	(hl)
+   0447 34                 1229 	inc	(hl)
+   0448 34                 1230 	inc	(hl)
+                           1231 ;	genLabel
+   0449                    1232 00110$:
+                           1233 ;	genEndFunction
+                           1234 	
+   0449 C9                 1235 	ret
+   044A                    1236 ___player_jump_and_gravity_end:
+                           1237 ;	src/food_spirit.c 70
+                           1238 ;	genLabel
+                           1239 ;	genFunction
+                           1240 ;	---------------------------------
+                           1241 ; Function player_idle_anim
+                           1242 ; ---------------------------------
+   044A                    1243 ___player_idle_anim_start:
+   044A                    1244 _player_idle_anim:
+                           1245 	
+                           1246 ;	src/food_spirit.c 71
+                           1247 ;	genCmpLt
+                           1248 ;	AOP_HL for _player_idle_anim_frames
+   044A 21 05 00           1249 	ld	hl,#_player_idle_anim_frames
+   044D 7E                 1250 	ld	a,(hl)
+   044E D6 78              1251 	sub	a,#0x78
+   0450 23                 1252 	inc	hl
+   0451 7E                 1253 	ld	a,(hl)
+   0452 DE 00              1254 	sbc	a,#0x00
+   0454 D2 60 04           1255 	jp	nc,00102$
+                           1256 ;	src/food_spirit.c 72
+                           1257 ;	genPlus
+                           1258 ;	AOP_HL for _player_idle_anim_frames
+                           1259 ;	genPlusIncr
+   0457 2B                 1260 	dec	hl
+   0458 34                 1261 	inc	(hl)
+   0459 20 02              1262 	jr	nz,00127$
+   045B 23                 1263 	inc	hl
+   045C 34                 1264 	inc	(hl)
+   045D                    1265 00127$:
+                           1266 ;	genGoto
+   045D C3 68 04           1267 	jp	00103$
+                           1268 ;	genLabel
+   0460                    1269 00102$:
+                           1270 ;	src/food_spirit.c 74
+                           1271 ;	genAssign
+                           1272 ;	AOP_HL for _player_idle_anim_frames
+   0460 21 05 00           1273 	ld	hl,#_player_idle_anim_frames
+   0463 36 00              1274 	ld	(hl),#0x00
+   0465 23                 1275 	inc	hl
+   0466 36 00              1276 	ld	(hl),#0x00
+                           1277 ;	genLabel
+   0468                    1278 00103$:
+                           1279 ;	src/food_spirit.c 77
+                           1280 ;	genCmpLt
+                           1281 ;	AOP_HL for _player_idle_anim_frames
+   0468 21 05 00           1282 	ld	hl,#_player_idle_anim_frames
+   046B 7E                 1283 	ld	a,(hl)
+   046C D6 14              1284 	sub	a,#0x14
+   046E 23                 1285 	inc	hl
+   046F 7E                 1286 	ld	a,(hl)
+   0470 DE 00              1287 	sbc	a,#0x00
+   0472 D2 7D 04           1288 	jp	nc,00117$
+                           1289 ;	src/food_spirit.c 78
+                           1290 ;	genAssign
+                           1291 ;	AOP_HL for _player_y_draw_offset
+   0475 21 02 00           1292 	ld	hl,#_player_y_draw_offset
+   0478 36 FF              1293 	ld	(hl),#0xFF
+                           1294 ;	genGoto
+   047A C3 D6 04           1295 	jp	00119$
+                           1296 ;	genLabel
+   047D                    1297 00117$:
                            1298 ;	src/food_spirit.c 79
-                           1299 ;	genLabel
-                           1300 ;	genFunction
-                           1301 ;	---------------------------------
-                           1302 ; Function game_loop
-                           1303 ; ---------------------------------
-   0475                    1304 ___game_loop_start:
-   0475                    1305 _game_loop:
-                           1306 	
-                           1307 ;	src/food_spirit.c 80
-                           1308 ;	genCall
-                           1309 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0475 CD 00 00           1310 	call	_read_controls
-                           1311 ;	src/food_spirit.c 82
-                           1312 ;	genCall
-                           1313 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0478 CD C0 03           1314 	call	_player_jump_and_gravity
-                           1315 ;	src/food_spirit.c 83
-                           1316 ;	genCall
-                           1317 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   047B CD F0 03           1318 	call	_draw_player
-                           1319 ;	genLabel
-   047E                    1320 00101$:
-                           1321 ;	genEndFunction
-                           1322 	
-   047E C9                 1323 	ret
-   047F                    1324 ___game_loop_end:
-                           1325 ;	src/food_spirit.c 86
-                           1326 ;	genLabel
-                           1327 ;	genFunction
-                           1328 ;	---------------------------------
-                           1329 ; Function init_player
-                           1330 ; ---------------------------------
-   047F                    1331 ___init_player_start:
-   047F                    1332 _init_player:
-                           1333 	
-                           1334 ;	src/food_spirit.c 87
-                           1335 ;	genAssign
-                           1336 ;	AOP_HL for _player_x
-   047F 21 00 00           1337 	ld	hl,#_player_x
-   0482 36 28              1338 	ld	(hl),#0x28
-                           1339 ;	src/food_spirit.c 88
-                           1340 ;	genAssign
-                           1341 ;	AOP_HL for _player_y
-   0484 21 01 00           1342 	ld	hl,#_player_y
-   0487 36 28              1343 	ld	(hl),#0x28
-                           1344 ;	src/food_spirit.c 89
-                           1345 ;	genAssign
-                           1346 ;	AOP_HL for _player_jump_frames
-   0489 21 03 00           1347 	ld	hl,#_player_jump_frames
-   048C 36 00              1348 	ld	(hl),#0x00
-                           1349 ;	src/food_spirit.c 91
-                           1350 ;	genAssign
-                           1351 ;	AOP_HL for _SPR_DAT_PLAYER_0_0_MID
-   048E 21 5A 00           1352 	ld	hl,#_SPR_DAT_PLAYER_0_0_MID
-   0491 4E                 1353 	ld	c,(hl)
-                           1354 ;	genCast
-                           1355 ; Removed redundent load
-   0492 06 00              1356 	ld	b,#0x00
-                           1357 ;	genIpush
-                           1358 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0494 21 88 03           1359 	ld	hl,#_PAL_PLAYER
-   0497 E5                 1360 	push	hl
-                           1361 ;	genIpush
-   0498 C5                 1362 	push	bc
-                           1363 ;	genIpush
-   0499 21 00 00           1364 	ld	hl,#0x0000
-   049C E5                 1365 	push	hl
-                           1366 ;	genCall
-   049D CD 00 00           1367 	call	_set_up_sprite_simple
-   04A0 E8 06              1368 	lda	sp,6(sp)
-                           1369 ;	src/food_spirit.c 92
-                           1370 ;	genAssign
-                           1371 ;	AOP_HL for _SPR_DAT_PLAYER_0_1_MID
-   04A2 21 5B 00           1372 	ld	hl,#_SPR_DAT_PLAYER_0_1_MID
-   04A5 4E                 1373 	ld	c,(hl)
-                           1374 ;	genCast
-                           1375 ; Removed redundent load
-   04A6 06 00              1376 	ld	b,#0x00
-                           1377 ;	genIpush
-                           1378 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   04A8 21 88 03           1379 	ld	hl,#_PAL_PLAYER
-   04AB E5                 1380 	push	hl
-                           1381 ;	genIpush
-   04AC C5                 1382 	push	bc
-                           1383 ;	genIpush
-   04AD 21 01 00           1384 	ld	hl,#0x0001
-   04B0 E5                 1385 	push	hl
-                           1386 ;	genCall
-   04B1 CD 00 00           1387 	call	_set_up_sprite_simple
-   04B4 E8 06              1388 	lda	sp,6(sp)
-                           1389 ;	src/food_spirit.c 93
-                           1390 ;	genAssign
-                           1391 ;	AOP_HL for _SPR_DAT_PLAYER_1_0_MID
-   04B6 21 5C 00           1392 	ld	hl,#_SPR_DAT_PLAYER_1_0_MID
-   04B9 4E                 1393 	ld	c,(hl)
-                           1394 ;	genCast
-                           1395 ; Removed redundent load
-   04BA 06 00              1396 	ld	b,#0x00
-                           1397 ;	genIpush
-                           1398 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   04BC 21 88 03           1399 	ld	hl,#_PAL_PLAYER
-   04BF E5                 1400 	push	hl
-                           1401 ;	genIpush
-   04C0 C5                 1402 	push	bc
-                           1403 ;	genIpush
-   04C1 21 02 00           1404 	ld	hl,#0x0002
-   04C4 E5                 1405 	push	hl
-                           1406 ;	genCall
-   04C5 CD 00 00           1407 	call	_set_up_sprite_simple
-   04C8 E8 06              1408 	lda	sp,6(sp)
-                           1409 ;	src/food_spirit.c 94
-                           1410 ;	genAssign
-                           1411 ;	AOP_HL for _SPR_DAT_PLAYER_1_1_MID
-   04CA 21 5D 00           1412 	ld	hl,#_SPR_DAT_PLAYER_1_1_MID
-   04CD 4E                 1413 	ld	c,(hl)
-                           1414 ;	genCast
-                           1415 ; Removed redundent load
-   04CE 06 00              1416 	ld	b,#0x00
-                           1417 ;	genIpush
-                           1418 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   04D0 21 88 03           1419 	ld	hl,#_PAL_PLAYER
-   04D3 E5                 1420 	push	hl
-                           1421 ;	genIpush
-   04D4 C5                 1422 	push	bc
-                           1423 ;	genIpush
-   04D5 21 03 00           1424 	ld	hl,#0x0003
-   04D8 E5                 1425 	push	hl
-                           1426 ;	genCall
-   04D9 CD 00 00           1427 	call	_set_up_sprite_simple
-   04DC E8 06              1428 	lda	sp,6(sp)
-                           1429 ;	src/food_spirit.c 95
-                           1430 ;	genAssign
-                           1431 ;	AOP_HL for _SPR_DAT_PLAYER_2_0_MID
-   04DE 21 5E 00           1432 	ld	hl,#_SPR_DAT_PLAYER_2_0_MID
-   04E1 4E                 1433 	ld	c,(hl)
-                           1434 ;	genCast
-                           1435 ; Removed redundent load
-   04E2 06 00              1436 	ld	b,#0x00
+                           1299 ;	genCmpLt
+                           1300 ;	AOP_HL for _player_idle_anim_frames
+   047D 21 05 00           1301 	ld	hl,#_player_idle_anim_frames
+   0480 7E                 1302 	ld	a,(hl)
+   0481 D6 28              1303 	sub	a,#0x28
+   0483 23                 1304 	inc	hl
+   0484 7E                 1305 	ld	a,(hl)
+   0485 DE 00              1306 	sbc	a,#0x00
+   0487 D2 92 04           1307 	jp	nc,00114$
+                           1308 ;	src/food_spirit.c 80
+                           1309 ;	genAssign
+                           1310 ;	AOP_HL for _player_y_draw_offset
+   048A 21 02 00           1311 	ld	hl,#_player_y_draw_offset
+   048D 36 FE              1312 	ld	(hl),#0xFE
+                           1313 ;	genGoto
+   048F C3 D6 04           1314 	jp	00119$
+                           1315 ;	genLabel
+   0492                    1316 00114$:
+                           1317 ;	src/food_spirit.c 81
+                           1318 ;	genCmpLt
+                           1319 ;	AOP_HL for _player_idle_anim_frames
+   0492 21 05 00           1320 	ld	hl,#_player_idle_anim_frames
+   0495 7E                 1321 	ld	a,(hl)
+   0496 D6 3C              1322 	sub	a,#0x3C
+   0498 23                 1323 	inc	hl
+   0499 7E                 1324 	ld	a,(hl)
+   049A DE 00              1325 	sbc	a,#0x00
+   049C D2 A7 04           1326 	jp	nc,00111$
+                           1327 ;	src/food_spirit.c 82
+                           1328 ;	genAssign
+                           1329 ;	AOP_HL for _player_y_draw_offset
+   049F 21 02 00           1330 	ld	hl,#_player_y_draw_offset
+   04A2 36 FD              1331 	ld	(hl),#0xFD
+                           1332 ;	genGoto
+   04A4 C3 D6 04           1333 	jp	00119$
+                           1334 ;	genLabel
+   04A7                    1335 00111$:
+                           1336 ;	src/food_spirit.c 83
+                           1337 ;	genCmpLt
+                           1338 ;	AOP_HL for _player_idle_anim_frames
+   04A7 21 05 00           1339 	ld	hl,#_player_idle_anim_frames
+   04AA 7E                 1340 	ld	a,(hl)
+   04AB D6 50              1341 	sub	a,#0x50
+   04AD 23                 1342 	inc	hl
+   04AE 7E                 1343 	ld	a,(hl)
+   04AF DE 00              1344 	sbc	a,#0x00
+   04B1 D2 BC 04           1345 	jp	nc,00108$
+                           1346 ;	src/food_spirit.c 84
+                           1347 ;	genAssign
+                           1348 ;	AOP_HL for _player_y_draw_offset
+   04B4 21 02 00           1349 	ld	hl,#_player_y_draw_offset
+   04B7 36 FE              1350 	ld	(hl),#0xFE
+                           1351 ;	genGoto
+   04B9 C3 D6 04           1352 	jp	00119$
+                           1353 ;	genLabel
+   04BC                    1354 00108$:
+                           1355 ;	src/food_spirit.c 85
+                           1356 ;	genCmpLt
+                           1357 ;	AOP_HL for _player_idle_anim_frames
+   04BC 21 05 00           1358 	ld	hl,#_player_idle_anim_frames
+   04BF 7E                 1359 	ld	a,(hl)
+   04C0 D6 64              1360 	sub	a,#0x64
+   04C2 23                 1361 	inc	hl
+   04C3 7E                 1362 	ld	a,(hl)
+   04C4 DE 00              1363 	sbc	a,#0x00
+   04C6 D2 D1 04           1364 	jp	nc,00105$
+                           1365 ;	src/food_spirit.c 86
+                           1366 ;	genAssign
+                           1367 ;	AOP_HL for _player_y_draw_offset
+   04C9 21 02 00           1368 	ld	hl,#_player_y_draw_offset
+   04CC 36 FF              1369 	ld	(hl),#0xFF
+                           1370 ;	genGoto
+   04CE C3 D6 04           1371 	jp	00119$
+                           1372 ;	genLabel
+   04D1                    1373 00105$:
+                           1374 ;	src/food_spirit.c 88
+                           1375 ;	genAssign
+                           1376 ;	AOP_HL for _player_y_draw_offset
+   04D1 21 02 00           1377 	ld	hl,#_player_y_draw_offset
+   04D4 36 00              1378 	ld	(hl),#0x00
+                           1379 ;	genLabel
+   04D6                    1380 00119$:
+                           1381 ;	genEndFunction
+                           1382 	
+   04D6 C9                 1383 	ret
+   04D7                    1384 ___player_idle_anim_end:
+                           1385 ;	src/food_spirit.c 92
+                           1386 ;	genLabel
+                           1387 ;	genFunction
+                           1388 ;	---------------------------------
+                           1389 ; Function draw_player
+                           1390 ; ---------------------------------
+   04D7                    1391 ___draw_player_start:
+   04D7                    1392 _draw_player:
+   04D7 E8 FF              1393 	lda	sp,-1(sp)
+                           1394 ;	src/food_spirit.c 95
+                           1395 ;	genCmpEq
+                           1396 ;	AOP_HL for _player_dir
+                           1397 ; genCmpEq: left 1, right 1, result 0
+   04D9 21 03 00           1398 	ld	hl,#_player_dir
+   04DC 7E                 1399 	ld	a,(hl)
+   04DD B7                 1400 	or	a,a
+   04DE C2 E9 04           1401 	jp	nz,00102$
+   04E1 18 03              1402 	jr	00107$
+   04E3                    1403 00106$:
+   04E3 C3 E9 04           1404 	jp	00102$
+   04E6                    1405 00107$:
+                           1406 ;	src/food_spirit.c 96
+                           1407 ;	genCall
+                           1408 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   04E6 CD 4A 04           1409 	call	_player_idle_anim
+                           1410 ;	genLabel
+   04E9                    1411 00102$:
+                           1412 ;	src/food_spirit.c 98
+                           1413 ;	genPlus
+                           1414 ;	AOP_HL for _player_y
+                           1415 ;	AOP_HL for _player_y_draw_offset
+                           1416 ;	Can't optimise plus by inc, falling back to the normal way
+   04E9 21 01 00           1417 	ld	hl,#_player_y
+   04EC 7E                 1418 	ld	a,(hl)
+   04ED 21 02 00           1419 	ld	hl,#_player_y_draw_offset
+   04F0 86                 1420 	add	a,(hl)
+   04F1 4F                 1421 	ld	c,a
+                           1422 ;	genAssign
+                           1423 ;	(registers are the same)
+                           1424 ;	src/food_spirit.c 100
+                           1425 ;	genIpush
+                           1426 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   04F2 C5                 1427 	push	bc
+   04F3 79                 1428 	ld	a,c
+   04F4 F5                 1429 	push	af
+   04F5 33                 1430 	inc	sp
+                           1431 ;	genIpush
+                           1432 ;	AOP_HL for _player_x
+   04F6 21 00 00           1433 	ld	hl,#_player_x
+   04F9 7E                 1434 	ld	a,(hl)
+   04FA F5                 1435 	push	af
+   04FB 33                 1436 	inc	sp
                            1437 ;	genIpush
-                           1438 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   04E4 21 88 03           1439 	ld	hl,#_PAL_PLAYER
-   04E7 E5                 1440 	push	hl
-                           1441 ;	genIpush
-   04E8 C5                 1442 	push	bc
-                           1443 ;	genIpush
-   04E9 21 04 00           1444 	ld	hl,#0x0004
-   04EC E5                 1445 	push	hl
-                           1446 ;	genCall
-   04ED CD 00 00           1447 	call	_set_up_sprite_simple
-   04F0 E8 06              1448 	lda	sp,6(sp)
-                           1449 ;	src/food_spirit.c 96
-                           1450 ;	genAssign
-                           1451 ;	AOP_HL for _SPR_DAT_PLAYER_2_1_MID
-   04F2 21 5F 00           1452 	ld	hl,#_SPR_DAT_PLAYER_2_1_MID
-   04F5 4E                 1453 	ld	c,(hl)
-                           1454 ;	genCast
-                           1455 ; Removed redundent load
-   04F6 06 00              1456 	ld	b,#0x00
-                           1457 ;	genIpush
-                           1458 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   04F8 21 88 03           1459 	ld	hl,#_PAL_PLAYER
-   04FB E5                 1460 	push	hl
+   04FC 3E 00              1438 	ld	a,#0x00
+   04FE F5                 1439 	push	af
+   04FF 33                 1440 	inc	sp
+                           1441 ;	genCall
+   0500 CD 00 00           1442 	call	_move_sprite
+   0503 E8 03              1443 	lda	sp,3(sp)
+   0505 E1                 1444 	pop	hl
+   0506 4D                 1445 	ld	c,l
+                           1446 ;	src/food_spirit.c 101
+                           1447 ;	genPlus
+                           1448 ;	AOP_HL for _player_x
+                           1449 ;	genPlusIncr
+                           1450 ;	Can't optimise plus by inc, falling back to the normal way
+   0507 21 00 00           1451 	ld	hl,#_player_x
+   050A 7E                 1452 	ld	a,(hl)
+   050B C6 08              1453 	add	a,#0x08
+   050D 47                 1454 	ld	b,a
+                           1455 ;	genIpush
+                           1456 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   050E C5                 1457 	push	bc
+   050F 79                 1458 	ld	a,c
+   0510 F5                 1459 	push	af
+   0511 33                 1460 	inc	sp
                            1461 ;	genIpush
-   04FC C5                 1462 	push	bc
-                           1463 ;	genIpush
-   04FD 21 05 00           1464 	ld	hl,#0x0005
-   0500 E5                 1465 	push	hl
-                           1466 ;	genCall
-   0501 CD 00 00           1467 	call	_set_up_sprite_simple
-   0504 E8 06              1468 	lda	sp,6(sp)
-                           1469 ;	genLabel
-   0506                    1470 00101$:
-                           1471 ;	genEndFunction
-                           1472 	
-   0506 C9                 1473 	ret
-   0507                    1474 ___init_player_end:
-                           1475 ;	src/food_spirit.c 99
-                           1476 ;	genLabel
-                           1477 ;	genFunction
-                           1478 ;	---------------------------------
-                           1479 ; Function init_bg
-                           1480 ; ---------------------------------
-   0507                    1481 ___init_bg_start:
-   0507                    1482 _init_bg:
-                           1483 	
-                           1484 ;	src/food_spirit.c 100
-                           1485 ;	genIpush
-                           1486 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0507 21 90 03           1487 	ld	hl,#_PAL_BG_SPOTS
-   050A E5                 1488 	push	hl
+   0512 78                 1462 	ld	a,b
+   0513 F5                 1463 	push	af
+   0514 33                 1464 	inc	sp
+                           1465 ;	genIpush
+   0515 3E 01              1466 	ld	a,#0x01
+   0517 F5                 1467 	push	af
+   0518 33                 1468 	inc	sp
+                           1469 ;	genCall
+   0519 CD 00 00           1470 	call	_move_sprite
+   051C E8 03              1471 	lda	sp,3(sp)
+   051E C1                 1472 	pop	bc
+                           1473 ;	src/food_spirit.c 102
+                           1474 ;	genPlus
+                           1475 ;	AOP_STK for _draw_player_sloc0_1_0
+                           1476 ;	genPlusIncr
+                           1477 ;	Can't optimise plus by inc, falling back to the normal way
+   051F 79                 1478 	ld	a,c
+   0520 C6 08              1479 	add	a,#0x08
+   0522 F8 00              1480 	lda	hl,0(sp)
+   0524 77                 1481 	ld	(hl),a
+                           1482 ;	genIpush
+                           1483 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0525 C5                 1484 	push	bc
+                           1485 ;	AOP_STK for _draw_player_sloc0_1_0
+   0526 7E                 1486 	ld	a,(hl)
+   0527 F5                 1487 	push	af
+   0528 33                 1488 	inc	sp
                            1489 ;	genIpush
-   050B 21 01 01           1490 	ld	hl,#0x0101
-   050E E5                 1491 	push	hl
-                           1492 ;	genCall
-   050F CD 00 00           1493 	call	_set_bkg_palette
-   0512 E8 04              1494 	lda	sp,4(sp)
-                           1495 ;	src/food_spirit.c 101
-                           1496 ;	genIpush
-                           1497 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0514 21 98 03           1498 	ld	hl,#_PAL_BG_POT
-   0517 E5                 1499 	push	hl
-                           1500 ;	genIpush
-   0518 21 02 01           1501 	ld	hl,#0x0102
-   051B E5                 1502 	push	hl
-                           1503 ;	genCall
-   051C CD 00 00           1504 	call	_set_bkg_palette
-   051F E8 04              1505 	lda	sp,4(sp)
-                           1506 ;	src/food_spirit.c 102
-                           1507 ;	genIpush
-                           1508 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0521 21 B8 03           1509 	ld	hl,#_PAL_BG_FIRE
-   0524 E5                 1510 	push	hl
-                           1511 ;	genIpush
-   0525 21 03 01           1512 	ld	hl,#0x0103
-   0528 E5                 1513 	push	hl
-                           1514 ;	genCall
-   0529 CD 00 00           1515 	call	_set_bkg_palette
-   052C E8 04              1516 	lda	sp,4(sp)
-                           1517 ;	src/food_spirit.c 103
-                           1518 ;	genIpush
-                           1519 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   052E 21 A0 03           1520 	ld	hl,#_PAL_BG_POT_DARK
-   0531 E5                 1521 	push	hl
-                           1522 ;	genIpush
-   0532 21 04 01           1523 	ld	hl,#0x0104
-   0535 E5                 1524 	push	hl
-                           1525 ;	genCall
-   0536 CD 00 00           1526 	call	_set_bkg_palette
-   0539 E8 04              1527 	lda	sp,4(sp)
-                           1528 ;	src/food_spirit.c 104
-                           1529 ;	genIpush
-                           1530 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   053B 21 A8 03           1531 	ld	hl,#_PAL_BG_POT_DARK_2
-   053E E5                 1532 	push	hl
-                           1533 ;	genIpush
-   053F 21 05 01           1534 	ld	hl,#0x0105
-   0542 E5                 1535 	push	hl
-                           1536 ;	genCall
-   0543 CD 00 00           1537 	call	_set_bkg_palette
-   0546 E8 04              1538 	lda	sp,4(sp)
-                           1539 ;	src/food_spirit.c 105
-                           1540 ;	genIpush
-                           1541 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0548 21 B0 03           1542 	ld	hl,#_PAL_BG_POT_DARK_3
-   054B E5                 1543 	push	hl
-                           1544 ;	genIpush
-   054C 21 06 01           1545 	ld	hl,#0x0106
-   054F E5                 1546 	push	hl
+                           1490 ;	AOP_HL for _player_x
+   0529 21 00 00           1491 	ld	hl,#_player_x
+   052C 7E                 1492 	ld	a,(hl)
+   052D F5                 1493 	push	af
+   052E 33                 1494 	inc	sp
+                           1495 ;	genIpush
+   052F 3E 02              1496 	ld	a,#0x02
+   0531 F5                 1497 	push	af
+   0532 33                 1498 	inc	sp
+                           1499 ;	genCall
+   0533 CD 00 00           1500 	call	_move_sprite
+   0536 E8 03              1501 	lda	sp,3(sp)
+   0538 C1                 1502 	pop	bc
+                           1503 ;	src/food_spirit.c 103
+                           1504 ;	genIpush
+                           1505 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0539 C5                 1506 	push	bc
+                           1507 ;	AOP_STK for _draw_player_sloc0_1_0
+   053A F8 02              1508 	lda	hl,2(sp)
+   053C 7E                 1509 	ld	a,(hl)
+   053D F5                 1510 	push	af
+   053E 33                 1511 	inc	sp
+                           1512 ;	genIpush
+   053F 78                 1513 	ld	a,b
+   0540 F5                 1514 	push	af
+   0541 33                 1515 	inc	sp
+                           1516 ;	genIpush
+   0542 3E 03              1517 	ld	a,#0x03
+   0544 F5                 1518 	push	af
+   0545 33                 1519 	inc	sp
+                           1520 ;	genCall
+   0546 CD 00 00           1521 	call	_move_sprite
+   0549 E8 03              1522 	lda	sp,3(sp)
+   054B C1                 1523 	pop	bc
+                           1524 ;	src/food_spirit.c 104
+                           1525 ;	genPlus
+                           1526 ;	genPlusIncr
+                           1527 ;	Can't optimise plus by inc, falling back to the normal way
+   054C 79                 1528 	ld	a,c
+   054D C6 10              1529 	add	a,#0x10
+   054F 4F                 1530 	ld	c,a
+                           1531 ;	genIpush
+                           1532 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0550 C5                 1533 	push	bc
+   0551 79                 1534 	ld	a,c
+   0552 F5                 1535 	push	af
+   0553 33                 1536 	inc	sp
+                           1537 ;	genIpush
+                           1538 ;	AOP_HL for _player_x
+   0554 21 00 00           1539 	ld	hl,#_player_x
+   0557 7E                 1540 	ld	a,(hl)
+   0558 F5                 1541 	push	af
+   0559 33                 1542 	inc	sp
+                           1543 ;	genIpush
+   055A 3E 04              1544 	ld	a,#0x04
+   055C F5                 1545 	push	af
+   055D 33                 1546 	inc	sp
                            1547 ;	genCall
-   0550 CD 00 00           1548 	call	_set_bkg_palette
-   0553 E8 04              1549 	lda	sp,4(sp)
-                           1550 ;	src/food_spirit.c 107
-                           1551 ;	genIpush
-                           1552 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0555 21 70 00           1553 	ld	hl,#_TILE_SPOTS
-   0558 E5                 1554 	push	hl
-                           1555 ;	genIpush
-   0559 21 01 01           1556 	ld	hl,#0x0101
-   055C E5                 1557 	push	hl
-                           1558 ;	genCall
-   055D CD 00 00           1559 	call	_set_bkg_data
-   0560 E8 04              1560 	lda	sp,4(sp)
-                           1561 ;	src/food_spirit.c 108
-                           1562 ;	genIpush
-                           1563 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0562 21 80 00           1564 	ld	hl,#_TILE_POT_FLOOR
-   0565 E5                 1565 	push	hl
-                           1566 ;	genIpush
-   0566 21 02 01           1567 	ld	hl,#0x0102
-   0569 E5                 1568 	push	hl
-                           1569 ;	genCall
-   056A CD 00 00           1570 	call	_set_bkg_data
-   056D E8 04              1571 	lda	sp,4(sp)
-                           1572 ;	src/food_spirit.c 109
-                           1573 ;	genIpush
-                           1574 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   056F 21 90 00           1575 	ld	hl,#_TILE_POT_LEFT_CORNER
-   0572 E5                 1576 	push	hl
-                           1577 ;	genIpush
-   0573 21 03 01           1578 	ld	hl,#0x0103
-   0576 E5                 1579 	push	hl
-                           1580 ;	genCall
-   0577 CD 00 00           1581 	call	_set_bkg_data
-   057A E8 04              1582 	lda	sp,4(sp)
-                           1583 ;	src/food_spirit.c 110
-                           1584 ;	genIpush
+   055E CD 00 00           1548 	call	_move_sprite
+   0561 E8 03              1549 	lda	sp,3(sp)
+   0563 C1                 1550 	pop	bc
+                           1551 ;	src/food_spirit.c 105
+                           1552 ;	genIpush
+                           1553 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0564 79                 1554 	ld	a,c
+   0565 F5                 1555 	push	af
+   0566 33                 1556 	inc	sp
+                           1557 ;	genIpush
+   0567 78                 1558 	ld	a,b
+   0568 F5                 1559 	push	af
+   0569 33                 1560 	inc	sp
+                           1561 ;	genIpush
+   056A 3E 05              1562 	ld	a,#0x05
+   056C F5                 1563 	push	af
+   056D 33                 1564 	inc	sp
+                           1565 ;	genCall
+   056E CD 00 00           1566 	call	_move_sprite
+   0571 E8 03              1567 	lda	sp,3(sp)
+                           1568 ;	genLabel
+   0573                    1569 00103$:
+                           1570 ;	genEndFunction
+   0573 E8 01              1571 	lda	sp,1(sp)
+   0575 C9                 1572 	ret
+   0576                    1573 ___draw_player_end:
+                           1574 ;	src/food_spirit.c 108
+                           1575 ;	genLabel
+                           1576 ;	genFunction
+                           1577 ;	---------------------------------
+                           1578 ; Function game_loop
+                           1579 ; ---------------------------------
+   0576                    1580 ___game_loop_start:
+   0576                    1581 _game_loop:
+                           1582 	
+                           1583 ;	src/food_spirit.c 109
+                           1584 ;	genCall
                            1585 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   057C 21 A0 00           1586 	ld	hl,#_TILE_POT_RIGHT_CORNER
-   057F E5                 1587 	push	hl
-                           1588 ;	genIpush
-   0580 21 04 01           1589 	ld	hl,#0x0104
-   0583 E5                 1590 	push	hl
-                           1591 ;	genCall
-   0584 CD 00 00           1592 	call	_set_bkg_data
-   0587 E8 04              1593 	lda	sp,4(sp)
-                           1594 ;	src/food_spirit.c 111
-                           1595 ;	genIpush
-                           1596 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0589 21 B0 00           1597 	ld	hl,#_TILE_POT_LEFT_WALL
-   058C E5                 1598 	push	hl
-                           1599 ;	genIpush
-   058D 21 05 01           1600 	ld	hl,#0x0105
-   0590 E5                 1601 	push	hl
-                           1602 ;	genCall
-   0591 CD 00 00           1603 	call	_set_bkg_data
-   0594 E8 04              1604 	lda	sp,4(sp)
-                           1605 ;	src/food_spirit.c 112
-                           1606 ;	genIpush
-                           1607 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0596 21 C0 00           1608 	ld	hl,#_TILE_POT_RIGHT_WALL
-   0599 E5                 1609 	push	hl
-                           1610 ;	genIpush
-   059A 21 06 01           1611 	ld	hl,#0x0106
-   059D E5                 1612 	push	hl
-                           1613 ;	genCall
-   059E CD 00 00           1614 	call	_set_bkg_data
-   05A1 E8 04              1615 	lda	sp,4(sp)
-                           1616 ;	src/food_spirit.c 113
-                           1617 ;	genIpush
-                           1618 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   05A3 21 D0 00           1619 	ld	hl,#_TILE_FIRE
-   05A6 E5                 1620 	push	hl
-                           1621 ;	genIpush
-   05A7 21 07 01           1622 	ld	hl,#0x0107
-   05AA E5                 1623 	push	hl
-                           1624 ;	genCall
-   05AB CD 00 00           1625 	call	_set_bkg_data
-   05AE E8 04              1626 	lda	sp,4(sp)
-                           1627 ;	src/food_spirit.c 114
-                           1628 ;	genIpush
-                           1629 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   05B0 21 60 00           1630 	ld	hl,#_TILE_BLANK
-   05B3 E5                 1631 	push	hl
-                           1632 ;	genIpush
-   05B4 21 08 01           1633 	ld	hl,#0x0108
-   05B7 E5                 1634 	push	hl
-                           1635 ;	genCall
-   05B8 CD 00 00           1636 	call	_set_bkg_data
-   05BB E8 04              1637 	lda	sp,4(sp)
-                           1638 ;	src/food_spirit.c 116
-                           1639 ;	genIpush
-                           1640 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   05BD 21 34 02           1641 	ld	hl,#_MAP_PAL_BG_1
-   05C0 E5                 1642 	push	hl
-                           1643 ;	genIpush
-   05C1 21 E0 00           1644 	ld	hl,#_MAP_BG_1
-   05C4 E5                 1645 	push	hl
-                           1646 ;	genIpush
-   05C5 21 11 00           1647 	ld	hl,#0x0011
-   05C8 E5                 1648 	push	hl
-                           1649 ;	genIpush
-   05C9 21 14 00           1650 	ld	hl,#0x0014
-   05CC E5                 1651 	push	hl
+   0576 CD 00 00           1586 	call	_read_controls
+                           1587 ;	src/food_spirit.c 111
+                           1588 ;	genCall
+                           1589 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0579 CD 1A 04           1590 	call	_player_jump_and_gravity
+                           1591 ;	src/food_spirit.c 112
+                           1592 ;	genCall
+                           1593 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   057C CD D7 04           1594 	call	_draw_player
+                           1595 ;	genLabel
+   057F                    1596 00101$:
+                           1597 ;	genEndFunction
+                           1598 	
+   057F C9                 1599 	ret
+   0580                    1600 ___game_loop_end:
+                           1601 ;	src/food_spirit.c 115
+                           1602 ;	genLabel
+                           1603 ;	genFunction
+                           1604 ;	---------------------------------
+                           1605 ; Function init_player
+                           1606 ; ---------------------------------
+   0580                    1607 ___init_player_start:
+   0580                    1608 _init_player:
+                           1609 	
+                           1610 ;	src/food_spirit.c 116
+                           1611 ;	genAssign
+                           1612 ;	AOP_HL for _player_x
+   0580 21 00 00           1613 	ld	hl,#_player_x
+   0583 36 28              1614 	ld	(hl),#0x28
+                           1615 ;	src/food_spirit.c 117
+                           1616 ;	genAssign
+                           1617 ;	AOP_HL for _player_y
+   0585 21 01 00           1618 	ld	hl,#_player_y
+   0588 36 28              1619 	ld	(hl),#0x28
+                           1620 ;	src/food_spirit.c 118
+                           1621 ;	genAssign
+                           1622 ;	AOP_HL for _player_jump_frames
+   058A 21 04 00           1623 	ld	hl,#_player_jump_frames
+   058D 36 00              1624 	ld	(hl),#0x00
+                           1625 ;	src/food_spirit.c 119
+                           1626 ;	genAssign
+                           1627 ;	AOP_HL for _player_idle_anim_frames
+   058F 21 05 00           1628 	ld	hl,#_player_idle_anim_frames
+   0592 36 00              1629 	ld	(hl),#0x00
+   0594 23                 1630 	inc	hl
+   0595 36 00              1631 	ld	(hl),#0x00
+                           1632 ;	src/food_spirit.c 120
+                           1633 ;	genAssign
+                           1634 ;	AOP_HL for _player_y_draw_offset
+   0597 21 02 00           1635 	ld	hl,#_player_y_draw_offset
+   059A 36 00              1636 	ld	(hl),#0x00
+                           1637 ;	src/food_spirit.c 122
+                           1638 ;	genIpush
+                           1639 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   059C 21 E2 03           1640 	ld	hl,#_PAL_PLAYER
+   059F E5                 1641 	push	hl
+                           1642 ;	genIpush
+   05A0 21 5A 00           1643 	ld	hl,#_SPR_DAT_PLAYER_0_0_MID
+   05A3 E5                 1644 	push	hl
+                           1645 ;	genIpush
+   05A4 21 00 00           1646 	ld	hl,#0x0000
+   05A7 E5                 1647 	push	hl
+                           1648 ;	genCall
+   05A8 CD 00 00           1649 	call	_set_up_sprite_simple
+   05AB E8 06              1650 	lda	sp,6(sp)
+                           1651 ;	src/food_spirit.c 123
                            1652 ;	genIpush
-   05CD 21 01 00           1653 	ld	hl,#0x0001
-   05D0 E5                 1654 	push	hl
-                           1655 ;	genIpush
-   05D1 21 00 00           1656 	ld	hl,#0x0000
-   05D4 E5                 1657 	push	hl
-                           1658 ;	genCall
-   05D5 CD 00 00           1659 	call	_set_up_bg
-   05D8 E8 0C              1660 	lda	sp,12(sp)
-                           1661 ;	genLabel
-   05DA                    1662 00101$:
-                           1663 ;	genEndFunction
-                           1664 	
-   05DA C9                 1665 	ret
-   05DB                    1666 ___init_bg_end:
-                           1667 ;	src/food_spirit.c 119
-                           1668 ;	genLabel
-                           1669 ;	genFunction
-                           1670 ;	---------------------------------
-                           1671 ; Function initialize
-                           1672 ; ---------------------------------
-   05DB                    1673 ___initialize_start:
-   05DB                    1674 _initialize:
-   05DB E8 FD              1675 	lda	sp,-3(sp)
-                           1676 ;	src/food_spirit.c 120
-                           1677 ;	genCall
-                           1678 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   05DD CD 00 00           1679 	call	_cgb_compatibility
-                           1680 ;	src/food_spirit.c 122
-                           1681 ;	genCall
-                           1682 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   05E0 CD 07 05           1683 	call	_init_bg
-                           1684 ;	src/food_spirit.c 123
-                           1685 ;	genCall
-                           1686 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   05E3 CD 7F 04           1687 	call	_init_player
-                           1688 ;	src/food_spirit.c 125
-                           1689 ;	genAssign
-   05E6 01 40 FF           1690 	ld	bc,#0xFF40
-                           1691 ;	genAssign
-                           1692 ;	AOP_STK for _initialize_sloc0_1_0
-   05E9 F8 01              1693 	lda	hl,1(sp)
-   05EB 36 40              1694 	ld	(hl),#0x40
-   05ED 23                 1695 	inc	hl
-   05EE 36 FF              1696 	ld	(hl),#0xFF
-                           1697 ;	genPointerGet
-                           1698 ;	AOP_STK for _initialize_sloc0_1_0
-                           1699 ;	AOP_STK for _initialize_sloc1_1_0
-   05F0 2B                 1700 	dec	hl
-   05F1 5E                 1701 	ld	e,(hl)
-   05F2 23                 1702 	inc	hl
-   05F3 56                 1703 	ld	d,(hl)
-   05F4 1A                 1704 	ld	a,(de)
-   05F5 2B                 1705 	dec	hl
-   05F6 2B                 1706 	dec	hl
-                           1707 ;	genOr
-                           1708 ;	AOP_STK for _initialize_sloc1_1_0
-   05F7 77                 1709 	ld      (hl),a
-   05F8 7F                 1710 	ld      a,a
-   05F9 F6 01              1711 	or	a,#0x01
-                           1712 ;	genAssign (pointer)
-   05FB 02                 1713 	ld	(bc),a
-                           1714 ;	src/food_spirit.c 126
-                           1715 ;	genAssign
-   05FC 01 40 FF           1716 	ld	bc,#0xFF40
-                           1717 ;	genAssign
-                           1718 ;	AOP_STK for _initialize_sloc0_1_0
-   05FF 23                 1719 	inc	hl
-   0600 36 40              1720 	ld	(hl),#0x40
-   0602 23                 1721 	inc	hl
-   0603 36 FF              1722 	ld	(hl),#0xFF
-                           1723 ;	genPointerGet
-                           1724 ;	AOP_STK for _initialize_sloc0_1_0
-                           1725 ;	AOP_STK for _initialize_sloc1_1_0
-   0605 2B                 1726 	dec	hl
-   0606 5E                 1727 	ld	e,(hl)
-   0607 23                 1728 	inc	hl
-   0608 56                 1729 	ld	d,(hl)
-   0609 1A                 1730 	ld	a,(de)
-   060A 2B                 1731 	dec	hl
-   060B 2B                 1732 	dec	hl
-                           1733 ;	genOr
-                           1734 ;	AOP_STK for _initialize_sloc1_1_0
-   060C 77                 1735 	ld      (hl),a
-   060D 7F                 1736 	ld      a,a
-   060E F6 02              1737 	or	a,#0x02
-                           1738 ;	genAssign (pointer)
-   0610 02                 1739 	ld	(bc),a
-                           1740 ;	genLabel
-   0611                    1741 00101$:
-                           1742 ;	genEndFunction
-   0611 E8 03              1743 	lda	sp,3(sp)
-   0613 C9                 1744 	ret
-   0614                    1745 ___initialize_end:
-                           1746 ;	src/food_spirit.c 129
-                           1747 ;	genLabel
-                           1748 ;	genFunction
-                           1749 ;	---------------------------------
-                           1750 ; Function main
-                           1751 ; ---------------------------------
-   0614                    1752 ___main_start:
-   0614                    1753 _main:
-                           1754 	
-                           1755 ;	src/food_spirit.c 130
-                           1756 ;	genCall
-                           1757 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0614 CD 00 00           1758 	call	_wait_vbl_done
-                           1759 ;	src/food_spirit.c 131
-                           1760 ;	genCall
-                           1761 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0617 CD DB 05           1762 	call	_initialize
-                           1763 ;	src/food_spirit.c 133
-                           1764 ;	genLabel
-   061A                    1765 00102$:
-                           1766 ;	src/food_spirit.c 134
-                           1767 ;	genCall
-                           1768 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   061A CD 00 00           1769 	call	_wait_vbl_done
-                           1770 ;	src/food_spirit.c 135
-                           1771 ;	genCall
-                           1772 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   061D CD 75 04           1773 	call	_game_loop
-                           1774 ;	genGoto
-   0620 C3 1A 06           1775 	jp	00102$
-                           1776 ;	genLabel
-   0623                    1777 00104$:
-                           1778 ;	genEndFunction
-                           1779 	
-   0623 C9                 1780 	ret
-   0624                    1781 ___main_end:
-                           1782 	.area _CODE
+                           1653 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   05AD 21 E2 03           1654 	ld	hl,#_PAL_PLAYER
+   05B0 E5                 1655 	push	hl
+                           1656 ;	genIpush
+   05B1 21 6A 00           1657 	ld	hl,#_SPR_DAT_PLAYER_1_0_MID
+   05B4 E5                 1658 	push	hl
+                           1659 ;	genIpush
+   05B5 21 01 00           1660 	ld	hl,#0x0001
+   05B8 E5                 1661 	push	hl
+                           1662 ;	genCall
+   05B9 CD 00 00           1663 	call	_set_up_sprite_simple
+   05BC E8 06              1664 	lda	sp,6(sp)
+                           1665 ;	src/food_spirit.c 124
+                           1666 ;	genIpush
+                           1667 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   05BE 21 E2 03           1668 	ld	hl,#_PAL_PLAYER
+   05C1 E5                 1669 	push	hl
+                           1670 ;	genIpush
+   05C2 21 7A 00           1671 	ld	hl,#_SPR_DAT_PLAYER_0_1_MID
+   05C5 E5                 1672 	push	hl
+                           1673 ;	genIpush
+   05C6 21 02 00           1674 	ld	hl,#0x0002
+   05C9 E5                 1675 	push	hl
+                           1676 ;	genCall
+   05CA CD 00 00           1677 	call	_set_up_sprite_simple
+   05CD E8 06              1678 	lda	sp,6(sp)
+                           1679 ;	src/food_spirit.c 125
+                           1680 ;	genIpush
+                           1681 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   05CF 21 E2 03           1682 	ld	hl,#_PAL_PLAYER
+   05D2 E5                 1683 	push	hl
+                           1684 ;	genIpush
+   05D3 21 8A 00           1685 	ld	hl,#_SPR_DAT_PLAYER_1_1_MID
+   05D6 E5                 1686 	push	hl
+                           1687 ;	genIpush
+   05D7 21 03 00           1688 	ld	hl,#0x0003
+   05DA E5                 1689 	push	hl
+                           1690 ;	genCall
+   05DB CD 00 00           1691 	call	_set_up_sprite_simple
+   05DE E8 06              1692 	lda	sp,6(sp)
+                           1693 ;	src/food_spirit.c 126
+                           1694 ;	genIpush
+                           1695 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   05E0 21 E2 03           1696 	ld	hl,#_PAL_PLAYER
+   05E3 E5                 1697 	push	hl
+                           1698 ;	genIpush
+   05E4 21 9A 00           1699 	ld	hl,#_SPR_DAT_PLAYER_0_2_MID
+   05E7 E5                 1700 	push	hl
+                           1701 ;	genIpush
+   05E8 21 04 00           1702 	ld	hl,#0x0004
+   05EB E5                 1703 	push	hl
+                           1704 ;	genCall
+   05EC CD 00 00           1705 	call	_set_up_sprite_simple
+   05EF E8 06              1706 	lda	sp,6(sp)
+                           1707 ;	src/food_spirit.c 127
+                           1708 ;	genIpush
+                           1709 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   05F1 21 E2 03           1710 	ld	hl,#_PAL_PLAYER
+   05F4 E5                 1711 	push	hl
+                           1712 ;	genIpush
+   05F5 21 AA 00           1713 	ld	hl,#_SPR_DAT_PLAYER_1_2_MID
+   05F8 E5                 1714 	push	hl
+                           1715 ;	genIpush
+   05F9 21 05 00           1716 	ld	hl,#0x0005
+   05FC E5                 1717 	push	hl
+                           1718 ;	genCall
+   05FD CD 00 00           1719 	call	_set_up_sprite_simple
+   0600 E8 06              1720 	lda	sp,6(sp)
+                           1721 ;	genLabel
+   0602                    1722 00101$:
+                           1723 ;	genEndFunction
+                           1724 	
+   0602 C9                 1725 	ret
+   0603                    1726 ___init_player_end:
+                           1727 ;	src/food_spirit.c 130
+                           1728 ;	genLabel
+                           1729 ;	genFunction
+                           1730 ;	---------------------------------
+                           1731 ; Function init_bg
+                           1732 ; ---------------------------------
+   0603                    1733 ___init_bg_start:
+   0603                    1734 _init_bg:
+                           1735 	
+                           1736 ;	src/food_spirit.c 131
+                           1737 ;	genIpush
+                           1738 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0603 21 EA 03           1739 	ld	hl,#_PAL_BG_SPOTS
+   0606 E5                 1740 	push	hl
+                           1741 ;	genIpush
+   0607 21 01 01           1742 	ld	hl,#0x0101
+   060A E5                 1743 	push	hl
+                           1744 ;	genCall
+   060B CD 00 00           1745 	call	_set_bkg_palette
+   060E E8 04              1746 	lda	sp,4(sp)
+                           1747 ;	src/food_spirit.c 132
+                           1748 ;	genIpush
+                           1749 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0610 21 F2 03           1750 	ld	hl,#_PAL_BG_POT
+   0613 E5                 1751 	push	hl
+                           1752 ;	genIpush
+   0614 21 02 01           1753 	ld	hl,#0x0102
+   0617 E5                 1754 	push	hl
+                           1755 ;	genCall
+   0618 CD 00 00           1756 	call	_set_bkg_palette
+   061B E8 04              1757 	lda	sp,4(sp)
+                           1758 ;	src/food_spirit.c 133
+                           1759 ;	genIpush
+                           1760 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   061D 21 12 04           1761 	ld	hl,#_PAL_BG_FIRE
+   0620 E5                 1762 	push	hl
+                           1763 ;	genIpush
+   0621 21 03 01           1764 	ld	hl,#0x0103
+   0624 E5                 1765 	push	hl
+                           1766 ;	genCall
+   0625 CD 00 00           1767 	call	_set_bkg_palette
+   0628 E8 04              1768 	lda	sp,4(sp)
+                           1769 ;	src/food_spirit.c 134
+                           1770 ;	genIpush
+                           1771 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   062A 21 FA 03           1772 	ld	hl,#_PAL_BG_POT_DARK
+   062D E5                 1773 	push	hl
+                           1774 ;	genIpush
+   062E 21 04 01           1775 	ld	hl,#0x0104
+   0631 E5                 1776 	push	hl
+                           1777 ;	genCall
+   0632 CD 00 00           1778 	call	_set_bkg_palette
+   0635 E8 04              1779 	lda	sp,4(sp)
+                           1780 ;	src/food_spirit.c 135
+                           1781 ;	genIpush
+                           1782 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0637 21 02 04           1783 	ld	hl,#_PAL_BG_POT_DARK_2
+   063A E5                 1784 	push	hl
+                           1785 ;	genIpush
+   063B 21 05 01           1786 	ld	hl,#0x0105
+   063E E5                 1787 	push	hl
+                           1788 ;	genCall
+   063F CD 00 00           1789 	call	_set_bkg_palette
+   0642 E8 04              1790 	lda	sp,4(sp)
+                           1791 ;	src/food_spirit.c 136
+                           1792 ;	genIpush
+                           1793 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0644 21 0A 04           1794 	ld	hl,#_PAL_BG_POT_DARK_3
+   0647 E5                 1795 	push	hl
+                           1796 ;	genIpush
+   0648 21 06 01           1797 	ld	hl,#0x0106
+   064B E5                 1798 	push	hl
+                           1799 ;	genCall
+   064C CD 00 00           1800 	call	_set_bkg_palette
+   064F E8 04              1801 	lda	sp,4(sp)
+                           1802 ;	src/food_spirit.c 138
+                           1803 ;	genIpush
+                           1804 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0651 21 CA 00           1805 	ld	hl,#_TILE_SPOTS
+   0654 E5                 1806 	push	hl
+                           1807 ;	genIpush
+   0655 21 01 01           1808 	ld	hl,#0x0101
+   0658 E5                 1809 	push	hl
+                           1810 ;	genCall
+   0659 CD 00 00           1811 	call	_set_bkg_data
+   065C E8 04              1812 	lda	sp,4(sp)
+                           1813 ;	src/food_spirit.c 139
+                           1814 ;	genIpush
+                           1815 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   065E 21 DA 00           1816 	ld	hl,#_TILE_POT_FLOOR
+   0661 E5                 1817 	push	hl
+                           1818 ;	genIpush
+   0662 21 02 01           1819 	ld	hl,#0x0102
+   0665 E5                 1820 	push	hl
+                           1821 ;	genCall
+   0666 CD 00 00           1822 	call	_set_bkg_data
+   0669 E8 04              1823 	lda	sp,4(sp)
+                           1824 ;	src/food_spirit.c 140
+                           1825 ;	genIpush
+                           1826 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   066B 21 EA 00           1827 	ld	hl,#_TILE_POT_LEFT_CORNER
+   066E E5                 1828 	push	hl
+                           1829 ;	genIpush
+   066F 21 03 01           1830 	ld	hl,#0x0103
+   0672 E5                 1831 	push	hl
+                           1832 ;	genCall
+   0673 CD 00 00           1833 	call	_set_bkg_data
+   0676 E8 04              1834 	lda	sp,4(sp)
+                           1835 ;	src/food_spirit.c 141
+                           1836 ;	genIpush
+                           1837 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0678 21 FA 00           1838 	ld	hl,#_TILE_POT_RIGHT_CORNER
+   067B E5                 1839 	push	hl
+                           1840 ;	genIpush
+   067C 21 04 01           1841 	ld	hl,#0x0104
+   067F E5                 1842 	push	hl
+                           1843 ;	genCall
+   0680 CD 00 00           1844 	call	_set_bkg_data
+   0683 E8 04              1845 	lda	sp,4(sp)
+                           1846 ;	src/food_spirit.c 142
+                           1847 ;	genIpush
+                           1848 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0685 21 0A 01           1849 	ld	hl,#_TILE_POT_LEFT_WALL
+   0688 E5                 1850 	push	hl
+                           1851 ;	genIpush
+   0689 21 05 01           1852 	ld	hl,#0x0105
+   068C E5                 1853 	push	hl
+                           1854 ;	genCall
+   068D CD 00 00           1855 	call	_set_bkg_data
+   0690 E8 04              1856 	lda	sp,4(sp)
+                           1857 ;	src/food_spirit.c 143
+                           1858 ;	genIpush
+                           1859 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0692 21 1A 01           1860 	ld	hl,#_TILE_POT_RIGHT_WALL
+   0695 E5                 1861 	push	hl
+                           1862 ;	genIpush
+   0696 21 06 01           1863 	ld	hl,#0x0106
+   0699 E5                 1864 	push	hl
+                           1865 ;	genCall
+   069A CD 00 00           1866 	call	_set_bkg_data
+   069D E8 04              1867 	lda	sp,4(sp)
+                           1868 ;	src/food_spirit.c 144
+                           1869 ;	genIpush
+                           1870 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   069F 21 2A 01           1871 	ld	hl,#_TILE_FIRE
+   06A2 E5                 1872 	push	hl
+                           1873 ;	genIpush
+   06A3 21 07 01           1874 	ld	hl,#0x0107
+   06A6 E5                 1875 	push	hl
+                           1876 ;	genCall
+   06A7 CD 00 00           1877 	call	_set_bkg_data
+   06AA E8 04              1878 	lda	sp,4(sp)
+                           1879 ;	src/food_spirit.c 145
+                           1880 ;	genIpush
+                           1881 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06AC 21 BA 00           1882 	ld	hl,#_TILE_BLANK
+   06AF E5                 1883 	push	hl
+                           1884 ;	genIpush
+   06B0 21 08 01           1885 	ld	hl,#0x0108
+   06B3 E5                 1886 	push	hl
+                           1887 ;	genCall
+   06B4 CD 00 00           1888 	call	_set_bkg_data
+   06B7 E8 04              1889 	lda	sp,4(sp)
+                           1890 ;	src/food_spirit.c 147
+                           1891 ;	genIpush
+                           1892 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06B9 21 8E 02           1893 	ld	hl,#_MAP_PAL_BG_1
+   06BC E5                 1894 	push	hl
+                           1895 ;	genIpush
+   06BD 21 3A 01           1896 	ld	hl,#_MAP_BG_1
+   06C0 E5                 1897 	push	hl
+                           1898 ;	genIpush
+   06C1 21 11 00           1899 	ld	hl,#0x0011
+   06C4 E5                 1900 	push	hl
+                           1901 ;	genIpush
+   06C5 21 14 00           1902 	ld	hl,#0x0014
+   06C8 E5                 1903 	push	hl
+                           1904 ;	genIpush
+   06C9 21 01 00           1905 	ld	hl,#0x0001
+   06CC E5                 1906 	push	hl
+                           1907 ;	genIpush
+   06CD 21 00 00           1908 	ld	hl,#0x0000
+   06D0 E5                 1909 	push	hl
+                           1910 ;	genCall
+   06D1 CD 00 00           1911 	call	_set_up_bg
+   06D4 E8 0C              1912 	lda	sp,12(sp)
+                           1913 ;	genLabel
+   06D6                    1914 00101$:
+                           1915 ;	genEndFunction
+                           1916 	
+   06D6 C9                 1917 	ret
+   06D7                    1918 ___init_bg_end:
+                           1919 ;	src/food_spirit.c 150
+                           1920 ;	genLabel
+                           1921 ;	genFunction
+                           1922 ;	---------------------------------
+                           1923 ; Function initialize
+                           1924 ; ---------------------------------
+   06D7                    1925 ___initialize_start:
+   06D7                    1926 _initialize:
+   06D7 E8 FD              1927 	lda	sp,-3(sp)
+                           1928 ;	src/food_spirit.c 151
+                           1929 ;	genCall
+                           1930 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06D9 CD 00 00           1931 	call	_cgb_compatibility
+                           1932 ;	src/food_spirit.c 153
+                           1933 ;	genCall
+                           1934 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06DC CD 03 06           1935 	call	_init_bg
+                           1936 ;	src/food_spirit.c 154
+                           1937 ;	genCall
+                           1938 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   06DF CD 80 05           1939 	call	_init_player
+                           1940 ;	src/food_spirit.c 156
+                           1941 ;	genAssign
+   06E2 01 40 FF           1942 	ld	bc,#0xFF40
+                           1943 ;	genAssign
+                           1944 ;	AOP_STK for _initialize_sloc0_1_0
+   06E5 F8 01              1945 	lda	hl,1(sp)
+   06E7 36 40              1946 	ld	(hl),#0x40
+   06E9 23                 1947 	inc	hl
+   06EA 36 FF              1948 	ld	(hl),#0xFF
+                           1949 ;	genPointerGet
+                           1950 ;	AOP_STK for _initialize_sloc0_1_0
+                           1951 ;	AOP_STK for _initialize_sloc1_1_0
+   06EC 2B                 1952 	dec	hl
+   06ED 5E                 1953 	ld	e,(hl)
+   06EE 23                 1954 	inc	hl
+   06EF 56                 1955 	ld	d,(hl)
+   06F0 1A                 1956 	ld	a,(de)
+   06F1 2B                 1957 	dec	hl
+   06F2 2B                 1958 	dec	hl
+                           1959 ;	genOr
+                           1960 ;	AOP_STK for _initialize_sloc1_1_0
+   06F3 77                 1961 	ld      (hl),a
+   06F4 7F                 1962 	ld      a,a
+   06F5 F6 01              1963 	or	a,#0x01
+                           1964 ;	genAssign (pointer)
+   06F7 02                 1965 	ld	(bc),a
+                           1966 ;	src/food_spirit.c 157
+                           1967 ;	genAssign
+   06F8 01 40 FF           1968 	ld	bc,#0xFF40
+                           1969 ;	genAssign
+                           1970 ;	AOP_STK for _initialize_sloc0_1_0
+   06FB 23                 1971 	inc	hl
+   06FC 36 40              1972 	ld	(hl),#0x40
+   06FE 23                 1973 	inc	hl
+   06FF 36 FF              1974 	ld	(hl),#0xFF
+                           1975 ;	genPointerGet
+                           1976 ;	AOP_STK for _initialize_sloc0_1_0
+                           1977 ;	AOP_STK for _initialize_sloc1_1_0
+   0701 2B                 1978 	dec	hl
+   0702 5E                 1979 	ld	e,(hl)
+   0703 23                 1980 	inc	hl
+   0704 56                 1981 	ld	d,(hl)
+   0705 1A                 1982 	ld	a,(de)
+   0706 2B                 1983 	dec	hl
+   0707 2B                 1984 	dec	hl
+                           1985 ;	genOr
+                           1986 ;	AOP_STK for _initialize_sloc1_1_0
+   0708 77                 1987 	ld      (hl),a
+   0709 7F                 1988 	ld      a,a
+   070A F6 02              1989 	or	a,#0x02
+                           1990 ;	genAssign (pointer)
+   070C 02                 1991 	ld	(bc),a
+                           1992 ;	genLabel
+   070D                    1993 00101$:
+                           1994 ;	genEndFunction
+   070D E8 03              1995 	lda	sp,3(sp)
+   070F C9                 1996 	ret
+   0710                    1997 ___initialize_end:
+                           1998 ;	src/food_spirit.c 160
+                           1999 ;	genLabel
+                           2000 ;	genFunction
+                           2001 ;	---------------------------------
+                           2002 ; Function main
+                           2003 ; ---------------------------------
+   0710                    2004 ___main_start:
+   0710                    2005 _main:
+                           2006 	
+                           2007 ;	src/food_spirit.c 161
+                           2008 ;	genCall
+                           2009 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0710 CD 00 00           2010 	call	_wait_vbl_done
+                           2011 ;	src/food_spirit.c 162
+                           2012 ;	genCall
+                           2013 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0713 CD D7 06           2014 	call	_initialize
+                           2015 ;	src/food_spirit.c 164
+                           2016 ;	genLabel
+   0716                    2017 00102$:
+                           2018 ;	src/food_spirit.c 165
+                           2019 ;	genCall
+                           2020 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0716 CD 00 00           2021 	call	_wait_vbl_done
+                           2022 ;	src/food_spirit.c 166
+                           2023 ;	genCall
+                           2024 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0719 CD 76 05           2025 	call	_game_loop
+                           2026 ;	genGoto
+   071C C3 16 07           2027 	jp	00102$
+                           2028 ;	genLabel
+   071F                    2029 00104$:
+                           2030 ;	genEndFunction
+                           2031 	
+   071F C9                 2032 	ret
+   0720                    2033 ___main_end:
+                           2034 	.area _CODE
 ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
 
 Symbol Table
 
-  0 _MAP_BG_1                          00E0 GR
-  0 _MAP_PAL_BG_1                      0234 GR
-  0 _PAL_BG_FIRE                       03B8 GR
-  0 _PAL_BG_POT                        0398 GR
-  0 _PAL_BG_POT_DARK                   03A0 GR
-  0 _PAL_BG_POT_DARK_2                 03A8 GR
-  0 _PAL_BG_POT_DARK_3                 03B0 GR
-  0 _PAL_BG_SPOTS                      0390 GR
-  0 _PAL_PLAYER                        0388 GR
+  0 _MAP_BG_1                          013A GR
+  0 _MAP_PAL_BG_1                      028E GR
+  0 _PAL_BG_FIRE                       0412 GR
+  0 _PAL_BG_POT                        03F2 GR
+  0 _PAL_BG_POT_DARK                   03FA GR
+  0 _PAL_BG_POT_DARK_2                 0402 GR
+  0 _PAL_BG_POT_DARK_3                 040A GR
+  0 _PAL_BG_SPOTS                      03EA GR
+  0 _PAL_PLAYER                        03E2 GR
   0 _SPR_DAT_PLAYER_0_0_MID            005A GR
-  0 _SPR_DAT_PLAYER_0_1_MID            005B GR
-  0 _SPR_DAT_PLAYER_1_0_MID            005C GR
-  0 _SPR_DAT_PLAYER_1_1_MID            005D GR
-  0 _SPR_DAT_PLAYER_2_0_MID            005E GR
-  0 _SPR_DAT_PLAYER_2_1_MID            005F GR
-  0 _TILE_BLANK                        0060 GR
-  0 _TILE_FIRE                         00D0 GR
-  0 _TILE_POT_FLOOR                    0080 GR
-  0 _TILE_POT_LEFT_CORNER              0090 GR
-  0 _TILE_POT_LEFT_WALL                00B0 GR
-  0 _TILE_POT_RIGHT_CORNER             00A0 GR
-  0 _TILE_POT_RIGHT_WALL               00C0 GR
-  0 _TILE_SPOTS                        0070 GR
-  0 ___draw_player_end                 0475 R
-  0 ___draw_player_start               03F0 R
-  0 ___game_loop_end                   047F R
-  0 ___game_loop_start                 0475 R
-  0 ___init_bg_end                     05DB R
-  0 ___init_bg_start                   0507 R
-  0 ___init_player_end                 0507 R
-  0 ___init_player_start               047F R
-  0 ___initialize_end                  0614 R
-  0 ___initialize_start                05DB R
-  0 ___main_end                        0624 R
-  0 ___main_start                      0614 R
-  0 ___player_jump_and_gravity_end     03F0 R
-  0 ___player_jump_and_gravity_start   03C0 R
+  0 _SPR_DAT_PLAYER_0_1_MID            007A GR
+  0 _SPR_DAT_PLAYER_0_2_MID            009A GR
+  0 _SPR_DAT_PLAYER_1_0_MID            006A GR
+  0 _SPR_DAT_PLAYER_1_1_MID            008A GR
+  0 _SPR_DAT_PLAYER_1_2_MID            00AA GR
+  0 _TILE_BLANK                        00BA GR
+  0 _TILE_FIRE                         012A GR
+  0 _TILE_POT_FLOOR                    00DA GR
+  0 _TILE_POT_LEFT_CORNER              00EA GR
+  0 _TILE_POT_LEFT_WALL                010A GR
+  0 _TILE_POT_RIGHT_CORNER             00FA GR
+  0 _TILE_POT_RIGHT_WALL               011A GR
+  0 _TILE_SPOTS                        00CA GR
+  0 ___draw_player_end                 0576 R
+  0 ___draw_player_start               04D7 R
+  0 ___game_loop_end                   0580 R
+  0 ___game_loop_start                 0576 R
+  0 ___init_bg_end                     06D7 R
+  0 ___init_bg_start                   0603 R
+  0 ___init_player_end                 0603 R
+  0 ___init_player_start               0580 R
+  0 ___initialize_end                  0710 R
+  0 ___initialize_start                06D7 R
+  0 ___main_end                        0720 R
+  0 ___main_start                      0710 R
+  0 ___player_idle_anim_end            04D7 R
+  0 ___player_idle_anim_start          044A R
+  0 ___player_jump_and_gravity_end     044A R
+  0 ___player_jump_and_gravity_start   041A R
   0 ___read_controls_end               005A R
   0 ___read_controls_start             0000 R
     _cgb_compatibility                 **** GX
-  0 _draw_player                       03F0 GR
-  0 _game_loop                         0475 GR
-  0 _init_bg                           0507 GR
-  0 _init_player                       047F GR
-  0 _initialize                        05DB GR
+  0 _draw_player                       04D7 GR
+  0 _game_loop                         0576 GR
+  0 _init_bg                           0603 GR
+  0 _init_player                       0580 GR
+  0 _initialize                        06D7 GR
     _joypad                            **** GX
-  0 _main                              0614 GR
+  0 _main                              0710 GR
     _move_sprite                       **** GX
-  1 _player_dir                        0002 GR
-  0 _player_jump_and_gravity           03C0 GR
-  1 _player_jump_frames                0003 GR
+  1 _player_dir                        0003 GR
+  0 _player_idle_anim                  044A GR
+  1 _player_idle_anim_frames           0005 GR
+  0 _player_jump_and_gravity           041A GR
+  1 _player_jump_frames                0004 GR
   1 _player_x                          0000 GR
   1 _player_y                          0001 GR
+  1 _player_y_draw_offset              0002 GR
   0 _read_controls                     0000 GR
     _set_bkg_data                      **** GX
     _set_bkg_palette                   **** GX
@@ -1848,8 +2105,8 @@ Symbol Table
 
 Area Table
 
-   0 _CODE                              size  624   flags 0
-   1 _DATA                              size    4   flags 0
+   0 _CODE                              size  720   flags 0
+   1 _DATA                              size    7   flags 0
    2 _OVERLAY                           size    0   flags 0
    3 _ISEG                              size    0   flags 0
    4 _BSEG                              size    0   flags 0

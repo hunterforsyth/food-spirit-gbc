@@ -5,7 +5,7 @@
 
 // Player
 const UWORD PAL_PLAYER[] = 
-    { 0, RGB(0, 0, 0), RGB(5, 31, 18), RGB(1, 3, 9) };
+    { 0, RGB(0, 31, 27), RGB(0, 20, 17), RGB(0, 0, 0) };
 
 // BG
 const UWORD PAL_BG_SPOTS[] = 
