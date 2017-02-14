@@ -1,4 +1,9 @@
-const unsigned char BG_1_MAP[] = 
+//
+//   FOOD SPIRIT GBC
+//   (c) 2017 Hunter Forsyth
+//
+
+const unsigned char MAP_BG_1[] = 
 {
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -19,7 +24,7 @@ const unsigned char BG_1_MAP[] =
   1, 1, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 1, 1
 };
 
-const unsigned char BG_1_MAP_PAL[] = 
+const unsigned char MAP_PAL_BG_1[] = 
 {
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,

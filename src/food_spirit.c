@@ -1,3 +1,8 @@
+//
+//   FOOD SPIRIT GBC
+//   (c) 2017 Hunter Forsyth
+//
+
 #include <stdio.h>
 #include <string.h>
 
@@ -54,16 +59,21 @@ void player_jump_and_gravity() {
 }
 
 void draw_player() {
-    move_sprite(PLAYER_SPR_BOT, player_x, player_y);
-    move_sprite(PLAYER_SPR_TOP, player_x, player_y - 8);
+    move_sprite(SPR_PLAYER_0_0_MID, player_x, player_y);
+    move_sprite(SPR_PLAYER_0_1_MID, player_x + SPR_W, player_y);
+    move_sprite(SPR_PLAYER_1_0_MID, player_x, player_y + SPR_H);
+    move_sprite(SPR_PLAYER_1_1_MID, player_x + SPR_W, player_y + SPR_H);
+    move_sprite(SPR_PLAYER_2_0_MID, player_x, player_y + SPR_H + SPR_H);
+    move_sprite(SPR_PLAYER_2_1_MID, player_x + SPR_W, player_y + SPR_H + SPR_H);
 
+    /*
     if (player_dir == LEFT) {
         set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_LEFT_DATA, PLAYER_SPR_BOT_PAL);
     } else if (player_dir == RIGHT) {
         set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_RIGHT_DATA, PLAYER_SPR_BOT_PAL);
     } else {
         set_up_sprite(PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT, PLAYER_SPR_BOT_MID_DATA, PLAYER_SPR_BOT_PAL);
-    }
+    }*/
 }
 
 void game_loop() {
@@ -78,27 +88,32 @@ void init_player() {
     player_y = 40;
     player_jump_frames = 0;
 
-    set_up_sprite(PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP, PLAYER_SPR_TOP_DATA, PLAYER_SPR_TOP_PAL);
+    set_up_sprite_simple(SPR_PLAYER_0_0_MID, SPR_DAT_PLAYER_0_0_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_0_1_MID, SPR_DAT_PLAYER_0_1_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_1_0_MID, SPR_DAT_PLAYER_1_0_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_1_1_MID, SPR_DAT_PLAYER_1_1_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_2_0_MID, SPR_DAT_PLAYER_2_0_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_2_1_MID, SPR_DAT_PLAYER_2_1_MID, PAL_PLAYER);
 }
 
 void init_bg() {
-    set_bkg_palette(1, 1, BG_PAL_SPOTS);
-    set_bkg_palette(2, 1, BG_PAL_POT);
-    set_bkg_palette(3, 1, BG_PAL_FIRE);
-    set_bkg_palette(4, 1, BG_PAL_POT_DARK);
-    set_bkg_palette(5, 1, BG_PAL_POT_DARK_2);
-    set_bkg_palette(6, 1, BG_PAL_POT_DARK_3);
+    set_bkg_palette(1, 1, PAL_BG_SPOTS);
+    set_bkg_palette(2, 1, PAL_BG_POT);
+    set_bkg_palette(3, 1, PAL_BG_FIRE);
+    set_bkg_palette(4, 1, PAL_BG_POT_DARK);
+    set_bkg_palette(5, 1, PAL_BG_POT_DARK_2);
+    set_bkg_palette(6, 1, PAL_BG_POT_DARK_3);
 
-    set_bkg_data(1, 1, BG_TILE_SPOTS_DATA);
-    set_bkg_data(2, 1, BG_TILE_POT_FLOOR_DATA);
-    set_bkg_data(3, 1, BG_TILE_POT_LEFT_CORNER_DATA);
-    set_bkg_data(4, 1, BG_TILE_POT_RIGHT_CORNER_DATA);
-    set_bkg_data(5, 1, BG_TILE_POT_LEFT_WALL_DATA);
-    set_bkg_data(6, 1, BG_TILE_POT_RIGHT_WALL_DATA);
-    set_bkg_data(7, 1, BG_TILE_FIRE_DATA);
-    set_bkg_data(8, 1, BG_TILE_BLANK_DATA);
+    set_bkg_data(1, 1, TILE_SPOTS);
+    set_bkg_data(2, 1, TILE_POT_FLOOR);
+    set_bkg_data(3, 1, TILE_POT_LEFT_CORNER);
+    set_bkg_data(4, 1, TILE_POT_RIGHT_CORNER);
+    set_bkg_data(5, 1, TILE_POT_LEFT_WALL);
+    set_bkg_data(6, 1, TILE_POT_RIGHT_WALL);
+    set_bkg_data(7, 1, TILE_FIRE);
+    set_bkg_data(8, 1, TILE_BLANK);
 
-    set_up_bg(0, 1, 20, 17, BG_1_MAP, BG_1_MAP_PAL);
+    set_up_bg(0, 1, 20, 17, MAP_BG_1, MAP_PAL_BG_1);
 }
 
 void initialize() {
