@@ -1,9 +1,9 @@
                               1 ;--------------------------------------------------------
                               2 ; File Created by SDCC : FreeWare ANSI-C Compiler
-                              3 ; Version 2.3.1 Sun Feb 26 12:42:24 2017
+                              3 ; Version 2.3.1 Sun Feb 26 13:08:00 2017
                               4 
                               5 ;--------------------------------------------------------
-                              6 	.module lcc50980
+                              6 	.module lcc55460
                               7 	
                               8 ;--------------------------------------------------------
                               9 ; Public variables in this module
@@ -455,75 +455,116 @@
                             455 ; ---------------------------------
    0115                     456 ___get_rand_start:
    0115                     457 _get_rand:
-                            458 	
-                            459 ;	src/utils.c 57
+   0115 E8 FC               458 	lda	sp,-4(sp)
+                            459 ;	src/utils.c 59
                             460 ;	genCall
                             461 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0115 CD 00 00            462 	call	_arand
-   0118 4B                  463 	ld	c,e
-                            464 ;	genMinus
+   0117 CD 00 00            462 	call	_arand
+   011A 4B                  463 	ld	c,e
+                            464 ;	genPlus
                             465 ;	AOP_STK for 
-                            466 ;	AOP_STK for 
-   0119 F8 03               467 	lda	hl,3(sp)
-   011B 7E                  468 	ld	a,(hl)
-   011C 2B                  469 	dec	hl
-   011D 96                  470 	sub	a,(hl)
-                            471 ;	genIpush
-                            472 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   011E 47                  473 	ld	b,a
-   011F F5                  474 	push	af
-   0120 33                  475 	inc	sp
-                            476 ;	genIpush
-   0121 79                  477 	ld	a,c
-   0122 F5                  478 	push	af
-   0123 33                  479 	inc	sp
-                            480 ;	genCall
-   0124 CD 00 00            481 	call	__moduchar_rrx_s
-   0127 4B                  482 	ld	c,e
-   0128 E8 02               483 	lda	sp,2(sp)
-                            484 ;	genPlus
-                            485 ;	AOP_STK for 
-                            486 ;	Can't optimise plus by inc, falling back to the normal way
-   012A 79                  487 	ld	a,c
-   012B F8 02               488 	lda	hl,2(sp)
-   012D 86                  489 	add	a,(hl)
-   012E 4F                  490 	ld	c,a
-                            491 ;	genRet
-   012F 59                  492 	ld	e,c
-                            493 ;	genLabel
-   0130                     494 00101$:
-                            495 ;	genEndFunction
-                            496 	
-   0130 C9                  497 	ret
-   0131                     498 ___get_rand_end:
-                            499 ;	src/utils.c 60
-                            500 ;	genLabel
-                            501 ;	genFunction
-                            502 ;	---------------------------------
-                            503 ; Function get_rand_ready
-                            504 ; ---------------------------------
-   0131                     505 ___get_rand_ready_start:
-   0131                     506 _get_rand_ready:
-                            507 	
-                            508 ;	src/utils.c 61
-                            509 ;	genRet
-                            510 ;	AOP_HL for _rand_ready
-   0131 21 00 00            511 	ld	hl,#_rand_ready
-   0134 5E                  512 	ld	e,(hl)
-                            513 ;	genLabel
-   0135                     514 00101$:
-                            515 ;	genEndFunction
-                            516 	
-   0135 C9                  517 	ret
-   0136                     518 ___get_rand_ready_end:
-                            519 	.area _CODE
+                            466 ;	AOP_STK for _get_rand_sloc0_1_0
+                            467 ;	genPlusIncr
+                            468 ;	Can't optimise plus by inc, falling back to the normal way
+   011B F8 08               469 	lda	hl,8(sp)
+   011D 5E                  470 	ld	e,(hl)
+   011E 23                  471 	inc	hl
+   011F 56                  472 	ld	d,(hl)
+   0120 21 01 00            473 	ld	hl,#0x0001
+   0123 19                  474 	add	hl,de
+   0124 7D                  475 	ld	a,l
+   0125 54                  476 	ld	d,h
+   0126 F8 02               477 	lda	hl,2(sp)
+   0128 22                  478 	ld	(hl+),a
+   0129 72                  479 	ld	(hl),d
+                            480 ;	genMinus
+                            481 ;	AOP_STK for _get_rand_sloc0_1_0
+                            482 ;	AOP_STK for 
+                            483 ;	AOP_STK for _get_rand_sloc1_1_0
+   012A 2B                  484 	dec	hl
+   012B 5E                  485 	ld	e,(hl)
+   012C 23                  486 	inc	hl
+   012D 56                  487 	ld	d,(hl)
+   012E F8 06               488 	lda	hl,6(sp)
+   0130 2A                  489 	ld	a,(hl+)
+   0131 66                  490 	ld	h,(hl)
+   0132 6F                  491 	ld	l,a
+   0133 7B                  492 	ld	a,e
+   0134 95                  493 	sub	a,l
+   0135 5F                  494 	ld	e,a
+   0136 7A                  495 	ld	a,d
+   0137 9C                  496 	sbc	a,h
+   0138 F8 01               497 	lda	hl,1(sp)
+   013A 32                  498 	ld      (hl-),a
+   013B 73                  499 	ld	(hl),e
+                            500 ;	genCast
+                            501 ; Removed redundent load
+   013C 79                  502 	ld	a,c
+   013D 17                  503 	rla	
+   013E 9F                  504 	sbc	a,a
+   013F 47                  505 	ld	b,a
+                            506 ;	genIpush
+                            507 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            508 ;	AOP_STK for _get_rand_sloc1_1_0
+   0140 2A                  509 	ld	a,(hl+)
+   0141 66                  510 	ld	h,(hl)
+   0142 6F                  511 	ld	l,a
+   0143 E5                  512 	push	hl
+                            513 ;	genIpush
+   0144 C5                  514 	push	bc
+                            515 ;	genCall
+   0145 CD 00 00            516 	call	__modsint_rrx_s
+   0148 42                  517 	ld	b,d
+   0149 4B                  518 	ld	c,e
+   014A E8 04               519 	lda	sp,4(sp)
+                            520 ;	genPlus
+                            521 ;	AOP_STK for 
+                            522 ;	Can't optimise plus by inc, falling back to the normal way
+   014C F8 06               523 	lda	hl,6(sp)
+   014E 2A                  524 	ld	a,(hl+)
+   014F 66                  525 	ld	h,(hl)
+   0150 6F                  526 	ld	l,a
+   0151 09                  527 	add	hl,bc
+   0152 4D                  528 	ld	c,l
+   0153 44                  529 	ld	b,h
+                            530 ;	genCast
+                            531 ; Removed redundent load
+                            532 ;	genRet
+   0154 59                  533 	ld	e,c
+                            534 ;	genLabel
+   0155                     535 00101$:
+                            536 ;	genEndFunction
+   0155 E8 04               537 	lda	sp,4(sp)
+   0157 C9                  538 	ret
+   0158                     539 ___get_rand_end:
+                            540 ;	src/utils.c 62
+                            541 ;	genLabel
+                            542 ;	genFunction
+                            543 ;	---------------------------------
+                            544 ; Function get_rand_ready
+                            545 ; ---------------------------------
+   0158                     546 ___get_rand_ready_start:
+   0158                     547 _get_rand_ready:
+                            548 	
+                            549 ;	src/utils.c 63
+                            550 ;	genRet
+                            551 ;	AOP_HL for _rand_ready
+   0158 21 00 00            552 	ld	hl,#_rand_ready
+   015B 5E                  553 	ld	e,(hl)
+                            554 ;	genLabel
+   015C                     555 00101$:
+                            556 ;	genEndFunction
+                            557 	
+   015C C9                  558 	ret
+   015D                     559 ___get_rand_ready_end:
+                            560 	.area _CODE
 ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
 
 Symbol Table
 
-  0 ___get_rand_end                    0131 R
-  0 ___get_rand_ready_end              0136 R
-  0 ___get_rand_ready_start            0131 R
+  0 ___get_rand_end                    0158 R
+  0 ___get_rand_ready_end              015D R
+  0 ___get_rand_ready_start            0158 R
   0 ___get_rand_start                  0115 R
   0 ___init_rand_end                   0115 R
   0 ___init_rand_start                 00E3 R
@@ -535,10 +576,10 @@ Symbol Table
   0 ___set_up_sprite_simple_end        0070 R
   0 ___set_up_sprite_simple_start      004C R
   0 ___set_up_sprite_start             0000 R
-    __moduchar_rrx_s                   **** GX
+    __modsint_rrx_s                    **** GX
     _arand                             **** GX
   0 _get_rand                          0115 GR
-  0 _get_rand_ready                    0131 GR
+  0 _get_rand_ready                    0158 GR
   0 _init_rand                         00E3 GR
     _initarand                         **** GX
   0 _pre_init_rand                     00D1 GR
@@ -557,7 +598,7 @@ Symbol Table
 
 Area Table
 
-   0 _CODE                              size  136   flags 0
+   0 _CODE                              size  15D   flags 0
    1 _DATA                              size    3   flags 0
    2 _OVERLAY                           size    0   flags 0
    3 _ISEG                              size    0   flags 0

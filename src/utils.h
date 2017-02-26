@@ -35,7 +35,7 @@ void pre_init_rand();
 
 void init_rand();
 
-UBYTE get_rand(UBYTE min, UBYTE max);
+UBYTE get_rand(int min, int max);
 
 UBYTE get_rand_ready();
 

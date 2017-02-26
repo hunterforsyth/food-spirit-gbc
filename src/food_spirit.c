@@ -58,6 +58,19 @@ void read_controls() {
     }
 }
 
+void bounce_food(struct food * f, int dir1, int dir2, int dir3) {
+    UBYTE rand_dir;
+    rand_dir = get_rand(0, 2);
+
+    if (rand_dir == 0) {
+        f->dir = dir1;
+    } else if (rand_dir == 1) {
+        f->dir = dir2;
+    } else if (rand_dir == 2) {
+        f->dir = dir3;
+    }
+}
+
 void food_logic() {
     UBYTE i;
 
@@ -75,7 +88,7 @@ void food_logic() {
                     if (f->pos_y > COLLISION_CEIL) {
                         f->pos_y -= f->vel;
                     } else {
-
+                        bounce_food(f, DIR_S, DIR_SE, DIR_SW);
                     }
 
                     break;
@@ -84,18 +97,36 @@ void food_logic() {
                     break;
 
                 case DIR_E :
+                    if (f->pos_x < COLLISION_RIGHT) {
+                        f->pos_x += f->vel;
+                    } else {
+                        bounce_food(f, DIR_W, DIR_SW, DIR_NW);
+                    }
+
                     break;
 
                 case DIR_SE :
                     break;
 
                 case DIR_S :
+                    if (f->pos_y < COLLISION_FLOOR) {
+                        f->pos_y += f->vel;
+                    } else {
+                        bounce_food(f, DIR_N, DIR_W, DIR_E);
+                    }
+
                     break;
 
                 case DIR_SW :
                     break;
 
                 case DIR_W :
+                    if (f->pos_x > COLLISION_LEFT) {
+                        f->pos_x -= f->vel;
+                    } else {
+                        bounce_food(f, DIR_E, DIR_SE, DIR_NE);
+                    }
+
                     break;
 
                 case DIR_NW :
@@ -159,8 +190,8 @@ void draw_player() {
 }
 
 void draw_foods() {
-    UBYTE spr; // sprite index
-    UBYTE i;   // logical index
+    UBYTE spr; // Sprite index
+    UBYTE i;   // Logical index
 
     if (get_rand_ready() != 0) {
         return;
@@ -195,7 +226,7 @@ void init_player() {
     set_up_sprite_simple(SPR_PLAYER_1_2_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
 }
 
-void set_food_type(UBYTE food_index, UBYTE type) {
+void set_food_type(int food_index, int type) {
     UBYTE spr;
     spr = food_index * SPRITES_PER_FOOD;
 
@@ -214,7 +245,7 @@ void set_food_type(UBYTE food_index, UBYTE type) {
     }
 }
 
-void init_food(UBYTE food_index, UBYTE type, UBYTE startx, UBYTE starty, UBYTE enabled) {
+void init_food(int food_index, int type, int startx, int starty, int enabled) {
     struct food * f;
     f = &foods[food_index];
 
@@ -222,7 +253,7 @@ void init_food(UBYTE food_index, UBYTE type, UBYTE startx, UBYTE starty, UBYTE e
     f->pos_y = starty;
 
     f->dir = DIR_S;
-    f->vel = 1;
+    f->vel = 2;
 
     f->enabled = enabled;
 
@@ -274,6 +305,11 @@ void initialize() {
     init_bg();
     init_player();
     init_foods();
+
+    init_food(0, 0, 80, 50, ON);
+    // init_food(1, 0, 10, 50, ON);
+    // init_food(2, 0, 30, 50, ON);
+    // init_food(3, 0, 40, 20, ON);
 
     SHOW_BKG;
     SHOW_SPRITES;

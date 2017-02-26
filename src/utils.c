@@ -53,8 +53,10 @@ void init_rand() {
     initarand(rand_seed);
 }
 
-UBYTE get_rand(UBYTE min, UBYTE max) {
-    return ((arand() % (max - min)) + min);
+UBYTE get_rand(int min, int max) {
+    // Min and max inclusive
+
+    return ((arand() % ((max + 1) - min)) + min);
 }
 
 UBYTE get_rand_ready() {
