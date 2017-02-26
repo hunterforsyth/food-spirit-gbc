@@ -23,13 +23,13 @@ AREA .  .ABS.
 		l__HEADER	01E1
 		s__CODE	0200
 		l__BASE	0211
-		l__CODE	0BBE
-		s__HOME	0DBE
-		s__BASE	0F6A
-		s__GSINITTAIL	117B
-		s__LIT	117B
-		s__GSINIT	117B
-		s__GSFINAL	117C
+		l__CODE	0C2A
+		s__HOME	0E2A
+		s__BASE	0FD6
+		s__GSINITTAIL	11E7
+		s__LIT	11E7
+		s__GSINIT	11E7
+		s__GSFINAL	11E8
 		.OAM	C000
 		s__DATA	C0A0
 		s__BSS	C0B7
@@ -43,7 +43,7 @@ AREA .  .ABS.
 AREA _CODE
 	RADIX HEX
 	BASE 0200
-	SIZE 0BBE
+	SIZE 0C2A
 	ATTRIB REL CON
 	GLOBALS
 		_read_controls	0200
@@ -79,25 +79,27 @@ AREA _CODE
 		_PAL_BG_POT_DARK_2	0692
 		_PAL_BG_POT_DARK_3	069A
 		_PAL_BG_FIRE	06A2
-		_player_jump_and_gravity	06AA
-		_player_idle_anim	06DA
-		_draw_player	0767
-		_draw_foods	0806
-		_game_loop	0900
-		_init_player	090D
-		_set_food_type	09A8
-		_init_foods	0AC2
-		_init_bg	0B12
-		_initialize	0BE6
-		_main	0C22
-		_set_up_sprite	0C32
-		_set_up_sprite_simple	0C7E
-		_set_up_bg	0CA2
-		_set_bkg_palette_entry	0D03
-		_set_sprite_palette_entry	0D2B
-		_cpu_slow	0D53
-		_cpu_fast	0D6E
-		_cgb_compatibility	0D75
+		_food_logic	06AA
+		_player_jump_and_gravity	06B3
+		_player_idle_anim	06E3
+		_draw_player	0770
+		_draw_foods	080F
+		_init_player	0909
+		_set_food_type	09A4
+		_init_food	0ABE
+		_init_foods	0B16
+		_init_bg	0B6E
+		_game_loop	0C42
+		_initialize	0C52
+		_main	0C8E
+		_set_up_sprite	0C9E
+		_set_up_sprite_simple	0CEA
+		_set_up_bg	0D0E
+		_set_bkg_palette_entry	0D6F
+		_set_sprite_palette_entry	0D97
+		_cpu_slow	0DBF
+		_cpu_fast	0DDA
+		_cgb_compatibility	0DE1
 AREA _HEADER
 	RADIX HEX
 	BASE 0000
@@ -107,100 +109,100 @@ AREA _HEADER
 		_exit	01D2
 AREA _HOME
 	RADIX HEX
-	BASE 0DBE
+	BASE 0E2A
 	SIZE 01AC
 	ATTRIB REL CON
 	GLOBALS
-		.set_mode	0DBE
-		.remove_VBL	0DCE
-		.remove_LCD	0DD4
-		.remove_TIM	0DDA
-		.remove_SIO	0DE0
-		.remove_JOY	0DE6
-		.add_VBL	0DEC
-		.add_LCD	0DF2
-		.add_TIM	0DF8
-		.add_SIO	0DFE
-		.add_JOY	0E04
-		.remove_int	0E0A
-		.add_int	0E2A
-		.wait_vbl_done	0E46
-		_wait_vbl_done	0E46
-		_display_off	0E5D
-		.display_off	0E5D
-		.serial_IO	0E7E
-		_mode	0EAD
-		_get_mode	0EB6
-		_enable_interrupts	0EBB
-		_disable_interrupts	0EBD
-		_reset	0EBF
-		.reset	0EBF
-		_set_interrupts	0EC5
-		_remove_VBL	0ED0
-		_remove_LCD	0EDB
-		_remove_TIM	0EE6
-		_remove_SIO	0EF1
-		_remove_JOY	0EFC
-		_add_VBL	0F07
-		_add_LCD	0F12
-		_add_TIM	0F1D
-		_add_SIO	0F28
-		_add_JOY	0F33
-		_clock	0F3E
-		__printTStates	0F47
-		banked_call	0F48
-		banked_ret	0F61
+		.set_mode	0E2A
+		.remove_VBL	0E3A
+		.remove_LCD	0E40
+		.remove_TIM	0E46
+		.remove_SIO	0E4C
+		.remove_JOY	0E52
+		.add_VBL	0E58
+		.add_LCD	0E5E
+		.add_TIM	0E64
+		.add_SIO	0E6A
+		.add_JOY	0E70
+		.remove_int	0E76
+		.add_int	0E96
+		.wait_vbl_done	0EB2
+		_wait_vbl_done	0EB2
+		_display_off	0EC9
+		.display_off	0EC9
+		.serial_IO	0EEA
+		_mode	0F19
+		_get_mode	0F22
+		_enable_interrupts	0F27
+		_disable_interrupts	0F29
+		_reset	0F2B
+		.reset	0F2B
+		_set_interrupts	0F31
+		_remove_VBL	0F3C
+		_remove_LCD	0F47
+		_remove_TIM	0F52
+		_remove_SIO	0F5D
+		_remove_JOY	0F68
+		_add_VBL	0F73
+		_add_LCD	0F7E
+		_add_TIM	0F89
+		_add_SIO	0F94
+		_add_JOY	0F9F
+		_clock	0FAA
+		__printTStates	0FB3
+		banked_call	0FB4
+		banked_ret	0FCD
 AREA _BASE
 	RADIX HEX
-	BASE 0F6A
+	BASE 0FD6
 	SIZE 0211
 	ATTRIB REL CON
 	GLOBALS
-		.set_sprite_prop	0F6A
-		_set_sprite_prop	0F77
-		.mv_sprite	0F82
-		_move_sprite	0F91
-		_set_bkg_palette	0F9E
-		_set_sprite_palette	0FC9
-		_set_win_data	0FF4
-		_set_bkg_data	0FF4
-		_set_sprite_data	1041
-		.padup	1070
-		_waitpadup	1070
-		.jpad	1080
-		.wait_pad	10AD
-		_joypad	10B4
-		_waitpad	10B9
-		.set_sprite_tile	10C3
-		_set_sprite_tile	10D0
-		.copy_vram	10DB
-		_get_data	10EA
-		_set_data	10EA
-		_set_bkg_tiles	10FD
-		.set_xy_wtt	1111
-		.set_xy_btt	1122
-		.set_xy_tt	1131
-		_set_tiles	1162
+		.set_sprite_prop	0FD6
+		_set_sprite_prop	0FE3
+		.mv_sprite	0FEE
+		_move_sprite	0FFD
+		_set_bkg_palette	100A
+		_set_sprite_palette	1035
+		_set_win_data	1060
+		_set_bkg_data	1060
+		_set_sprite_data	10AD
+		.padup	10DC
+		_waitpadup	10DC
+		.jpad	10EC
+		.wait_pad	1119
+		_joypad	1120
+		_waitpad	1125
+		.set_sprite_tile	112F
+		_set_sprite_tile	113C
+		.copy_vram	1147
+		_get_data	1156
+		_set_data	1156
+		_set_bkg_tiles	1169
+		.set_xy_wtt	117D
+		.set_xy_btt	118E
+		.set_xy_tt	119D
+		_set_tiles	11CE
 AREA _LIT
 	RADIX HEX
-	BASE 117B
+	BASE 11E7
 	SIZE 0000
 	ATTRIB REL CON
 AREA _GSINIT
 	RADIX HEX
-	BASE 117B
+	BASE 11E7
 	SIZE 0000
 	ATTRIB REL CON
 	GLOBALS
-		gsinit	117B
+		gsinit	11E7
 AREA _GSINITTAIL
 	RADIX HEX
-	BASE 117B
+	BASE 11E7
 	SIZE 0001
 	ATTRIB REL CON
 AREA _GSFINAL
 	RADIX HEX
-	BASE 117C
+	BASE 11E8
 	SIZE 0000
 	ATTRIB REL CON
 AREA _DATA
@@ -267,9 +269,9 @@ MODULES
 	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
 		NAME Runtime
 	FILE build/food_spirit.o
-		NAME lcc48050
+		NAME lcc48250
 	FILE build/utils.o
-		NAME lcc48090
+		NAME lcc48290
 LIBRARIES
 	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
 		MODULE set_prop.o

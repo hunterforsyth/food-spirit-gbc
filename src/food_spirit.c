@@ -52,6 +52,14 @@ void read_controls() {
     }
 }
 
+void food_logic() {
+    UBYTE i;
+
+    for (i = 0; i < MAX_FOODS; i++) {
+
+    }
+}
+
 void player_jump_and_gravity() {
     if (player_jump_frames > 0) {
         player_jump_frames--;
@@ -119,14 +127,6 @@ void draw_foods() {
     }
 }
 
-void game_loop() {
-    read_controls();
-
-    player_jump_and_gravity();
-    draw_player();
-    draw_foods();
-}
-
 void init_player() {
     player_x = 40;
     player_y = 40;
@@ -161,6 +161,15 @@ void set_food_type(int food_index, int type) {
     }
 }
 
+void init_food(int food_index, int type, int startx, int starty) {
+    foods[food_index].pos_x = startx;
+    foods[food_index].pos_y = starty;
+
+    foods[food_index].dir = DOWN;
+
+    set_food_type(food_index, type);
+}
+
 void init_foods() {
     UBYTE i;
 
@@ -168,7 +177,7 @@ void init_foods() {
         foods[i].pos_x = 0;
         foods[i].pos_y = 0;
 
-        set_food_type(i, 0);
+        init_food(i, 0, 0, 0);
     }
 }
 
@@ -190,6 +199,16 @@ void init_bg() {
     set_bkg_data(8, 1, TILE_BLANK_LIGHT);
 
     set_up_bg(0, 1, 20, 17, MAP_BG_1, MAP_PAL_BG_1);
+}
+
+void game_loop() {
+    read_controls();
+
+    player_jump_and_gravity();
+    draw_player();
+
+    food_logic();
+    draw_foods();
 }
 
 void initialize() {
