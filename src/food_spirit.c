@@ -85,7 +85,7 @@ void food_logic() {
         if (f->enabled == ON) {
             switch (f->dir) {
                 case DIR_N :
-                    if (f->pos_y > COLLISION_CEIL) {
+                    if (f->pos_y - SPR_W > COLLISION_CEIL) {
                         f->pos_y -= f->vel;
                     } else {
                         bounce_food(f, DIR_S, DIR_SE, DIR_SW);
@@ -94,6 +94,13 @@ void food_logic() {
                     break;
 
                 case DIR_NE :
+                    if (f->pos_y - SPR_W > COLLISION_CEIL && f->pos_x < COLLISION_RIGHT) {
+                        f->pos_x += f->vel;
+                        f->pos_y -= f->vel;
+                    } else {
+                        bounce_food(f, DIR_SW, DIR_S, DIR_W);
+                    }
+
                     break;
 
                 case DIR_E :
@@ -106,18 +113,32 @@ void food_logic() {
                     break;
 
                 case DIR_SE :
+                    if (f->pos_y - SPR_W < COLLISION_FLOOR && f->pos_x < COLLISION_RIGHT) {
+                        f->pos_x += f->vel;
+                        f->pos_y += f->vel;
+                    } else {
+                        bounce_food(f, DIR_NW, DIR_N, DIR_W);
+                    }
+
                     break;
 
                 case DIR_S :
-                    if (f->pos_y < COLLISION_FLOOR) {
+                    if (f->pos_y - SPR_W < COLLISION_FLOOR) {
                         f->pos_y += f->vel;
                     } else {
-                        bounce_food(f, DIR_N, DIR_W, DIR_E);
+                        bounce_food(f, DIR_N, DIR_NW, DIR_NE);
                     }
 
                     break;
 
                 case DIR_SW :
+                    if (f->pos_y - SPR_W < COLLISION_FLOOR && f->pos_x > COLLISION_LEFT) {
+                        f->pos_x -= f->vel;
+                        f->pos_y += f->vel;
+                    } else {
+                        bounce_food(f, DIR_NE, DIR_N, DIR_E);
+                    }
+
                     break;
 
                 case DIR_W :
@@ -130,6 +151,13 @@ void food_logic() {
                     break;
 
                 case DIR_NW :
+                    if (f->pos_y - SPR_W > COLLISION_CEIL && f->pos_x > COLLISION_LEFT) {
+                        f->pos_x -= f->vel;
+                        f->pos_y -= f->vel;
+                    } else {
+                        bounce_food(f, DIR_SE, DIR_S, DIR_E);
+                    }
+
                     break;
             }
         }

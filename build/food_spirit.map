@@ -23,13 +23,13 @@ AREA .  .ABS.
 		l__HEADER	01E1
 		s__CODE	0200
 		l__BASE	021C
-		l__CODE	1076
-		s__HOME	1276
-		s__BASE	1422
-		s__GSINITTAIL	163E
-		s__LIT	163E
-		s__GSINIT	163E
-		s__GSFINAL	163F
+		l__CODE	123E
+		s__HOME	143E
+		s__BASE	15EA
+		s__GSINITTAIL	1806
+		s__LIT	1806
+		s__GSINIT	1806
+		s__GSFINAL	1807
 		.OAM	C000
 		s__DATA	C0A0
 		s__BSS	C0C2
@@ -43,7 +43,7 @@ AREA .  .ABS.
 AREA _CODE
 	RADIX HEX
 	BASE 0200
-	SIZE 1076
+	SIZE 123E
 	ATTRIB REL CON
 	GLOBALS
 		_read_controls	0200
@@ -81,58 +81,58 @@ AREA _CODE
 		_PAL_BG_FIRE	06B1
 		_bounce_food	06B9
 		_food_logic	0723
-		_player_jump_and_gravity	08DC
-		_player_idle_anim	090C
-		_draw_player	0999
-		_draw_foods	0A38
-		_init_player	0B2D
-		_set_food_type	0BC8
-		_init_food	0CF2
-		_init_foods	0D55
-		_init_bg	0D8C
-		_game_loop	0E60
-		_initialize	0E70
-		_main	0EC8
-		_set_up_sprite	0ED8
-		_set_up_sprite_simple	0F24
-		_set_up_bg	0F48
-		_pre_init_rand	0FA9
-		_init_rand	0FBB
-		_get_rand	0FED
-		_get_rand_ready	1030
-		__divschar_rrx_s	1035
-		__divschar_rrx_hds	103C
-		__modschar_rrx_s	1043
-		__modschar_rrx_hds	104A
-		__divsint_rrx_s	104F
-		__divsint_rrx_hds	105B
-		__modsint_rrx_s	1063
-		__modsint_rrx_hds	106F
-		__divuchar_rrx_s	1075
-		__divuchar_rrx_hds	107C
-		__moduchar_rrx_s	1083
-		__moduchar_rrx_hds	108A
-		__divuint_rrx_s	108F
-		__divuint_rrx_hds	109B
-		__moduint_rrx_s	10A3
-		__moduint_rrx_hds	10AF
-		.mod8	10B5
-		.div8	10B5
-		.mod16	10BD
-		.div16	10BD
-		.modu8	10F7
-		.divu8	10F7
-		.modu16	10FA
-		.divu16	10FA
-		_set_bkg_palette_entry	1137
-		_set_sprite_palette_entry	115F
-		_cpu_slow	1187
-		_cpu_fast	11A2
-		_cgb_compatibility	11A9
-		_arand	11F2
-		_initarand	121E
-		_rand	124B
-		_randw	124B
+		_player_jump_and_gravity	0AA4
+		_player_idle_anim	0AD4
+		_draw_player	0B61
+		_draw_foods	0C00
+		_init_player	0CF5
+		_set_food_type	0D90
+		_init_food	0EBA
+		_init_foods	0F1D
+		_init_bg	0F54
+		_game_loop	1028
+		_initialize	1038
+		_main	1090
+		_set_up_sprite	10A0
+		_set_up_sprite_simple	10EC
+		_set_up_bg	1110
+		_pre_init_rand	1171
+		_init_rand	1183
+		_get_rand	11B5
+		_get_rand_ready	11F8
+		__divschar_rrx_s	11FD
+		__divschar_rrx_hds	1204
+		__modschar_rrx_s	120B
+		__modschar_rrx_hds	1212
+		__divsint_rrx_s	1217
+		__divsint_rrx_hds	1223
+		__modsint_rrx_s	122B
+		__modsint_rrx_hds	1237
+		__divuchar_rrx_s	123D
+		__divuchar_rrx_hds	1244
+		__moduchar_rrx_s	124B
+		__moduchar_rrx_hds	1252
+		__divuint_rrx_s	1257
+		__divuint_rrx_hds	1263
+		__moduint_rrx_s	126B
+		__moduint_rrx_hds	1277
+		.mod8	127D
+		.div8	127D
+		.mod16	1285
+		.div16	1285
+		.modu8	12BF
+		.divu8	12BF
+		.modu16	12C2
+		.divu16	12C2
+		_set_bkg_palette_entry	12FF
+		_set_sprite_palette_entry	1327
+		_cpu_slow	134F
+		_cpu_fast	136A
+		_cgb_compatibility	1371
+		_arand	13BA
+		_initarand	13E6
+		_rand	1413
+		_randw	1413
 AREA _HEADER
 	RADIX HEX
 	BASE 0000
@@ -142,102 +142,102 @@ AREA _HEADER
 		_exit	01D2
 AREA _HOME
 	RADIX HEX
-	BASE 1276
+	BASE 143E
 	SIZE 01AC
 	ATTRIB REL CON
 	GLOBALS
-		.set_mode	1276
-		.remove_VBL	1286
-		.remove_LCD	128C
-		.remove_TIM	1292
-		.remove_SIO	1298
-		.remove_JOY	129E
-		.add_VBL	12A4
-		.add_LCD	12AA
-		.add_TIM	12B0
-		.add_SIO	12B6
-		.add_JOY	12BC
-		.remove_int	12C2
-		.add_int	12E2
-		.wait_vbl_done	12FE
-		_wait_vbl_done	12FE
-		_display_off	1315
-		.display_off	1315
-		.serial_IO	1336
-		_mode	1365
-		_get_mode	136E
-		_enable_interrupts	1373
-		_disable_interrupts	1375
-		_reset	1377
-		.reset	1377
-		_set_interrupts	137D
-		_remove_VBL	1388
-		_remove_LCD	1393
-		_remove_TIM	139E
-		_remove_SIO	13A9
-		_remove_JOY	13B4
-		_add_VBL	13BF
-		_add_LCD	13CA
-		_add_TIM	13D5
-		_add_SIO	13E0
-		_add_JOY	13EB
-		_clock	13F6
-		__printTStates	13FF
-		banked_call	1400
-		banked_ret	1419
+		.set_mode	143E
+		.remove_VBL	144E
+		.remove_LCD	1454
+		.remove_TIM	145A
+		.remove_SIO	1460
+		.remove_JOY	1466
+		.add_VBL	146C
+		.add_LCD	1472
+		.add_TIM	1478
+		.add_SIO	147E
+		.add_JOY	1484
+		.remove_int	148A
+		.add_int	14AA
+		.wait_vbl_done	14C6
+		_wait_vbl_done	14C6
+		_display_off	14DD
+		.display_off	14DD
+		.serial_IO	14FE
+		_mode	152D
+		_get_mode	1536
+		_enable_interrupts	153B
+		_disable_interrupts	153D
+		_reset	153F
+		.reset	153F
+		_set_interrupts	1545
+		_remove_VBL	1550
+		_remove_LCD	155B
+		_remove_TIM	1566
+		_remove_SIO	1571
+		_remove_JOY	157C
+		_add_VBL	1587
+		_add_LCD	1592
+		_add_TIM	159D
+		_add_SIO	15A8
+		_add_JOY	15B3
+		_clock	15BE
+		__printTStates	15C7
+		banked_call	15C8
+		banked_ret	15E1
 AREA _BASE
 	RADIX HEX
-	BASE 1422
+	BASE 15EA
 	SIZE 021C
 	ATTRIB REL CON
 	GLOBALS
-		.set_sprite_prop	1422
-		_set_sprite_prop	142F
-		.mv_sprite	143A
-		_move_sprite	1449
-		_set_bkg_palette	1456
-		_set_sprite_palette	1481
-		_set_win_data	14AC
-		_set_bkg_data	14AC
-		_set_sprite_data	14F9
-		.padup	1528
-		_waitpadup	1528
-		.jpad	1538
-		.wait_pad	1565
-		_joypad	156C
-		_waitpad	1571
-		.set_sprite_tile	157B
-		_set_sprite_tile	1588
-		.copy_vram	1593
-		_get_data	15A2
-		_set_data	15A2
-		_set_bkg_tiles	15B5
-		_initrand	15C9
-		.initrand	15CB
-		.set_xy_wtt	15D4
-		.set_xy_btt	15E5
-		.set_xy_tt	15F4
-		_set_tiles	1625
+		.set_sprite_prop	15EA
+		_set_sprite_prop	15F7
+		.mv_sprite	1602
+		_move_sprite	1611
+		_set_bkg_palette	161E
+		_set_sprite_palette	1649
+		_set_win_data	1674
+		_set_bkg_data	1674
+		_set_sprite_data	16C1
+		.padup	16F0
+		_waitpadup	16F0
+		.jpad	1700
+		.wait_pad	172D
+		_joypad	1734
+		_waitpad	1739
+		.set_sprite_tile	1743
+		_set_sprite_tile	1750
+		.copy_vram	175B
+		_get_data	176A
+		_set_data	176A
+		_set_bkg_tiles	177D
+		_initrand	1791
+		.initrand	1793
+		.set_xy_wtt	179C
+		.set_xy_btt	17AD
+		.set_xy_tt	17BC
+		_set_tiles	17ED
 AREA _LIT
 	RADIX HEX
-	BASE 163E
+	BASE 1806
 	SIZE 0000
 	ATTRIB REL CON
 AREA _GSINIT
 	RADIX HEX
-	BASE 163E
+	BASE 1806
 	SIZE 0000
 	ATTRIB REL CON
 	GLOBALS
-		gsinit	163E
+		gsinit	1806
 AREA _GSINITTAIL
 	RADIX HEX
-	BASE 163E
+	BASE 1806
 	SIZE 0001
 	ATTRIB REL CON
 AREA _GSFINAL
 	RADIX HEX
-	BASE 163F
+	BASE 1807
 	SIZE 0000
 	ATTRIB REL CON
 AREA _DATA
@@ -308,9 +308,9 @@ MODULES
 	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
 		NAME Runtime
 	FILE build/food_spirit.o
-		NAME lcc55420
+		NAME lcc56000
 	FILE build/utils.o
-		NAME lcc55460
+		NAME lcc56040
 LIBRARIES
 	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
 		MODULE set_prop.o
