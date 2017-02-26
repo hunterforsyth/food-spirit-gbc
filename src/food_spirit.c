@@ -56,7 +56,9 @@ void food_logic() {
     UBYTE i;
 
     for (i = 0; i < MAX_FOODS; i++) {
-
+        if (foods[i].enabled == ON) {
+            
+        }
     }
 }
 
@@ -118,10 +120,13 @@ void draw_foods() {
 
     i = 0;
     for (spr = 0; spr < MAX_FOODS * SPRITES_PER_FOOD; spr += SPRITES_PER_FOOD) {
-        move_sprite(SPR_FOOD(spr), foods[i].pos_x, foods[i].pos_y);
-        move_sprite(SPR_FOOD(spr + 1), foods[i].pos_x + SPR_W, foods[i].pos_y);
-        move_sprite(SPR_FOOD(spr + 2), foods[i].pos_x, foods[i].pos_y + SPR_W);
-        move_sprite(SPR_FOOD(spr + 3), foods[i].pos_x + SPR_W, foods[i].pos_y + SPR_W);
+        struct food * f;
+        f = &foods[i];
+
+        move_sprite(SPR_FOOD(spr), f->pos_x, f->pos_y);
+        move_sprite(SPR_FOOD(spr + 1), f->pos_x + SPR_W, f->pos_y);
+        move_sprite(SPR_FOOD(spr + 2), f->pos_x, f->pos_y + SPR_W);
+        move_sprite(SPR_FOOD(spr + 3), f->pos_x + SPR_W, f->pos_y + SPR_W);
 
         i++;
     }
@@ -161,11 +166,15 @@ void set_food_type(int food_index, int type) {
     }
 }
 
-void init_food(int food_index, int type, int startx, int starty) {
-    foods[food_index].pos_x = startx;
-    foods[food_index].pos_y = starty;
+void init_food(int food_index, int type, int startx, int starty, int enabled) {
+    struct food * f;
+    f = &foods[food_index];
 
-    foods[food_index].dir = DOWN;
+    f->pos_x = startx;
+    f->pos_y = starty;
+
+    f->dir = DOWN;
+    f->enabled = enabled;
 
     set_food_type(food_index, type);
 }
@@ -177,7 +186,7 @@ void init_foods() {
         foods[i].pos_x = 0;
         foods[i].pos_y = 0;
 
-        init_food(i, 0, 0, 0);
+        init_food(i, 0, 0, 0, OFF);
     }
 }
 

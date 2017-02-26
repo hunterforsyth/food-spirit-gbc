@@ -1,6 +1,6 @@
 XL
 H 9 areas 8 global symbols
-M lcc48290
+M lcc49460
 S _set_sprite_prop Ref0000
 S _set_sprite_data Ref0000
 S _set_sprite_tile Ref0000
