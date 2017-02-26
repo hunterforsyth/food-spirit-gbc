@@ -1,9 +1,9 @@
                               1 ;--------------------------------------------------------
                               2 ; File Created by SDCC : FreeWare ANSI-C Compiler
-                              3 ; Version 2.3.1 Sun Feb 26 11:34:40 2017
+                              3 ; Version 2.3.1 Sun Feb 26 11:38:13 2017
                               4 
                               5 ;--------------------------------------------------------
-                              6 	.module lcc45790
+                              6 	.module lcc46610
                               7 	
                               8 ;--------------------------------------------------------
                               9 ; Public variables in this module
@@ -1677,25 +1677,25 @@
    05C6 E8 F8              1677 	lda	sp,-8(sp)
                            1678 ;	src/food_spirit.c 111
                            1679 ;	genAssign
-                           1680 ;	AOP_STK for _draw_foods_j_1_1
+                           1680 ;	AOP_STK for _draw_foods_i_1_1
    05C8 F8 06              1681 	lda	hl,6(sp)
    05CA 36 00              1682 	ld	(hl),#0x00
                            1683 ;	src/food_spirit.c 112
                            1684 ;	genAssign
-                           1685 ;	AOP_STK for _draw_foods_i_1_1
+                           1685 ;	AOP_STK for _draw_foods_spr_1_1
    05CC 23                 1686 	inc	hl
    05CD 36 00              1687 	ld	(hl),#0x00
                            1688 ;	genLabel
    05CF                    1689 00101$:
                            1690 ;	genCmpLt
-                           1691 ;	AOP_STK for _draw_foods_i_1_1
+                           1691 ;	AOP_STK for _draw_foods_spr_1_1
    05CF F8 07              1692 	lda	hl,7(sp)
    05D1 7E                 1693 	ld	a,(hl)
    05D2 FE 10              1694 	cp	#0x10
    05D4 D2 BD 06           1695 	jp	nc,00105$
                            1696 ;	src/food_spirit.c 113
                            1697 ;	genCast
-                           1698 ;	AOP_STK for _draw_foods_j_1_1
+                           1698 ;	AOP_STK for _draw_foods_i_1_1
                            1699 ;	AOP_STK for _draw_foods_sloc0_1_0
    05D7 2B                 1700 	dec	hl
    05D8 7E                 1701 	ld	a,(hl)
@@ -1760,7 +1760,7 @@
    060D F8 02              1760 	lda	hl,2(sp)
    060F 77                 1761 	ld	(hl),a
                            1762 ;	genPlus
-                           1763 ;	AOP_STK for _draw_foods_i_1_1
+                           1763 ;	AOP_STK for _draw_foods_spr_1_1
                            1764 ;	AOP_STK for _draw_foods_sloc3_1_0
                            1765 ;	genPlusIncr
                            1766 ;	Can't optimise plus by inc, falling back to the normal way
@@ -1979,13 +1979,13 @@
    06B0 E8 03              1979 	lda	sp,3(sp)
                            1980 ;	src/food_spirit.c 118
                            1981 ;	genPlus
-                           1982 ;	AOP_STK for _draw_foods_j_1_1
+                           1982 ;	AOP_STK for _draw_foods_i_1_1
                            1983 ;	genPlusIncr
    06B2 F8 06              1984 	lda	hl,6(sp)
    06B4 34                 1985 	inc	(hl)
                            1986 ;	src/food_spirit.c 112
                            1987 ;	genPlus
-                           1988 ;	AOP_STK for _draw_foods_i_1_1
+                           1988 ;	AOP_STK for _draw_foods_spr_1_1
                            1989 ;	genPlusIncr
    06B5 23                 1990 	inc	hl
    06B6 34                 1991 	inc	(hl)
@@ -2185,652 +2185,602 @@
    0768                    2185 _init_foods:
    0768 E8 F8              2186 	lda	sp,-8(sp)
                            2187 ;	src/food_spirit.c 149
-                           2188 ;	genIpush
-                           2189 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   076A 21 BA 00           2190 	ld	hl,#_SPR_DAT_FOOD_0_0_0
-   076D E5                 2191 	push	hl
-                           2192 ;	genIpush
-   076E 21 06 01           2193 	ld	hl,#0x0106
-   0771 E5                 2194 	push	hl
-                           2195 ;	genCall
-   0772 CD 00 00           2196 	call	_set_sprite_data
-   0775 E8 04              2197 	lda	sp,4(sp)
-                           2198 ;	src/food_spirit.c 150
-                           2199 ;	genIpush
-                           2200 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0777 21 CA 00           2201 	ld	hl,#_SPR_DAT_FOOD_1_0_0
-   077A E5                 2202 	push	hl
-                           2203 ;	genIpush
-   077B 21 07 01           2204 	ld	hl,#0x0107
-   077E E5                 2205 	push	hl
-                           2206 ;	genCall
-   077F CD 00 00           2207 	call	_set_sprite_data
-   0782 E8 04              2208 	lda	sp,4(sp)
-                           2209 ;	src/food_spirit.c 151
-                           2210 ;	genIpush
-                           2211 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0784 21 DA 00           2212 	ld	hl,#_SPR_DAT_FOOD_0_1_0
-   0787 E5                 2213 	push	hl
-                           2214 ;	genIpush
-   0788 21 08 01           2215 	ld	hl,#0x0108
-   078B E5                 2216 	push	hl
-                           2217 ;	genCall
-   078C CD 00 00           2218 	call	_set_sprite_data
-   078F E8 04              2219 	lda	sp,4(sp)
-                           2220 ;	src/food_spirit.c 152
-                           2221 ;	genIpush
-                           2222 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0791 21 EA 00           2223 	ld	hl,#_SPR_DAT_FOOD_1_1_0
-   0794 E5                 2224 	push	hl
-                           2225 ;	genIpush
-   0795 21 09 01           2226 	ld	hl,#0x0109
-   0798 E5                 2227 	push	hl
-                           2228 ;	genCall
-   0799 CD 00 00           2229 	call	_set_sprite_data
-   079C E8 04              2230 	lda	sp,4(sp)
-                           2231 ;	src/food_spirit.c 154
-                           2232 ;	genAssign
-                           2233 ;	AOP_STK for _init_foods_j_1_1
-   079E F8 06              2234 	lda	hl,6(sp)
-   07A0 36 00              2235 	ld	(hl),#0x00
-                           2236 ;	src/food_spirit.c 155
-                           2237 ;	genAssign
-                           2238 ;	AOP_STK for _init_foods_i_1_1
-   07A2 23                 2239 	inc	hl
-   07A3 36 00              2240 	ld	(hl),#0x00
-                           2241 ;	genLabel
-   07A5                    2242 00101$:
-                           2243 ;	genCmpLt
-                           2244 ;	AOP_STK for _init_foods_i_1_1
-   07A5 F8 07              2245 	lda	hl,7(sp)
-   07A7 7E                 2246 	ld	a,(hl)
-   07A8 FE 10              2247 	cp	#0x10
-   07AA D2 93 08           2248 	jp	nc,00105$
-                           2249 ;	src/food_spirit.c 156
-                           2250 ;	genCast
-                           2251 ;	AOP_STK for _init_foods_j_1_1
-                           2252 ;	AOP_STK for _init_foods_sloc0_1_0
-   07AD 2B                 2253 	dec	hl
-   07AE 7E                 2254 	ld	a,(hl)
-   07AF 2B                 2255 	dec	hl
-   07B0 2B                 2256 	dec	hl
-   07B1 22                 2257 	ld	(hl+),a
-   07B2 36 00              2258 	ld	(hl),#0x00
-                           2259 ;	genLeftShift
-                           2260 ;	AOP_STK for _init_foods_sloc0_1_0
-   07B4 2B                 2261 	dec	hl
-   07B5 46                 2262 	ld	b,(hl)
-   07B6 23                 2263 	inc	hl
-   07B7 4E                 2264 	ld	c,(hl)
-   07B8 3E 03              2265 	ld	a,#0x02+1
-   07BA 18 04              2266 	jr	00110$
-   07BC                    2267 00109$:
-   07BC CB 20              2268 	sla	b
-   07BE CB 11              2269 	rl	c
-   07C0                    2270 00110$:
-   07C0 3D                 2271 	dec	a
-   07C1 20 F9              2272 	jr	nz,00109$
-                           2273 ;	genPlus
-                           2274 ;	Can't optimise plus by inc, falling back to the normal way
-   07C3 3E 07              2275 	ld	a,#<_foods
-   07C5 80                 2276 	add	a,b
-   07C6 47                 2277 	ld	b,a
-   07C7 3E 00              2278 	ld	a,#>_foods
-   07C9 89                 2279 	adc	a,c
-   07CA 4F                 2280 	ld	c,a
-                           2281 ;	genPlus
-                           2282 ;	AOP_STK for _init_foods_sloc0_1_0
-                           2283 ;	genPlusIncr
-                           2284 ;	Can't optimise plus by inc, falling back to the normal way
-   07CB 58                 2285 	ld	e,b
-   07CC 51                 2286 	ld	d,c
-   07CD 21 01 00           2287 	ld	hl,#0x0001
-   07D0 19                 2288 	add	hl,de
-   07D1 7D                 2289 	ld	a,l
-   07D2 54                 2290 	ld	d,h
-   07D3 F8 04              2291 	lda	hl,4(sp)
-   07D5 22                 2292 	ld	(hl+),a
-   07D6 72                 2293 	ld	(hl),d
-                           2294 ;	genMult
-                           2295 ;	AOP_STK for _init_foods_j_1_1
-                           2296 ;	AOP_STK for _init_foods_sloc1_1_0
-   07D7 23                 2297 	inc	hl
-   07D8 5E                 2298 	ld	e,(hl)
-   07D9 16 00              2299 	ld	d,#0x00
-   07DB 6B                 2300 	ld	l,e
-   07DC 62                 2301 	ld	h,d
-   07DD 29                 2302 	add	hl,hl
-   07DE 19                 2303 	add	hl,de
-   07DF 29                 2304 	add	hl,hl
-   07E0 29                 2305 	add	hl,hl
-   07E1 29                 2306 	add	hl,hl
-   07E2 7D                 2307 	ld	a,l
-   07E3 54                 2308 	ld	d,h
-   07E4 F8 02              2309 	lda	hl,2(sp)
-   07E6 22                 2310 	ld	(hl+),a
-   07E7 72                 2311 	ld	(hl),d
-                           2312 ;	genPlus
-                           2313 ;	AOP_STK for _init_foods_sloc1_1_0
-                           2314 ;	AOP_STK for _init_foods_sloc2_1_0
-                           2315 ;	genPlusIncr
-                           2316 ;	Can't optimise plus by inc, falling back to the normal way
-   07E8 2B                 2317 	dec	hl
-   07E9 5E                 2318 	ld	e,(hl)
-   07EA 23                 2319 	inc	hl
-   07EB 56                 2320 	ld	d,(hl)
-   07EC 21 28 00           2321 	ld	hl,#0x0028
-   07EF 19                 2322 	add	hl,de
-   07F0 7D                 2323 	ld	a,l
-   07F1 54                 2324 	ld	d,h
-   07F2 F8 00              2325 	lda	hl,0(sp)
-   07F4 22                 2326 	ld	(hl+),a
-   07F5 72                 2327 	ld	(hl),d
-                           2328 ;	genCast
-                           2329 ;	AOP_STK for _init_foods_sloc2_1_0
-   07F6 2B                 2330 	dec	hl
-   07F7 7E                 2331 	ld	a,(hl)
-                           2332 ;	genAssign (pointer)
-                           2333 ;	AOP_STK for _init_foods_sloc0_1_0
-   07F8 F8 04              2334 	lda	hl,4(sp)
-   07FA 5E                 2335 	ld	e,(hl)
-   07FB 23                 2336 	inc	hl
-   07FC 56                 2337 	ld	d,(hl)
-   07FD 12                 2338 	ld	(de),a
-                           2339 ;	src/food_spirit.c 157
-                           2340 ;	genPlus
-                           2341 ;	genPlusIncr
-   07FE 68                 2342 	ld	l,b
-   07FF 61                 2343 	ld	h,c
-   0800 23                 2344 	inc	hl
-   0801 23                 2345 	inc	hl
-                           2346 ;	genAssign (pointer)
-   0802 36 28              2347 	ld	(hl),#0x28
-                           2348 ;	src/food_spirit.c 166
-                           2349 ;	genPlus
-                           2350 ;	AOP_STK for _init_foods_i_1_1
-                           2351 ;	genPlusIncr
-                           2352 ;	Can't optimise plus by inc, falling back to the normal way
-   0804 23                 2353 	inc	hl
-   0805 23                 2354 	inc	hl
-   0806 7E                 2355 	ld	a,(hl)
-   0807 C6 06              2356 	add	a,#0x06
-   0809 4F                 2357 	ld	c,a
-                           2358 ;	genIpush
-                           2359 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   080A C5                 2360 	push	bc
-   080B 3E 06              2361 	ld	a,#0x06
-   080D F5                 2362 	push	af
-   080E 33                 2363 	inc	sp
-                           2364 ;	genIpush
-   080F 79                 2365 	ld	a,c
-   0810 F5                 2366 	push	af
-   0811 33                 2367 	inc	sp
-                           2368 ;	genCall
-   0812 CD 00 00           2369 	call	_set_sprite_tile
-   0815 E8 02              2370 	lda	sp,2(sp)
-   0817 E1                 2371 	pop	hl
-   0818 4D                 2372 	ld	c,l
-                           2373 ;	src/food_spirit.c 167
-                           2374 ;	genPlus
-                           2375 ;	genPlusIncr
-   0819 41                 2376 	ld	b,c
-   081A 04                 2377 	inc	b
-                           2378 ;	genIpush
-                           2379 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   081B C5                 2380 	push	bc
-   081C 3E 07              2381 	ld	a,#0x07
-   081E F5                 2382 	push	af
-   081F 33                 2383 	inc	sp
-                           2384 ;	genIpush
-   0820 78                 2385 	ld	a,b
-   0821 F5                 2386 	push	af
-   0822 33                 2387 	inc	sp
-                           2388 ;	genCall
-   0823 CD 00 00           2389 	call	_set_sprite_tile
-   0826 E8 02              2390 	lda	sp,2(sp)
-   0828 C1                 2391 	pop	bc
-                           2392 ;	src/food_spirit.c 168
-                           2393 ;	genPlus
-                           2394 ;	AOP_STK for _init_foods_sloc2_1_0
-                           2395 ;	genPlusIncr
-                           2396 ;	Can't optimise plus by inc, falling back to the normal way
-   0829 79                 2397 	ld	a,c
-   082A C6 02              2398 	add	a,#0x02
-   082C F8 00              2399 	lda	hl,0(sp)
-   082E 77                 2400 	ld	(hl),a
-                           2401 ;	genIpush
-                           2402 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   082F C5                 2403 	push	bc
-   0830 3E 08              2404 	ld	a,#0x08
-   0832 F5                 2405 	push	af
-   0833 33                 2406 	inc	sp
-                           2407 ;	genIpush
-                           2408 ;	AOP_STK for _init_foods_sloc2_1_0
-   0834 7E                 2409 	ld	a,(hl)
-   0835 F5                 2410 	push	af
-   0836 33                 2411 	inc	sp
-                           2412 ;	genCall
-   0837 CD 00 00           2413 	call	_set_sprite_tile
-   083A E8 02              2414 	lda	sp,2(sp)
-   083C C1                 2415 	pop	bc
-                           2416 ;	src/food_spirit.c 169
-                           2417 ;	genPlus
-                           2418 ;	AOP_STK for _init_foods_sloc1_1_0
-                           2419 ;	genPlusIncr
-                           2420 ;	Can't optimise plus by inc, falling back to the normal way
-   083D 79                 2421 	ld	a,c
-   083E C6 03              2422 	add	a,#0x03
-   0840 F8 02              2423 	lda	hl,2(sp)
-   0842 77                 2424 	ld	(hl),a
-                           2425 ;	genIpush
-                           2426 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   0843 C5                 2427 	push	bc
-   0844 3E 09              2428 	ld	a,#0x09
-   0846 F5                 2429 	push	af
-   0847 33                 2430 	inc	sp
-                           2431 ;	genIpush
-                           2432 ;	AOP_STK for _init_foods_sloc1_1_0
-   0848 7E                 2433 	ld	a,(hl)
-   0849 F5                 2434 	push	af
-   084A 33                 2435 	inc	sp
-                           2436 ;	genCall
-   084B CD 00 00           2437 	call	_set_sprite_tile
-   084E E8 02              2438 	lda	sp,2(sp)
-   0850 C1                 2439 	pop	bc
-                           2440 ;	src/food_spirit.c 171
+                           2188 ;	genAssign
+                           2189 ;	AOP_STK for _init_foods_i_1_1
+   076A F8 06              2190 	lda	hl,6(sp)
+   076C 36 00              2191 	ld	(hl),#0x00
+                           2192 ;	src/food_spirit.c 150
+                           2193 ;	genAssign
+                           2194 ;	AOP_STK for _init_foods_spr_1_1
+   076E 23                 2195 	inc	hl
+   076F 36 00              2196 	ld	(hl),#0x00
+                           2197 ;	genLabel
+   0771                    2198 00101$:
+                           2199 ;	genCmpLt
+                           2200 ;	AOP_STK for _init_foods_spr_1_1
+   0771 F8 07              2201 	lda	hl,7(sp)
+   0773 7E                 2202 	ld	a,(hl)
+   0774 FE 10              2203 	cp	#0x10
+   0776 D2 65 08           2204 	jp	nc,00105$
+                           2205 ;	src/food_spirit.c 151
+                           2206 ;	genCast
+                           2207 ;	AOP_STK for _init_foods_i_1_1
+                           2208 ;	AOP_STK for _init_foods_sloc0_1_0
+   0779 2B                 2209 	dec	hl
+   077A 7E                 2210 	ld	a,(hl)
+   077B 2B                 2211 	dec	hl
+   077C 2B                 2212 	dec	hl
+   077D 22                 2213 	ld	(hl+),a
+   077E 36 00              2214 	ld	(hl),#0x00
+                           2215 ;	genLeftShift
+                           2216 ;	AOP_STK for _init_foods_sloc0_1_0
+   0780 2B                 2217 	dec	hl
+   0781 46                 2218 	ld	b,(hl)
+   0782 23                 2219 	inc	hl
+   0783 4E                 2220 	ld	c,(hl)
+   0784 3E 03              2221 	ld	a,#0x02+1
+   0786 18 04              2222 	jr	00110$
+   0788                    2223 00109$:
+   0788 CB 20              2224 	sla	b
+   078A CB 11              2225 	rl	c
+   078C                    2226 00110$:
+   078C 3D                 2227 	dec	a
+   078D 20 F9              2228 	jr	nz,00109$
+                           2229 ;	genPlus
+                           2230 ;	Can't optimise plus by inc, falling back to the normal way
+   078F 3E 07              2231 	ld	a,#<_foods
+   0791 80                 2232 	add	a,b
+   0792 47                 2233 	ld	b,a
+   0793 3E 00              2234 	ld	a,#>_foods
+   0795 89                 2235 	adc	a,c
+   0796 4F                 2236 	ld	c,a
+                           2237 ;	genPlus
+                           2238 ;	AOP_STK for _init_foods_sloc0_1_0
+                           2239 ;	genPlusIncr
+                           2240 ;	Can't optimise plus by inc, falling back to the normal way
+   0797 58                 2241 	ld	e,b
+   0798 51                 2242 	ld	d,c
+   0799 21 01 00           2243 	ld	hl,#0x0001
+   079C 19                 2244 	add	hl,de
+   079D 7D                 2245 	ld	a,l
+   079E 54                 2246 	ld	d,h
+   079F F8 04              2247 	lda	hl,4(sp)
+   07A1 22                 2248 	ld	(hl+),a
+   07A2 72                 2249 	ld	(hl),d
+                           2250 ;	genMult
+                           2251 ;	AOP_STK for _init_foods_i_1_1
+                           2252 ;	AOP_STK for _init_foods_sloc1_1_0
+   07A3 23                 2253 	inc	hl
+   07A4 5E                 2254 	ld	e,(hl)
+   07A5 16 00              2255 	ld	d,#0x00
+   07A7 6B                 2256 	ld	l,e
+   07A8 62                 2257 	ld	h,d
+   07A9 29                 2258 	add	hl,hl
+   07AA 19                 2259 	add	hl,de
+   07AB 29                 2260 	add	hl,hl
+   07AC 29                 2261 	add	hl,hl
+   07AD 29                 2262 	add	hl,hl
+   07AE 7D                 2263 	ld	a,l
+   07AF 54                 2264 	ld	d,h
+   07B0 F8 02              2265 	lda	hl,2(sp)
+   07B2 22                 2266 	ld	(hl+),a
+   07B3 72                 2267 	ld	(hl),d
+                           2268 ;	genPlus
+                           2269 ;	AOP_STK for _init_foods_sloc1_1_0
+                           2270 ;	AOP_STK for _init_foods_sloc2_1_0
+                           2271 ;	genPlusIncr
+                           2272 ;	Can't optimise plus by inc, falling back to the normal way
+   07B4 2B                 2273 	dec	hl
+   07B5 5E                 2274 	ld	e,(hl)
+   07B6 23                 2275 	inc	hl
+   07B7 56                 2276 	ld	d,(hl)
+   07B8 21 28 00           2277 	ld	hl,#0x0028
+   07BB 19                 2278 	add	hl,de
+   07BC 7D                 2279 	ld	a,l
+   07BD 54                 2280 	ld	d,h
+   07BE F8 00              2281 	lda	hl,0(sp)
+   07C0 22                 2282 	ld	(hl+),a
+   07C1 72                 2283 	ld	(hl),d
+                           2284 ;	genCast
+                           2285 ;	AOP_STK for _init_foods_sloc2_1_0
+   07C2 2B                 2286 	dec	hl
+   07C3 7E                 2287 	ld	a,(hl)
+                           2288 ;	genAssign (pointer)
+                           2289 ;	AOP_STK for _init_foods_sloc0_1_0
+   07C4 F8 04              2290 	lda	hl,4(sp)
+   07C6 5E                 2291 	ld	e,(hl)
+   07C7 23                 2292 	inc	hl
+   07C8 56                 2293 	ld	d,(hl)
+   07C9 12                 2294 	ld	(de),a
+                           2295 ;	src/food_spirit.c 152
+                           2296 ;	genPlus
+                           2297 ;	genPlusIncr
+   07CA 68                 2298 	ld	l,b
+   07CB 61                 2299 	ld	h,c
+   07CC 23                 2300 	inc	hl
+   07CD 23                 2301 	inc	hl
+                           2302 ;	genAssign (pointer)
+   07CE 36 28              2303 	ld	(hl),#0x28
+                           2304 ;	src/food_spirit.c 154
+                           2305 ;	genPlus
+                           2306 ;	AOP_STK for _init_foods_spr_1_1
+                           2307 ;	genPlusIncr
+                           2308 ;	Can't optimise plus by inc, falling back to the normal way
+   07D0 23                 2309 	inc	hl
+   07D1 23                 2310 	inc	hl
+   07D2 7E                 2311 	ld	a,(hl)
+   07D3 C6 06              2312 	add	a,#0x06
+   07D5 4F                 2313 	ld	c,a
+                           2314 ;	genCast
+                           2315 ;	AOP_STK for _init_foods_sloc2_1_0
+   07D6 F8 00              2316 	lda	hl,0(sp)
+   07D8 71                 2317 	ld	(hl),c
+   07D9 79                 2318 	ld	a,c
+   07DA 17                 2319 	rla	
+   07DB 9F                 2320 	sbc	a,a
+   07DC 23                 2321 	inc	hl
+   07DD 77                 2322 	ld	(hl),a
+                           2323 ;	genIpush
+                           2324 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   07DE C5                 2325 	push	bc
+   07DF 21 32 04           2326 	ld	hl,#_PAL_PLAYER
+   07E2 E5                 2327 	push	hl
+                           2328 ;	genIpush
+   07E3 21 BA 00           2329 	ld	hl,#_SPR_DAT_FOOD_0_0_0
+   07E6 E5                 2330 	push	hl
+                           2331 ;	genIpush
+   07E7 21 00 00           2332 	ld	hl,#0x0000
+   07EA E5                 2333 	push	hl
+                           2334 ;	genIpush
+                           2335 ;	AOP_STK for _init_foods_sloc2_1_0
+   07EB F8 08              2336 	lda	hl,8(sp)
+   07ED 2A                 2337 	ld	a,(hl+)
+   07EE 66                 2338 	ld	h,(hl)
+   07EF 6F                 2339 	ld	l,a
+   07F0 E5                 2340 	push	hl
+                           2341 ;	genCall
+   07F1 CD 00 00           2342 	call	_set_up_sprite_simple
+   07F4 E8 08              2343 	lda	sp,8(sp)
+   07F6 E1                 2344 	pop	hl
+   07F7 4D                 2345 	ld	c,l
+                           2346 ;	src/food_spirit.c 155
+                           2347 ;	genPlus
+                           2348 ;	genPlusIncr
+   07F8 41                 2349 	ld	b,c
+   07F9 04                 2350 	inc	b
+                           2351 ;	genCast
+                           2352 ;	AOP_STK for _init_foods_sloc2_1_0
+   07FA F8 00              2353 	lda	hl,0(sp)
+   07FC 70                 2354 	ld	(hl),b
+   07FD 78                 2355 	ld	a,b
+   07FE 17                 2356 	rla	
+   07FF 9F                 2357 	sbc	a,a
+   0800 23                 2358 	inc	hl
+   0801 77                 2359 	ld	(hl),a
+                           2360 ;	genIpush
+                           2361 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0802 C5                 2362 	push	bc
+   0803 21 32 04           2363 	ld	hl,#_PAL_PLAYER
+   0806 E5                 2364 	push	hl
+                           2365 ;	genIpush
+   0807 21 CA 00           2366 	ld	hl,#_SPR_DAT_FOOD_1_0_0
+   080A E5                 2367 	push	hl
+                           2368 ;	genIpush
+   080B 21 00 00           2369 	ld	hl,#0x0000
+   080E E5                 2370 	push	hl
+                           2371 ;	genIpush
+                           2372 ;	AOP_STK for _init_foods_sloc2_1_0
+   080F F8 08              2373 	lda	hl,8(sp)
+   0811 2A                 2374 	ld	a,(hl+)
+   0812 66                 2375 	ld	h,(hl)
+   0813 6F                 2376 	ld	l,a
+   0814 E5                 2377 	push	hl
+                           2378 ;	genCall
+   0815 CD 00 00           2379 	call	_set_up_sprite_simple
+   0818 E8 08              2380 	lda	sp,8(sp)
+   081A E1                 2381 	pop	hl
+   081B 4D                 2382 	ld	c,l
+                           2383 ;	src/food_spirit.c 156
+                           2384 ;	genPlus
+                           2385 ;	genPlusIncr
+   081C 41                 2386 	ld	b,c
+   081D 04                 2387 	inc	b
+   081E 04                 2388 	inc	b
+                           2389 ;	genCast
+                           2390 ;	AOP_STK for _init_foods_sloc2_1_0
+   081F F8 00              2391 	lda	hl,0(sp)
+   0821 70                 2392 	ld	(hl),b
+   0822 78                 2393 	ld	a,b
+   0823 17                 2394 	rla	
+   0824 9F                 2395 	sbc	a,a
+   0825 23                 2396 	inc	hl
+   0826 77                 2397 	ld	(hl),a
+                           2398 ;	genIpush
+                           2399 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0827 C5                 2400 	push	bc
+   0828 21 32 04           2401 	ld	hl,#_PAL_PLAYER
+   082B E5                 2402 	push	hl
+                           2403 ;	genIpush
+   082C 21 DA 00           2404 	ld	hl,#_SPR_DAT_FOOD_0_1_0
+   082F E5                 2405 	push	hl
+                           2406 ;	genIpush
+   0830 21 00 00           2407 	ld	hl,#0x0000
+   0833 E5                 2408 	push	hl
+                           2409 ;	genIpush
+                           2410 ;	AOP_STK for _init_foods_sloc2_1_0
+   0834 F8 08              2411 	lda	hl,8(sp)
+   0836 2A                 2412 	ld	a,(hl+)
+   0837 66                 2413 	ld	h,(hl)
+   0838 6F                 2414 	ld	l,a
+   0839 E5                 2415 	push	hl
+                           2416 ;	genCall
+   083A CD 00 00           2417 	call	_set_up_sprite_simple
+   083D E8 08              2418 	lda	sp,8(sp)
+   083F E1                 2419 	pop	hl
+   0840 4D                 2420 	ld	c,l
+                           2421 ;	src/food_spirit.c 157
+                           2422 ;	genPlus
+                           2423 ;	genPlusIncr
+                           2424 ; Removed redundent load
+   0841 0C                 2425 	inc	c
+   0842 0C                 2426 	inc	c
+   0843 0C                 2427 	inc	c
+                           2428 ;	genCast
+                           2429 ; Removed redundent load
+   0844 79                 2430 	ld	a,c
+   0845 17                 2431 	rla	
+   0846 9F                 2432 	sbc	a,a
+   0847 47                 2433 	ld	b,a
+                           2434 ;	genIpush
+                           2435 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0848 21 32 04           2436 	ld	hl,#_PAL_PLAYER
+   084B E5                 2437 	push	hl
+                           2438 ;	genIpush
+   084C 21 EA 00           2439 	ld	hl,#_SPR_DAT_FOOD_1_1_0
+   084F E5                 2440 	push	hl
                            2441 ;	genIpush
-                           2442 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
-   0851 C5                 2443 	push	bc
-   0852 3E 00              2444 	ld	a,#0x00
-   0854 F5                 2445 	push	af
-   0855 33                 2446 	inc	sp
-                           2447 ;	genIpush
-   0856 79                 2448 	ld	a,c
-   0857 F5                 2449 	push	af
-   0858 33                 2450 	inc	sp
-                           2451 ;	genCall
-   0859 CD 00 00           2452 	call	_set_sprite_prop
-   085C E8 02              2453 	lda	sp,2(sp)
-   085E E1                 2454 	pop	hl
-   085F 44                 2455 	ld	b,h
-                           2456 ;	src/food_spirit.c 172
-                           2457 ;	genIpush
-                           2458 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0860 3E 00              2459 	ld	a,#0x00
-   0862 F5                 2460 	push	af
-   0863 33                 2461 	inc	sp
-                           2462 ;	genIpush
-   0864 78                 2463 	ld	a,b
-   0865 F5                 2464 	push	af
-   0866 33                 2465 	inc	sp
-                           2466 ;	genCall
-   0867 CD 00 00           2467 	call	_set_sprite_prop
-   086A E8 02              2468 	lda	sp,2(sp)
-                           2469 ;	src/food_spirit.c 173
-                           2470 ;	genIpush
-                           2471 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   086C 3E 00              2472 	ld	a,#0x00
-   086E F5                 2473 	push	af
-   086F 33                 2474 	inc	sp
-                           2475 ;	genIpush
-                           2476 ;	AOP_STK for _init_foods_sloc2_1_0
-   0870 F8 01              2477 	lda	hl,1(sp)
-   0872 7E                 2478 	ld	a,(hl)
-   0873 F5                 2479 	push	af
-   0874 33                 2480 	inc	sp
-                           2481 ;	genCall
-   0875 CD 00 00           2482 	call	_set_sprite_prop
-   0878 E8 02              2483 	lda	sp,2(sp)
-                           2484 ;	src/food_spirit.c 174
-                           2485 ;	genIpush
-                           2486 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   087A 3E 00              2487 	ld	a,#0x00
-   087C F5                 2488 	push	af
-   087D 33                 2489 	inc	sp
-                           2490 ;	genIpush
-                           2491 ;	AOP_STK for _init_foods_sloc1_1_0
-   087E F8 03              2492 	lda	hl,3(sp)
-   0880 7E                 2493 	ld	a,(hl)
-   0881 F5                 2494 	push	af
-   0882 33                 2495 	inc	sp
-                           2496 ;	genCall
-   0883 CD 00 00           2497 	call	_set_sprite_prop
-   0886 E8 02              2498 	lda	sp,2(sp)
-                           2499 ;	src/food_spirit.c 176
-                           2500 ;	genPlus
-                           2501 ;	AOP_STK for _init_foods_j_1_1
-                           2502 ;	genPlusIncr
-   0888 F8 06              2503 	lda	hl,6(sp)
-   088A 34                 2504 	inc	(hl)
-                           2505 ;	src/food_spirit.c 155
-                           2506 ;	genPlus
-                           2507 ;	AOP_STK for _init_foods_i_1_1
-                           2508 ;	genPlusIncr
-   088B 23                 2509 	inc	hl
-   088C 34                 2510 	inc	(hl)
-   088D 34                 2511 	inc	(hl)
-   088E 34                 2512 	inc	(hl)
-   088F 34                 2513 	inc	(hl)
-                           2514 ;	genGoto
-   0890 C3 A5 07           2515 	jp	00101$
-                           2516 ;	genLabel
-   0893                    2517 00105$:
-                           2518 ;	genEndFunction
-   0893 E8 08              2519 	lda	sp,8(sp)
-   0895 C9                 2520 	ret
-   0896                    2521 ___init_foods_end:
-                           2522 ;	src/food_spirit.c 180
-                           2523 ;	genLabel
-                           2524 ;	genFunction
-                           2525 ;	---------------------------------
-                           2526 ; Function init_bg
-                           2527 ; ---------------------------------
-   0896                    2528 ___init_bg_start:
-   0896                    2529 _init_bg:
-                           2530 	
-                           2531 ;	src/food_spirit.c 181
-                           2532 ;	genIpush
-                           2533 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0896 21 3A 04           2534 	ld	hl,#_PAL_BG_SPOTS
-   0899 E5                 2535 	push	hl
-                           2536 ;	genIpush
-   089A 21 01 01           2537 	ld	hl,#0x0101
-   089D E5                 2538 	push	hl
-                           2539 ;	genCall
-   089E CD 00 00           2540 	call	_set_bkg_palette
-   08A1 E8 04              2541 	lda	sp,4(sp)
-                           2542 ;	src/food_spirit.c 182
-                           2543 ;	genIpush
-                           2544 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08A3 21 42 04           2545 	ld	hl,#_PAL_BG_POT
-   08A6 E5                 2546 	push	hl
-                           2547 ;	genIpush
-   08A7 21 02 01           2548 	ld	hl,#0x0102
-   08AA E5                 2549 	push	hl
-                           2550 ;	genCall
-   08AB CD 00 00           2551 	call	_set_bkg_palette
-   08AE E8 04              2552 	lda	sp,4(sp)
-                           2553 ;	src/food_spirit.c 183
-                           2554 ;	genIpush
-                           2555 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08B0 21 62 04           2556 	ld	hl,#_PAL_BG_FIRE
-   08B3 E5                 2557 	push	hl
-                           2558 ;	genIpush
-   08B4 21 03 01           2559 	ld	hl,#0x0103
-   08B7 E5                 2560 	push	hl
-                           2561 ;	genCall
-   08B8 CD 00 00           2562 	call	_set_bkg_palette
-   08BB E8 04              2563 	lda	sp,4(sp)
-                           2564 ;	src/food_spirit.c 184
-                           2565 ;	genIpush
-                           2566 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08BD 21 4A 04           2567 	ld	hl,#_PAL_BG_POT_DARK
-   08C0 E5                 2568 	push	hl
-                           2569 ;	genIpush
-   08C1 21 04 01           2570 	ld	hl,#0x0104
-   08C4 E5                 2571 	push	hl
-                           2572 ;	genCall
-   08C5 CD 00 00           2573 	call	_set_bkg_palette
-   08C8 E8 04              2574 	lda	sp,4(sp)
-                           2575 ;	src/food_spirit.c 185
-                           2576 ;	genIpush
-                           2577 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08CA 21 52 04           2578 	ld	hl,#_PAL_BG_POT_DARK_2
-   08CD E5                 2579 	push	hl
-                           2580 ;	genIpush
-   08CE 21 05 01           2581 	ld	hl,#0x0105
-   08D1 E5                 2582 	push	hl
-                           2583 ;	genCall
-   08D2 CD 00 00           2584 	call	_set_bkg_palette
-   08D5 E8 04              2585 	lda	sp,4(sp)
-                           2586 ;	src/food_spirit.c 186
-                           2587 ;	genIpush
-                           2588 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08D7 21 5A 04           2589 	ld	hl,#_PAL_BG_POT_DARK_3
-   08DA E5                 2590 	push	hl
-                           2591 ;	genIpush
-   08DB 21 06 01           2592 	ld	hl,#0x0106
-   08DE E5                 2593 	push	hl
-                           2594 ;	genCall
-   08DF CD 00 00           2595 	call	_set_bkg_palette
-   08E2 E8 04              2596 	lda	sp,4(sp)
-                           2597 ;	src/food_spirit.c 188
-                           2598 ;	genIpush
-                           2599 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08E4 21 1A 01           2600 	ld	hl,#_TILE_SPOTS
-   08E7 E5                 2601 	push	hl
-                           2602 ;	genIpush
-   08E8 21 01 01           2603 	ld	hl,#0x0101
-   08EB E5                 2604 	push	hl
-                           2605 ;	genCall
-   08EC CD 00 00           2606 	call	_set_bkg_data
-   08EF E8 04              2607 	lda	sp,4(sp)
-                           2608 ;	src/food_spirit.c 189
-                           2609 ;	genIpush
-                           2610 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08F1 21 2A 01           2611 	ld	hl,#_TILE_POT_FLOOR
-   08F4 E5                 2612 	push	hl
-                           2613 ;	genIpush
-   08F5 21 02 01           2614 	ld	hl,#0x0102
-   08F8 E5                 2615 	push	hl
-                           2616 ;	genCall
-   08F9 CD 00 00           2617 	call	_set_bkg_data
-   08FC E8 04              2618 	lda	sp,4(sp)
-                           2619 ;	src/food_spirit.c 190
-                           2620 ;	genIpush
-                           2621 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   08FE 21 3A 01           2622 	ld	hl,#_TILE_POT_LEFT_CORNER
-   0901 E5                 2623 	push	hl
-                           2624 ;	genIpush
-   0902 21 03 01           2625 	ld	hl,#0x0103
-   0905 E5                 2626 	push	hl
-                           2627 ;	genCall
-   0906 CD 00 00           2628 	call	_set_bkg_data
-   0909 E8 04              2629 	lda	sp,4(sp)
-                           2630 ;	src/food_spirit.c 191
-                           2631 ;	genIpush
-                           2632 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   090B 21 4A 01           2633 	ld	hl,#_TILE_POT_RIGHT_CORNER
-   090E E5                 2634 	push	hl
-                           2635 ;	genIpush
-   090F 21 04 01           2636 	ld	hl,#0x0104
-   0912 E5                 2637 	push	hl
-                           2638 ;	genCall
-   0913 CD 00 00           2639 	call	_set_bkg_data
-   0916 E8 04              2640 	lda	sp,4(sp)
-                           2641 ;	src/food_spirit.c 192
-                           2642 ;	genIpush
-                           2643 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0918 21 5A 01           2644 	ld	hl,#_TILE_POT_LEFT_WALL
-   091B E5                 2645 	push	hl
+   0850 21 00 00           2442 	ld	hl,#0x0000
+   0853 E5                 2443 	push	hl
+                           2444 ;	genIpush
+   0854 C5                 2445 	push	bc
+                           2446 ;	genCall
+   0855 CD 00 00           2447 	call	_set_up_sprite_simple
+   0858 E8 08              2448 	lda	sp,8(sp)
+                           2449 ;	src/food_spirit.c 159
+                           2450 ;	genPlus
+                           2451 ;	AOP_STK for _init_foods_i_1_1
+                           2452 ;	genPlusIncr
+   085A F8 06              2453 	lda	hl,6(sp)
+   085C 34                 2454 	inc	(hl)
+                           2455 ;	src/food_spirit.c 150
+                           2456 ;	genPlus
+                           2457 ;	AOP_STK for _init_foods_spr_1_1
+                           2458 ;	genPlusIncr
+   085D 23                 2459 	inc	hl
+   085E 34                 2460 	inc	(hl)
+   085F 34                 2461 	inc	(hl)
+   0860 34                 2462 	inc	(hl)
+   0861 34                 2463 	inc	(hl)
+                           2464 ;	genGoto
+   0862 C3 71 07           2465 	jp	00101$
+                           2466 ;	genLabel
+   0865                    2467 00105$:
+                           2468 ;	genEndFunction
+   0865 E8 08              2469 	lda	sp,8(sp)
+   0867 C9                 2470 	ret
+   0868                    2471 ___init_foods_end:
+                           2472 ;	src/food_spirit.c 163
+                           2473 ;	genLabel
+                           2474 ;	genFunction
+                           2475 ;	---------------------------------
+                           2476 ; Function init_bg
+                           2477 ; ---------------------------------
+   0868                    2478 ___init_bg_start:
+   0868                    2479 _init_bg:
+                           2480 	
+                           2481 ;	src/food_spirit.c 164
+                           2482 ;	genIpush
+                           2483 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0868 21 3A 04           2484 	ld	hl,#_PAL_BG_SPOTS
+   086B E5                 2485 	push	hl
+                           2486 ;	genIpush
+   086C 21 01 01           2487 	ld	hl,#0x0101
+   086F E5                 2488 	push	hl
+                           2489 ;	genCall
+   0870 CD 00 00           2490 	call	_set_bkg_palette
+   0873 E8 04              2491 	lda	sp,4(sp)
+                           2492 ;	src/food_spirit.c 165
+                           2493 ;	genIpush
+                           2494 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0875 21 42 04           2495 	ld	hl,#_PAL_BG_POT
+   0878 E5                 2496 	push	hl
+                           2497 ;	genIpush
+   0879 21 02 01           2498 	ld	hl,#0x0102
+   087C E5                 2499 	push	hl
+                           2500 ;	genCall
+   087D CD 00 00           2501 	call	_set_bkg_palette
+   0880 E8 04              2502 	lda	sp,4(sp)
+                           2503 ;	src/food_spirit.c 166
+                           2504 ;	genIpush
+                           2505 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0882 21 62 04           2506 	ld	hl,#_PAL_BG_FIRE
+   0885 E5                 2507 	push	hl
+                           2508 ;	genIpush
+   0886 21 03 01           2509 	ld	hl,#0x0103
+   0889 E5                 2510 	push	hl
+                           2511 ;	genCall
+   088A CD 00 00           2512 	call	_set_bkg_palette
+   088D E8 04              2513 	lda	sp,4(sp)
+                           2514 ;	src/food_spirit.c 167
+                           2515 ;	genIpush
+                           2516 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   088F 21 4A 04           2517 	ld	hl,#_PAL_BG_POT_DARK
+   0892 E5                 2518 	push	hl
+                           2519 ;	genIpush
+   0893 21 04 01           2520 	ld	hl,#0x0104
+   0896 E5                 2521 	push	hl
+                           2522 ;	genCall
+   0897 CD 00 00           2523 	call	_set_bkg_palette
+   089A E8 04              2524 	lda	sp,4(sp)
+                           2525 ;	src/food_spirit.c 168
+                           2526 ;	genIpush
+                           2527 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   089C 21 52 04           2528 	ld	hl,#_PAL_BG_POT_DARK_2
+   089F E5                 2529 	push	hl
+                           2530 ;	genIpush
+   08A0 21 05 01           2531 	ld	hl,#0x0105
+   08A3 E5                 2532 	push	hl
+                           2533 ;	genCall
+   08A4 CD 00 00           2534 	call	_set_bkg_palette
+   08A7 E8 04              2535 	lda	sp,4(sp)
+                           2536 ;	src/food_spirit.c 169
+                           2537 ;	genIpush
+                           2538 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08A9 21 5A 04           2539 	ld	hl,#_PAL_BG_POT_DARK_3
+   08AC E5                 2540 	push	hl
+                           2541 ;	genIpush
+   08AD 21 06 01           2542 	ld	hl,#0x0106
+   08B0 E5                 2543 	push	hl
+                           2544 ;	genCall
+   08B1 CD 00 00           2545 	call	_set_bkg_palette
+   08B4 E8 04              2546 	lda	sp,4(sp)
+                           2547 ;	src/food_spirit.c 171
+                           2548 ;	genIpush
+                           2549 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08B6 21 1A 01           2550 	ld	hl,#_TILE_SPOTS
+   08B9 E5                 2551 	push	hl
+                           2552 ;	genIpush
+   08BA 21 01 01           2553 	ld	hl,#0x0101
+   08BD E5                 2554 	push	hl
+                           2555 ;	genCall
+   08BE CD 00 00           2556 	call	_set_bkg_data
+   08C1 E8 04              2557 	lda	sp,4(sp)
+                           2558 ;	src/food_spirit.c 172
+                           2559 ;	genIpush
+                           2560 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08C3 21 2A 01           2561 	ld	hl,#_TILE_POT_FLOOR
+   08C6 E5                 2562 	push	hl
+                           2563 ;	genIpush
+   08C7 21 02 01           2564 	ld	hl,#0x0102
+   08CA E5                 2565 	push	hl
+                           2566 ;	genCall
+   08CB CD 00 00           2567 	call	_set_bkg_data
+   08CE E8 04              2568 	lda	sp,4(sp)
+                           2569 ;	src/food_spirit.c 173
+                           2570 ;	genIpush
+                           2571 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08D0 21 3A 01           2572 	ld	hl,#_TILE_POT_LEFT_CORNER
+   08D3 E5                 2573 	push	hl
+                           2574 ;	genIpush
+   08D4 21 03 01           2575 	ld	hl,#0x0103
+   08D7 E5                 2576 	push	hl
+                           2577 ;	genCall
+   08D8 CD 00 00           2578 	call	_set_bkg_data
+   08DB E8 04              2579 	lda	sp,4(sp)
+                           2580 ;	src/food_spirit.c 174
+                           2581 ;	genIpush
+                           2582 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08DD 21 4A 01           2583 	ld	hl,#_TILE_POT_RIGHT_CORNER
+   08E0 E5                 2584 	push	hl
+                           2585 ;	genIpush
+   08E1 21 04 01           2586 	ld	hl,#0x0104
+   08E4 E5                 2587 	push	hl
+                           2588 ;	genCall
+   08E5 CD 00 00           2589 	call	_set_bkg_data
+   08E8 E8 04              2590 	lda	sp,4(sp)
+                           2591 ;	src/food_spirit.c 175
+                           2592 ;	genIpush
+                           2593 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08EA 21 5A 01           2594 	ld	hl,#_TILE_POT_LEFT_WALL
+   08ED E5                 2595 	push	hl
+                           2596 ;	genIpush
+   08EE 21 05 01           2597 	ld	hl,#0x0105
+   08F1 E5                 2598 	push	hl
+                           2599 ;	genCall
+   08F2 CD 00 00           2600 	call	_set_bkg_data
+   08F5 E8 04              2601 	lda	sp,4(sp)
+                           2602 ;	src/food_spirit.c 176
+                           2603 ;	genIpush
+                           2604 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   08F7 21 6A 01           2605 	ld	hl,#_TILE_POT_RIGHT_WALL
+   08FA E5                 2606 	push	hl
+                           2607 ;	genIpush
+   08FB 21 06 01           2608 	ld	hl,#0x0106
+   08FE E5                 2609 	push	hl
+                           2610 ;	genCall
+   08FF CD 00 00           2611 	call	_set_bkg_data
+   0902 E8 04              2612 	lda	sp,4(sp)
+                           2613 ;	src/food_spirit.c 177
+                           2614 ;	genIpush
+                           2615 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0904 21 7A 01           2616 	ld	hl,#_TILE_FIRE
+   0907 E5                 2617 	push	hl
+                           2618 ;	genIpush
+   0908 21 07 01           2619 	ld	hl,#0x0107
+   090B E5                 2620 	push	hl
+                           2621 ;	genCall
+   090C CD 00 00           2622 	call	_set_bkg_data
+   090F E8 04              2623 	lda	sp,4(sp)
+                           2624 ;	src/food_spirit.c 178
+                           2625 ;	genIpush
+                           2626 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0911 21 0A 01           2627 	ld	hl,#_TILE_BLANK_LIGHT
+   0914 E5                 2628 	push	hl
+                           2629 ;	genIpush
+   0915 21 08 01           2630 	ld	hl,#0x0108
+   0918 E5                 2631 	push	hl
+                           2632 ;	genCall
+   0919 CD 00 00           2633 	call	_set_bkg_data
+   091C E8 04              2634 	lda	sp,4(sp)
+                           2635 ;	src/food_spirit.c 180
+                           2636 ;	genIpush
+                           2637 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   091E 21 DE 02           2638 	ld	hl,#_MAP_PAL_BG_1
+   0921 E5                 2639 	push	hl
+                           2640 ;	genIpush
+   0922 21 8A 01           2641 	ld	hl,#_MAP_BG_1
+   0925 E5                 2642 	push	hl
+                           2643 ;	genIpush
+   0926 21 11 00           2644 	ld	hl,#0x0011
+   0929 E5                 2645 	push	hl
                            2646 ;	genIpush
-   091C 21 05 01           2647 	ld	hl,#0x0105
-   091F E5                 2648 	push	hl
-                           2649 ;	genCall
-   0920 CD 00 00           2650 	call	_set_bkg_data
-   0923 E8 04              2651 	lda	sp,4(sp)
-                           2652 ;	src/food_spirit.c 193
-                           2653 ;	genIpush
-                           2654 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0925 21 6A 01           2655 	ld	hl,#_TILE_POT_RIGHT_WALL
-   0928 E5                 2656 	push	hl
-                           2657 ;	genIpush
-   0929 21 06 01           2658 	ld	hl,#0x0106
-   092C E5                 2659 	push	hl
-                           2660 ;	genCall
-   092D CD 00 00           2661 	call	_set_bkg_data
-   0930 E8 04              2662 	lda	sp,4(sp)
-                           2663 ;	src/food_spirit.c 194
-                           2664 ;	genIpush
-                           2665 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0932 21 7A 01           2666 	ld	hl,#_TILE_FIRE
-   0935 E5                 2667 	push	hl
-                           2668 ;	genIpush
-   0936 21 07 01           2669 	ld	hl,#0x0107
-   0939 E5                 2670 	push	hl
-                           2671 ;	genCall
-   093A CD 00 00           2672 	call	_set_bkg_data
-   093D E8 04              2673 	lda	sp,4(sp)
-                           2674 ;	src/food_spirit.c 195
-                           2675 ;	genIpush
-                           2676 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   093F 21 0A 01           2677 	ld	hl,#_TILE_BLANK_LIGHT
-   0942 E5                 2678 	push	hl
-                           2679 ;	genIpush
-   0943 21 08 01           2680 	ld	hl,#0x0108
-   0946 E5                 2681 	push	hl
+   092A 21 14 00           2647 	ld	hl,#0x0014
+   092D E5                 2648 	push	hl
+                           2649 ;	genIpush
+   092E 21 01 00           2650 	ld	hl,#0x0001
+   0931 E5                 2651 	push	hl
+                           2652 ;	genIpush
+   0932 21 00 00           2653 	ld	hl,#0x0000
+   0935 E5                 2654 	push	hl
+                           2655 ;	genCall
+   0936 CD 00 00           2656 	call	_set_up_bg
+   0939 E8 0C              2657 	lda	sp,12(sp)
+                           2658 ;	genLabel
+   093B                    2659 00101$:
+                           2660 ;	genEndFunction
+                           2661 	
+   093B C9                 2662 	ret
+   093C                    2663 ___init_bg_end:
+                           2664 ;	src/food_spirit.c 183
+                           2665 ;	genLabel
+                           2666 ;	genFunction
+                           2667 ;	---------------------------------
+                           2668 ; Function initialize
+                           2669 ; ---------------------------------
+   093C                    2670 ___initialize_start:
+   093C                    2671 _initialize:
+   093C E8 FD              2672 	lda	sp,-3(sp)
+                           2673 ;	src/food_spirit.c 184
+                           2674 ;	genCall
+                           2675 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   093E CD 00 00           2676 	call	_cgb_compatibility
+                           2677 ;	src/food_spirit.c 186
+                           2678 ;	genCall
+                           2679 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0941 CD 68 08           2680 	call	_init_bg
+                           2681 ;	src/food_spirit.c 187
                            2682 ;	genCall
-   0947 CD 00 00           2683 	call	_set_bkg_data
-   094A E8 04              2684 	lda	sp,4(sp)
-                           2685 ;	src/food_spirit.c 197
-                           2686 ;	genIpush
+                           2683 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0944 CD CD 06           2684 	call	_init_player
+                           2685 ;	src/food_spirit.c 188
+                           2686 ;	genCall
                            2687 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   094C 21 DE 02           2688 	ld	hl,#_MAP_PAL_BG_1
-   094F E5                 2689 	push	hl
-                           2690 ;	genIpush
-   0950 21 8A 01           2691 	ld	hl,#_MAP_BG_1
-   0953 E5                 2692 	push	hl
-                           2693 ;	genIpush
-   0954 21 11 00           2694 	ld	hl,#0x0011
-   0957 E5                 2695 	push	hl
-                           2696 ;	genIpush
-   0958 21 14 00           2697 	ld	hl,#0x0014
-   095B E5                 2698 	push	hl
-                           2699 ;	genIpush
-   095C 21 01 00           2700 	ld	hl,#0x0001
-   095F E5                 2701 	push	hl
-                           2702 ;	genIpush
-   0960 21 00 00           2703 	ld	hl,#0x0000
-   0963 E5                 2704 	push	hl
-                           2705 ;	genCall
-   0964 CD 00 00           2706 	call	_set_up_bg
-   0967 E8 0C              2707 	lda	sp,12(sp)
-                           2708 ;	genLabel
-   0969                    2709 00101$:
-                           2710 ;	genEndFunction
-                           2711 	
-   0969 C9                 2712 	ret
-   096A                    2713 ___init_bg_end:
-                           2714 ;	src/food_spirit.c 200
-                           2715 ;	genLabel
-                           2716 ;	genFunction
-                           2717 ;	---------------------------------
-                           2718 ; Function initialize
-                           2719 ; ---------------------------------
-   096A                    2720 ___initialize_start:
-   096A                    2721 _initialize:
-   096A E8 FD              2722 	lda	sp,-3(sp)
-                           2723 ;	src/food_spirit.c 201
-                           2724 ;	genCall
-                           2725 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   096C CD 00 00           2726 	call	_cgb_compatibility
-                           2727 ;	src/food_spirit.c 203
-                           2728 ;	genCall
-                           2729 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   096F CD 96 08           2730 	call	_init_bg
-                           2731 ;	src/food_spirit.c 204
-                           2732 ;	genCall
-                           2733 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0972 CD CD 06           2734 	call	_init_player
-                           2735 ;	src/food_spirit.c 205
-                           2736 ;	genCall
-                           2737 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   0975 CD 68 07           2738 	call	_init_foods
-                           2739 ;	src/food_spirit.c 207
-                           2740 ;	genAssign
-   0978 01 40 FF           2741 	ld	bc,#0xFF40
-                           2742 ;	genAssign
-                           2743 ;	AOP_STK for _initialize_sloc0_1_0
-   097B F8 01              2744 	lda	hl,1(sp)
-   097D 36 40              2745 	ld	(hl),#0x40
-   097F 23                 2746 	inc	hl
-   0980 36 FF              2747 	ld	(hl),#0xFF
-                           2748 ;	genPointerGet
-                           2749 ;	AOP_STK for _initialize_sloc0_1_0
-                           2750 ;	AOP_STK for _initialize_sloc1_1_0
-   0982 2B                 2751 	dec	hl
-   0983 5E                 2752 	ld	e,(hl)
-   0984 23                 2753 	inc	hl
-   0985 56                 2754 	ld	d,(hl)
-   0986 1A                 2755 	ld	a,(de)
-   0987 2B                 2756 	dec	hl
-   0988 2B                 2757 	dec	hl
-                           2758 ;	genOr
-                           2759 ;	AOP_STK for _initialize_sloc1_1_0
-   0989 77                 2760 	ld      (hl),a
-   098A 7F                 2761 	ld      a,a
-   098B F6 01              2762 	or	a,#0x01
-                           2763 ;	genAssign (pointer)
-   098D 02                 2764 	ld	(bc),a
-                           2765 ;	src/food_spirit.c 208
-                           2766 ;	genAssign
-   098E 01 40 FF           2767 	ld	bc,#0xFF40
-                           2768 ;	genAssign
-                           2769 ;	AOP_STK for _initialize_sloc0_1_0
-   0991 23                 2770 	inc	hl
-   0992 36 40              2771 	ld	(hl),#0x40
-   0994 23                 2772 	inc	hl
-   0995 36 FF              2773 	ld	(hl),#0xFF
-                           2774 ;	genPointerGet
-                           2775 ;	AOP_STK for _initialize_sloc0_1_0
-                           2776 ;	AOP_STK for _initialize_sloc1_1_0
-   0997 2B                 2777 	dec	hl
-   0998 5E                 2778 	ld	e,(hl)
-   0999 23                 2779 	inc	hl
-   099A 56                 2780 	ld	d,(hl)
-   099B 1A                 2781 	ld	a,(de)
-   099C 2B                 2782 	dec	hl
-   099D 2B                 2783 	dec	hl
-                           2784 ;	genOr
-                           2785 ;	AOP_STK for _initialize_sloc1_1_0
-   099E 77                 2786 	ld      (hl),a
-   099F 7F                 2787 	ld      a,a
-   09A0 F6 02              2788 	or	a,#0x02
-                           2789 ;	genAssign (pointer)
-   09A2 02                 2790 	ld	(bc),a
-                           2791 ;	genLabel
-   09A3                    2792 00101$:
-                           2793 ;	genEndFunction
-   09A3 E8 03              2794 	lda	sp,3(sp)
-   09A5 C9                 2795 	ret
-   09A6                    2796 ___initialize_end:
-                           2797 ;	src/food_spirit.c 211
-                           2798 ;	genLabel
-                           2799 ;	genFunction
-                           2800 ;	---------------------------------
-                           2801 ; Function main
-                           2802 ; ---------------------------------
-   09A6                    2803 ___main_start:
-   09A6                    2804 _main:
-                           2805 	
-                           2806 ;	src/food_spirit.c 212
-                           2807 ;	genCall
-                           2808 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   09A6 CD 00 00           2809 	call	_wait_vbl_done
-                           2810 ;	src/food_spirit.c 213
-                           2811 ;	genCall
-                           2812 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   09A9 CD 6A 09           2813 	call	_initialize
-                           2814 ;	src/food_spirit.c 215
-                           2815 ;	genLabel
-   09AC                    2816 00102$:
-                           2817 ;	src/food_spirit.c 216
-                           2818 ;	genCall
-                           2819 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   09AC CD 00 00           2820 	call	_wait_vbl_done
-                           2821 ;	src/food_spirit.c 217
-                           2822 ;	genCall
-                           2823 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
-   09AF CD C0 06           2824 	call	_game_loop
-                           2825 ;	genGoto
-   09B2 C3 AC 09           2826 	jp	00102$
-                           2827 ;	genLabel
-   09B5                    2828 00104$:
-                           2829 ;	genEndFunction
-                           2830 	
-   09B5 C9                 2831 	ret
-   09B6                    2832 ___main_end:
-                           2833 	.area _CODE
+   0947 CD 68 07           2688 	call	_init_foods
+                           2689 ;	src/food_spirit.c 190
+                           2690 ;	genAssign
+   094A 01 40 FF           2691 	ld	bc,#0xFF40
+                           2692 ;	genAssign
+                           2693 ;	AOP_STK for _initialize_sloc0_1_0
+   094D F8 01              2694 	lda	hl,1(sp)
+   094F 36 40              2695 	ld	(hl),#0x40
+   0951 23                 2696 	inc	hl
+   0952 36 FF              2697 	ld	(hl),#0xFF
+                           2698 ;	genPointerGet
+                           2699 ;	AOP_STK for _initialize_sloc0_1_0
+                           2700 ;	AOP_STK for _initialize_sloc1_1_0
+   0954 2B                 2701 	dec	hl
+   0955 5E                 2702 	ld	e,(hl)
+   0956 23                 2703 	inc	hl
+   0957 56                 2704 	ld	d,(hl)
+   0958 1A                 2705 	ld	a,(de)
+   0959 2B                 2706 	dec	hl
+   095A 2B                 2707 	dec	hl
+                           2708 ;	genOr
+                           2709 ;	AOP_STK for _initialize_sloc1_1_0
+   095B 77                 2710 	ld      (hl),a
+   095C 7F                 2711 	ld      a,a
+   095D F6 01              2712 	or	a,#0x01
+                           2713 ;	genAssign (pointer)
+   095F 02                 2714 	ld	(bc),a
+                           2715 ;	src/food_spirit.c 191
+                           2716 ;	genAssign
+   0960 01 40 FF           2717 	ld	bc,#0xFF40
+                           2718 ;	genAssign
+                           2719 ;	AOP_STK for _initialize_sloc0_1_0
+   0963 23                 2720 	inc	hl
+   0964 36 40              2721 	ld	(hl),#0x40
+   0966 23                 2722 	inc	hl
+   0967 36 FF              2723 	ld	(hl),#0xFF
+                           2724 ;	genPointerGet
+                           2725 ;	AOP_STK for _initialize_sloc0_1_0
+                           2726 ;	AOP_STK for _initialize_sloc1_1_0
+   0969 2B                 2727 	dec	hl
+   096A 5E                 2728 	ld	e,(hl)
+   096B 23                 2729 	inc	hl
+   096C 56                 2730 	ld	d,(hl)
+   096D 1A                 2731 	ld	a,(de)
+   096E 2B                 2732 	dec	hl
+   096F 2B                 2733 	dec	hl
+                           2734 ;	genOr
+                           2735 ;	AOP_STK for _initialize_sloc1_1_0
+   0970 77                 2736 	ld      (hl),a
+   0971 7F                 2737 	ld      a,a
+   0972 F6 02              2738 	or	a,#0x02
+                           2739 ;	genAssign (pointer)
+   0974 02                 2740 	ld	(bc),a
+                           2741 ;	genLabel
+   0975                    2742 00101$:
+                           2743 ;	genEndFunction
+   0975 E8 03              2744 	lda	sp,3(sp)
+   0977 C9                 2745 	ret
+   0978                    2746 ___initialize_end:
+                           2747 ;	src/food_spirit.c 194
+                           2748 ;	genLabel
+                           2749 ;	genFunction
+                           2750 ;	---------------------------------
+                           2751 ; Function main
+                           2752 ; ---------------------------------
+   0978                    2753 ___main_start:
+   0978                    2754 _main:
+                           2755 	
+                           2756 ;	src/food_spirit.c 195
+                           2757 ;	genCall
+                           2758 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0978 CD 00 00           2759 	call	_wait_vbl_done
+                           2760 ;	src/food_spirit.c 196
+                           2761 ;	genCall
+                           2762 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   097B CD 3C 09           2763 	call	_initialize
+                           2764 ;	src/food_spirit.c 198
+                           2765 ;	genLabel
+   097E                    2766 00102$:
+                           2767 ;	src/food_spirit.c 199
+                           2768 ;	genCall
+                           2769 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   097E CD 00 00           2770 	call	_wait_vbl_done
+                           2771 ;	src/food_spirit.c 200
+                           2772 ;	genCall
+                           2773 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0981 CD C0 06           2774 	call	_game_loop
+                           2775 ;	genGoto
+   0984 C3 7E 09           2776 	jp	00102$
+                           2777 ;	genLabel
+   0987                    2778 00104$:
+                           2779 ;	genEndFunction
+                           2780 	
+   0987 C9                 2781 	ret
+   0988                    2782 ___main_end:
+                           2783 	.area _CODE
 ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
 
 Symbol Table
@@ -2869,16 +2819,16 @@ Symbol Table
   0 ___draw_player_start               0527 R
   0 ___game_loop_end                   06CD R
   0 ___game_loop_start                 06C0 R
-  0 ___init_bg_end                     096A R
-  0 ___init_bg_start                   0896 R
-  0 ___init_foods_end                  0896 R
+  0 ___init_bg_end                     093C R
+  0 ___init_bg_start                   0868 R
+  0 ___init_foods_end                  0868 R
   0 ___init_foods_start                0768 R
   0 ___init_player_end                 0768 R
   0 ___init_player_start               06CD R
-  0 ___initialize_end                  09A6 R
-  0 ___initialize_start                096A R
-  0 ___main_end                        09B6 R
-  0 ___main_start                      09A6 R
+  0 ___initialize_end                  0978 R
+  0 ___initialize_start                093C R
+  0 ___main_end                        0988 R
+  0 ___main_start                      0978 R
   0 ___player_idle_anim_end            0527 R
   0 ___player_idle_anim_start          049A R
   0 ___player_jump_and_gravity_end     049A R
@@ -2890,12 +2840,12 @@ Symbol Table
   0 _draw_player                       0527 GR
   1 _foods                             0007 GR
   0 _game_loop                         06C0 GR
-  0 _init_bg                           0896 GR
+  0 _init_bg                           0868 GR
   0 _init_foods                        0768 GR
   0 _init_player                       06CD GR
-  0 _initialize                        096A GR
+  0 _initialize                        093C GR
     _joypad                            **** GX
-  0 _main                              09A6 GR
+  0 _main                              0978 GR
     _move_sprite                       **** GX
   1 _player_dir                        0003 GR
   0 _player_idle_anim                  049A GR
@@ -2908,9 +2858,6 @@ Symbol Table
   0 _read_controls                     0000 GR
     _set_bkg_data                      **** GX
     _set_bkg_palette                   **** GX
-    _set_sprite_data                   **** GX
-    _set_sprite_prop                   **** GX
-    _set_sprite_tile                   **** GX
     _set_up_bg                         **** GX
     _set_up_sprite_simple              **** GX
     _wait_vbl_done                     **** GX
@@ -2919,7 +2866,7 @@ Symbol Table
 
 Area Table
 
-   0 _CODE                              size  9B6   flags 0
+   0 _CODE                              size  988   flags 0
    1 _DATA                              size   17   flags 0
    2 _OVERLAY                           size    0   flags 0
    3 _ISEG                              size    0   flags 0

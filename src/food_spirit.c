@@ -105,17 +105,17 @@ void draw_player() {
 }
 
 void draw_foods() {
+    UBYTE spr;
     UBYTE i;
-    UBYTE j;
 
-    j = 0;
-    for (i = 0; i < MAX_FOODS * SPRITES_PER_FOOD; i += SPRITES_PER_FOOD) {
-        move_sprite(SPR_FOOD(i), foods[j].pos_x, foods[j].pos_y);
-        move_sprite(SPR_FOOD(i + 1), foods[j].pos_x + SPR_W, foods[j].pos_y);
-        move_sprite(SPR_FOOD(i + 2), foods[j].pos_x, foods[j].pos_y + SPR_W);
-        move_sprite(SPR_FOOD(i + 3), foods[j].pos_x + SPR_W, foods[j].pos_y + SPR_W);
+    i = 0;
+    for (spr = 0; spr < MAX_FOODS * SPRITES_PER_FOOD; spr += SPRITES_PER_FOOD) {
+        move_sprite(SPR_FOOD(spr), foods[i].pos_x, foods[i].pos_y);
+        move_sprite(SPR_FOOD(spr + 1), foods[i].pos_x + SPR_W, foods[i].pos_y);
+        move_sprite(SPR_FOOD(spr + 2), foods[i].pos_x, foods[i].pos_y + SPR_W);
+        move_sprite(SPR_FOOD(spr + 3), foods[i].pos_x + SPR_W, foods[i].pos_y + SPR_W);
 
-        j++;
+        i++;
     }
 }
 
@@ -143,37 +143,20 @@ void init_player() {
 }
 
 void init_foods() {
+    UBYTE spr;
     UBYTE i;
-    UBYTE j;
 
-    set_sprite_data(START_SPR_FOOD, 1, SPR_DAT_FOOD_0_0_0);
-    set_sprite_data(START_SPR_FOOD + 1, 1, SPR_DAT_FOOD_1_0_0);
-    set_sprite_data(START_SPR_FOOD + 2, 1, SPR_DAT_FOOD_0_1_0);
-    set_sprite_data(START_SPR_FOOD + 3, 1, SPR_DAT_FOOD_1_1_0);
+    i = 0;
+    for (spr = 0; spr < MAX_FOODS * SPRITES_PER_FOOD; spr += SPRITES_PER_FOOD) {
+        foods[i].pos_x = 40 + (i*24);
+        foods[i].pos_y = 40;
 
-    j = 0;
-    for (i = 0; i < MAX_FOODS * SPRITES_PER_FOOD; i += SPRITES_PER_FOOD) {
-        foods[j].pos_x = 40 + (j*24);
-        foods[j].pos_y = 40;
+        set_up_sprite_simple(SPR_FOOD(spr), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(spr + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(spr + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(spr + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
 
-        /*
-        set_up_sprite_simple(SPR_FOOD(i), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(i + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(i + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(i + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
-        */
-
-        set_sprite_tile(SPR_FOOD(i), START_SPR_FOOD);
-        set_sprite_tile(SPR_FOOD(i + 1), START_SPR_FOOD + 1);
-        set_sprite_tile(SPR_FOOD(i + 2), START_SPR_FOOD + 2);
-        set_sprite_tile(SPR_FOOD(i + 3), START_SPR_FOOD + 3);
-
-        set_sprite_prop(SPR_FOOD(i), PAL_NUM_PLAYER);
-        set_sprite_prop(SPR_FOOD(i + 1), PAL_NUM_PLAYER);
-        set_sprite_prop(SPR_FOOD(i + 2), PAL_NUM_PLAYER);
-        set_sprite_prop(SPR_FOOD(i + 3), PAL_NUM_PLAYER);
-
-        j++;
+        i++;
     }
 }
 
