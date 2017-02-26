@@ -105,8 +105,8 @@ void draw_player() {
 }
 
 void draw_foods() {
-    UBYTE spr;
-    UBYTE i;
+    UBYTE spr; // sprite index
+    UBYTE i;   // logical index
 
     i = 0;
     for (spr = 0; spr < MAX_FOODS * SPRITES_PER_FOOD; spr += SPRITES_PER_FOOD) {
@@ -142,21 +142,33 @@ void init_player() {
     set_up_sprite_simple(SPR_PLAYER_1_2_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
 }
 
-void init_foods() {
+void set_food_type(int food_index, int type) {
     UBYTE spr;
-    UBYTE i;
+    spr = food_index * SPRITES_PER_FOOD;
 
-    i = 0;
-    for (spr = 0; spr < MAX_FOODS * SPRITES_PER_FOOD; spr += SPRITES_PER_FOOD) {
-        foods[i].pos_x = 40 + (i*24);
-        foods[i].pos_y = 40;
+    foods[food_index].food_type = type;
 
-        set_up_sprite_simple(SPR_FOOD(spr), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);
+    if (type == 0) {
+        set_up_sprite_simple(SPR_FOOD(spr), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);    
         set_up_sprite_simple(SPR_FOOD(spr + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
         set_up_sprite_simple(SPR_FOOD(spr + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
         set_up_sprite_simple(SPR_FOOD(spr + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
+    } else if (type == 1) {
+        set_up_sprite_simple(SPR_FOOD(spr), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_1, PAL_PLAYER);    
+        set_up_sprite_simple(SPR_FOOD(spr + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_1, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(spr + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_1, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(spr + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_1, PAL_PLAYER);
+    }
+}
 
-        i++;
+void init_foods() {
+    UBYTE i;
+
+    for (i = 0; i < MAX_FOODS; i++) {
+        foods[i].pos_x = 0;
+        foods[i].pos_y = 0;
+
+        set_food_type(i, 0);
     }
 }
 
