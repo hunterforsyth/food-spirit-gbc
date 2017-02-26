@@ -1,6 +1,6 @@
 XL
 H 9 areas 11 global symbols
-M lcc58460
+M lcc60040
 S _set_sprite_prop Ref0000
 S __modsint_rrx_s Ref0000
 S _initarand Ref0000

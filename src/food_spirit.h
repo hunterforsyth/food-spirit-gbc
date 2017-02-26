@@ -11,7 +11,7 @@
 #define COLLISION_RIGHT 140
 #define COLLISION_LEFT 20
 
-#define MAX_FOODS 4
+#define MAX_FOODS 8
 #define SPRITES_PER_FOOD 4
 
 struct food {

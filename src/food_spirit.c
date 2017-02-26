@@ -296,15 +296,15 @@ void set_food_type(int food_index, int type) {
     f->spr_num_1_1 = SPR_FOOD(spr + 3);
 
     if (type == 0) {
-        set_up_food_sprite(f, f->spr_num_0_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);    
-        set_up_food_sprite(f, f->spr_num_1_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
-        set_up_food_sprite(f, f->spr_num_0_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
-        set_up_food_sprite(f, f->spr_num_1_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_0_0, PAL_NUM_FOOD_0, SPR_DAT_FOOD_0_0_0, PAL_FOOD_0);    
+        set_up_food_sprite(f, f->spr_num_1_0, PAL_NUM_FOOD_0, SPR_DAT_FOOD_1_0_0, PAL_FOOD_0);
+        set_up_food_sprite(f, f->spr_num_0_1, PAL_NUM_FOOD_0, SPR_DAT_FOOD_0_1_0, PAL_FOOD_0);
+        set_up_food_sprite(f, f->spr_num_1_1, PAL_NUM_FOOD_0, SPR_DAT_FOOD_1_1_0, PAL_FOOD_0);
     } else if (type == 1) {
-        set_up_food_sprite(f, f->spr_num_0_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_1, PAL_PLAYER);    
-        set_up_food_sprite(f, f->spr_num_1_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_1, PAL_PLAYER);
-        set_up_food_sprite(f, f->spr_num_0_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_1, PAL_PLAYER);
-        set_up_food_sprite(f, f->spr_num_1_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_1, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_0_0, PAL_NUM_FOOD_0, SPR_DAT_FOOD_0_0_1, PAL_FOOD_0);    
+        set_up_food_sprite(f, f->spr_num_1_0, PAL_NUM_FOOD_0, SPR_DAT_FOOD_1_0_1, PAL_FOOD_0);
+        set_up_food_sprite(f, f->spr_num_0_1, PAL_NUM_FOOD_0, SPR_DAT_FOOD_0_1_1, PAL_FOOD_0);
+        set_up_food_sprite(f, f->spr_num_1_1, PAL_NUM_FOOD_0, SPR_DAT_FOOD_1_1_1, PAL_FOOD_0);
     }
 }
 
@@ -376,6 +376,10 @@ void initialize() {
     init_food(1, 0, 60, 22, ON);
     init_food(2, 0, 30, 25, ON);
     init_food(3, 0, 40, 27, ON);
+    init_food(4, 0, 80, 31, ON);
+    init_food(5, 0, 60, 22, ON);
+    init_food(6, 0, 30, 25, ON);
+    init_food(7, 0, 40, 27, ON);
 
     SHOW_BKG;
     SHOW_SPRITES;
