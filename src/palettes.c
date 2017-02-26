@@ -3,6 +3,8 @@
 //   (c) 2017 Hunter Forsyth
 //
 
+#define PAL_NUM_PLAYER 0
+
 // Player
 const UWORD PAL_PLAYER[] = 
     { 0, RGB(0, 31, 27), RGB(0, 20, 17), RGB(0, 0, 0) };

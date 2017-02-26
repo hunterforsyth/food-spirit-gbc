@@ -20,8 +20,8 @@ void set_up_sprite(int sprite_num, int tile_num, int palette_num, unsigned char 
     set_sprite_prop(sprite_num, palette_num);
 }
 
-void set_up_sprite_simple(int sprite_num, unsigned char * data, unsigned char * palette) {
-    set_up_sprite(sprite_num, sprite_num, sprite_num, data, palette);
+void set_up_sprite_simple(int sprite_num, int palette_num, unsigned char * data, unsigned char * palette) {
+    set_up_sprite(sprite_num, sprite_num, palette_num, data, palette);
 }
 
 void set_up_bg(int startx, int starty, int w, int h, unsigned char * map, unsigned char * pal_map) {

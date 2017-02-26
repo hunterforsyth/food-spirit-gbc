@@ -10,12 +10,13 @@
 #include <gb/drawing.h>
 #include <gb/gb.h>
 
-#include "consts.h"
-#include "utils.h"
 #include "sprites.c"
 #include "bg_tiles.c"
 #include "bg_maps.c"
 #include "palettes.c"
+
+#include "food_spirit.h"
+#include "utils.h"
 
 UBYTE player_x;
 UBYTE player_y;
@@ -24,6 +25,8 @@ UBYTE player_dir;
 UBYTE player_jump_frames;
 
 UWORD player_idle_anim_frames;
+
+struct food foods[MAX_FOODS];
 
 void read_controls() {
     UBYTE button = joypad();
@@ -101,11 +104,27 @@ void draw_player() {
     move_sprite(SPR_PLAYER_1_2_MID, player_x + SPR_W, draw_y_pos + SPR_H + SPR_H);
 }
 
+void draw_foods() {
+    UBYTE i;
+    UBYTE j;
+
+    j = 0;
+    for (i = 0; i < MAX_FOODS * SPRITES_PER_FOOD; i += SPRITES_PER_FOOD) {
+        move_sprite(SPR_FOOD(i), foods[j].pos_x, foods[j].pos_y);
+        move_sprite(SPR_FOOD(i + 1), foods[j].pos_x + SPR_W, foods[j].pos_y);
+        move_sprite(SPR_FOOD(i + 2), foods[j].pos_x, foods[j].pos_y + SPR_W);
+        move_sprite(SPR_FOOD(i + 3), foods[j].pos_x + SPR_W, foods[j].pos_y + SPR_W);
+
+        j++;
+    }
+}
+
 void game_loop() {
     read_controls();
 
     player_jump_and_gravity();
     draw_player();
+    draw_foods();
 }
 
 void init_player() {
@@ -115,12 +134,47 @@ void init_player() {
     player_idle_anim_frames = 0;
     player_y_draw_offset = 0;
 
-    set_up_sprite_simple(SPR_PLAYER_0_0_MID, SPR_DAT_PLAYER_0_0_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_1_0_MID, SPR_DAT_PLAYER_1_0_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_0_1_MID, SPR_DAT_PLAYER_0_1_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_1_1_MID, SPR_DAT_PLAYER_1_1_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_0_2_MID, SPR_DAT_PLAYER_0_2_MID, PAL_PLAYER);
-    set_up_sprite_simple(SPR_PLAYER_1_2_MID, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_0_0_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_0_0_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_1_0_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_0_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_0_1_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_0_1_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_1_1_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_1_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_0_2_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_0_2_MID, PAL_PLAYER);
+    set_up_sprite_simple(SPR_PLAYER_1_2_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
+}
+
+void init_foods() {
+    UBYTE i;
+    UBYTE j;
+
+    set_sprite_data(START_SPR_FOOD, 1, SPR_DAT_FOOD_0_0_0);
+    set_sprite_data(START_SPR_FOOD + 1, 1, SPR_DAT_FOOD_1_0_0);
+    set_sprite_data(START_SPR_FOOD + 2, 1, SPR_DAT_FOOD_0_1_0);
+    set_sprite_data(START_SPR_FOOD + 3, 1, SPR_DAT_FOOD_1_1_0);
+
+    j = 0;
+    for (i = 0; i < MAX_FOODS * SPRITES_PER_FOOD; i += SPRITES_PER_FOOD) {
+        foods[j].pos_x = 40 + (j*24);
+        foods[j].pos_y = 40;
+
+        /*
+        set_up_sprite_simple(SPR_FOOD(i), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(i + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(i + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
+        set_up_sprite_simple(SPR_FOOD(i + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
+        */
+
+        set_sprite_tile(SPR_FOOD(i), START_SPR_FOOD);
+        set_sprite_tile(SPR_FOOD(i + 1), START_SPR_FOOD + 1);
+        set_sprite_tile(SPR_FOOD(i + 2), START_SPR_FOOD + 2);
+        set_sprite_tile(SPR_FOOD(i + 3), START_SPR_FOOD + 3);
+
+        set_sprite_prop(SPR_FOOD(i), PAL_NUM_PLAYER);
+        set_sprite_prop(SPR_FOOD(i + 1), PAL_NUM_PLAYER);
+        set_sprite_prop(SPR_FOOD(i + 2), PAL_NUM_PLAYER);
+        set_sprite_prop(SPR_FOOD(i + 3), PAL_NUM_PLAYER);
+
+        j++;
+    }
 }
 
 void init_bg() {
@@ -148,6 +202,7 @@ void initialize() {
 
     init_bg();
     init_player();
+    init_foods();
 
     SHOW_BKG;
     SHOW_SPRITES;
