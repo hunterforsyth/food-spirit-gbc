@@ -19,6 +19,7 @@ struct food {
     UBYTE pos_x;
     UBYTE pos_y;
     UBYTE dir;
+    UBYTE vel;
     UBYTE enabled; 
 };
 

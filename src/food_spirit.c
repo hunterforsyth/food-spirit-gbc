@@ -32,17 +32,23 @@ void read_controls() {
     UBYTE button = joypad();
 
     if (button & J_A) {
+        init_rand();
+
         if (player_jump_frames == 0) {
             player_jump_frames = 20;
         }
     }
 
     if (button & J_RIGHT) {
+        init_rand();
+
         if (player_x < COLLISION_RIGHT)
             player_x += 2;
 
         player_dir = RIGHT;
     } else if (button & J_LEFT) {
+        init_rand();
+
         if (player_x > COLLISION_LEFT)
             player_x -= 2;
 
@@ -55,9 +61,46 @@ void read_controls() {
 void food_logic() {
     UBYTE i;
 
+    if (get_rand_ready() != 0) {
+        return;
+    }
+
     for (i = 0; i < MAX_FOODS; i++) {
-        if (foods[i].enabled == ON) {
-            
+        struct food * f;
+        f = &foods[i];
+
+        if (f->enabled == ON) {
+            switch (f->dir) {
+                case DIR_N :
+                    if (f->pos_y > COLLISION_CEIL) {
+                        f->pos_y -= f->vel;
+                    } else {
+
+                    }
+
+                    break;
+
+                case DIR_NE :
+                    break;
+
+                case DIR_E :
+                    break;
+
+                case DIR_SE :
+                    break;
+
+                case DIR_S :
+                    break;
+
+                case DIR_SW :
+                    break;
+
+                case DIR_W :
+                    break;
+
+                case DIR_NW :
+                    break;
+            }
         }
     }
 }
@@ -101,8 +144,9 @@ void player_idle_anim() {
 void draw_player() {
     UBYTE draw_y_pos;
 
-    if (player_dir == MID)
+    if (player_dir == MID) {
         player_idle_anim();
+    }
     
     draw_y_pos = player_y + player_y_draw_offset;
 
@@ -117,6 +161,10 @@ void draw_player() {
 void draw_foods() {
     UBYTE spr; // sprite index
     UBYTE i;   // logical index
+
+    if (get_rand_ready() != 0) {
+        return;
+    }
 
     i = 0;
     for (spr = 0; spr < MAX_FOODS * SPRITES_PER_FOOD; spr += SPRITES_PER_FOOD) {
@@ -147,7 +195,7 @@ void init_player() {
     set_up_sprite_simple(SPR_PLAYER_1_2_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
 }
 
-void set_food_type(int food_index, int type) {
+void set_food_type(UBYTE food_index, UBYTE type) {
     UBYTE spr;
     spr = food_index * SPRITES_PER_FOOD;
 
@@ -166,14 +214,16 @@ void set_food_type(int food_index, int type) {
     }
 }
 
-void init_food(int food_index, int type, int startx, int starty, int enabled) {
+void init_food(UBYTE food_index, UBYTE type, UBYTE startx, UBYTE starty, UBYTE enabled) {
     struct food * f;
     f = &foods[food_index];
 
     f->pos_x = startx;
     f->pos_y = starty;
 
-    f->dir = DOWN;
+    f->dir = DIR_S;
+    f->vel = 1;
+
     f->enabled = enabled;
 
     set_food_type(food_index, type);
@@ -183,9 +233,6 @@ void init_foods() {
     UBYTE i;
 
     for (i = 0; i < MAX_FOODS; i++) {
-        foods[i].pos_x = 0;
-        foods[i].pos_y = 0;
-
         init_food(i, 0, 0, 0, OFF);
     }
 }
@@ -222,6 +269,7 @@ void game_loop() {
 
 void initialize() {
     cgb_compatibility();
+    pre_init_rand();
 
     init_bg();
     init_player();
