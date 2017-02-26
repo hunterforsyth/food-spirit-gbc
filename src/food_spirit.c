@@ -10,16 +10,12 @@
 #include <gb/drawing.h>
 #include <gb/gb.h>
 
+#include "consts.h"
 #include "utils.h"
 #include "sprites.c"
 #include "bg_tiles.c"
 #include "bg_maps.c"
 #include "palettes.c"
-
-#define COLLISION_FLOOR 120
-#define COLLISION_CEIL 36
-#define COLLISION_RIGHT 140
-#define COLLISION_LEFT 20
 
 UBYTE player_x;
 UBYTE player_y;
@@ -142,7 +138,7 @@ void init_bg() {
     set_bkg_data(5, 1, TILE_POT_LEFT_WALL);
     set_bkg_data(6, 1, TILE_POT_RIGHT_WALL);
     set_bkg_data(7, 1, TILE_FIRE);
-    set_bkg_data(8, 1, TILE_BLANK);
+    set_bkg_data(8, 1, TILE_BLANK_LIGHT);
 
     set_up_bg(0, 1, 20, 17, MAP_BG_1, MAP_PAL_BG_1);
 }
