@@ -71,6 +71,21 @@ void bounce_food(struct food * f, int dir1, int dir2, int dir3) {
     }
 }
 
+void food_collision(struct food * f) {
+    if (player_x < f->pos_x + SPR_W + SPR_W && player_x + SPR_W + SPR_W > f->pos_x
+        && player_y < f->pos_y + SPR_W + SPR_W && player_y + SPR_W + SPR_W + SPR_W > f->pos_y) {
+        set_sprite_prop(f->spr_num_0_0, PAL_NUM_FOOD_TOUCH);
+        set_sprite_prop(f->spr_num_1_0, PAL_NUM_FOOD_TOUCH);
+        set_sprite_prop(f->spr_num_0_1, PAL_NUM_FOOD_TOUCH);
+        set_sprite_prop(f->spr_num_1_1, PAL_NUM_FOOD_TOUCH);
+    } else {
+        set_sprite_prop(f->spr_num_0_0, f->original_pal_num);
+        set_sprite_prop(f->spr_num_1_0, f->original_pal_num);
+        set_sprite_prop(f->spr_num_0_1, f->original_pal_num);
+        set_sprite_prop(f->spr_num_1_1, f->original_pal_num);
+    }
+}
+
 void food_logic() {
     UBYTE i;
 
@@ -83,6 +98,10 @@ void food_logic() {
         f = &foods[i];
 
         if (f->enabled == ON) {
+            if (f->pos_y - SPR_W < COLLISION_FLOOR && f->dir != DIR_N) {
+                f->pos_y += 1;
+            }
+
             switch (f->dir) {
                 case DIR_N :
                     if (f->pos_y - SPR_W > COLLISION_CEIL) {
@@ -160,6 +179,8 @@ void food_logic() {
 
                     break;
             }
+
+            food_collision(f);
         }
     }
 }
@@ -254,22 +275,36 @@ void init_player() {
     set_up_sprite_simple(SPR_PLAYER_1_2_MID, PAL_NUM_PLAYER, SPR_DAT_PLAYER_1_2_MID, PAL_PLAYER);
 }
 
+void set_up_food_sprite(struct food * f, int spr_num, int pal_num, unsigned char * spr_dat, unsigned char * pal_dat) {
+    f->original_pal_num = pal_num;
+
+    set_up_sprite_simple(spr_num, pal_num, spr_dat, pal_dat);
+}
+
 void set_food_type(int food_index, int type) {
     UBYTE spr;
-    spr = food_index * SPRITES_PER_FOOD;
+    struct food * f;
 
-    foods[food_index].food_type = type;
+    spr = food_index * SPRITES_PER_FOOD;
+    f = &foods[food_index];
+
+    f->food_type = type;
+
+    f->spr_num_0_0 = SPR_FOOD(spr);
+    f->spr_num_1_0 = SPR_FOOD(spr + 1);
+    f->spr_num_0_1 = SPR_FOOD(spr + 2);
+    f->spr_num_1_1 = SPR_FOOD(spr + 3);
 
     if (type == 0) {
-        set_up_sprite_simple(SPR_FOOD(spr), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);    
-        set_up_sprite_simple(SPR_FOOD(spr + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(spr + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(spr + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_0_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_0, PAL_PLAYER);    
+        set_up_food_sprite(f, f->spr_num_1_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_0, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_0_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_0, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_1_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_0, PAL_PLAYER);
     } else if (type == 1) {
-        set_up_sprite_simple(SPR_FOOD(spr), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_1, PAL_PLAYER);    
-        set_up_sprite_simple(SPR_FOOD(spr + 1), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_1, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(spr + 2), PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_1, PAL_PLAYER);
-        set_up_sprite_simple(SPR_FOOD(spr + 3), PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_1, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_0_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_0_1, PAL_PLAYER);    
+        set_up_food_sprite(f, f->spr_num_1_0, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_0_1, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_0_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_0_1_1, PAL_PLAYER);
+        set_up_food_sprite(f, f->spr_num_1_1, PAL_NUM_PLAYER, SPR_DAT_FOOD_1_1_1, PAL_PLAYER);
     }
 }
 
@@ -281,7 +316,7 @@ void init_food(int food_index, int type, int startx, int starty, int enabled) {
     f->pos_y = starty;
 
     f->dir = DIR_S;
-    f->vel = 2;
+    f->vel = 3;
 
     f->enabled = enabled;
 
@@ -290,6 +325,8 @@ void init_food(int food_index, int type, int startx, int starty, int enabled) {
 
 void init_foods() {
     UBYTE i;
+
+    set_sprite_palette(PAL_NUM_FOOD_TOUCH, 1, PAL_FOOD_TOUCH);
 
     for (i = 0; i < MAX_FOODS; i++) {
         init_food(i, 0, 0, 0, OFF);
@@ -334,10 +371,11 @@ void initialize() {
     init_player();
     init_foods();
 
-    init_food(0, 0, 80, 50, ON);
-    // init_food(1, 0, 10, 50, ON);
-    // init_food(2, 0, 30, 50, ON);
-    // init_food(3, 0, 40, 20, ON);
+    // TODO these should be spawned intermittently.
+    init_food(0, 0, 80, 31, ON);
+    init_food(1, 0, 60, 22, ON);
+    init_food(2, 0, 30, 25, ON);
+    init_food(3, 0, 40, 27, ON);
 
     SHOW_BKG;
     SHOW_SPRITES;

@@ -21,6 +21,12 @@ struct food {
     UBYTE dir;
     UBYTE vel;
     UBYTE enabled; 
+
+    UBYTE original_pal_num;
+    UBYTE spr_num_0_0;
+    UBYTE spr_num_1_0;
+    UBYTE spr_num_0_1;
+    UBYTE spr_num_1_1;
 };
 
 #endif
